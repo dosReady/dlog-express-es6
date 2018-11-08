@@ -1,9 +1,12 @@
 import express from 'express'
 import session from 'express-session'
 import passport  from 'passport'
+import flash from 'connect-flash'
 import ejsLocals  from 'ejs-locals'
+import bodyParser from 'body-parser'
 
 import modules from './modules'
+import app_passport from './setting/app_passport'
 import router from './router/index'
 
 const app = express()
@@ -19,8 +22,13 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
+
+app_passport(passport)
 
 app.use(modules.accesslog)
 
