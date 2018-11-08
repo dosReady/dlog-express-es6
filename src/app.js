@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
-import bodyParser from 'body-parser'
 import passport  from 'passport'
+import ejsLocals  from 'ejs-locals'
 
 import modules from './modules'
 import router from './router/index'
@@ -9,12 +9,15 @@ import router from './router/index'
 const app = express()
 
 // 상부 모듈 영역 
+app.engine('ejs', ejsLocals)
+app.set('views', __dirname +'/view')
+app.set('view engine', 'ejs')
+
 app.use(session({
     secret: '@#@#@D#@L#@#@O@#@G',
     resave: false,
     saveUninitialized: true
 }))
-
 
 app.use(passport.initialize())
 app.use(passport.session())
