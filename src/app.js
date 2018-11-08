@@ -30,8 +30,6 @@ app.all('*',modules.httpcode_exception)
 app.use(modules.exception)
 
 
-
-
 app.listen(3000, () => {
     console.log('http://127.0.0.1:3000')
 })
