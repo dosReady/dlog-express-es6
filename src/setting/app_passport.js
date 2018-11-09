@@ -1,4 +1,5 @@
 import passportLocal from 'passport-local'
+import pool from './db'
 
 module.exports = (passport) => {
     const LocalStrategy = passportLocal.Strategy
@@ -19,10 +20,8 @@ module.exports = (passport) => {
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true
-    }, (req, username, password, done) => {
+    }, async (req, username, password, done) => {
         console.log(req)
-        console.log(username)
-        console.log(password)
         if (sampleuser.userid !== username) return done(null, false, {
             message: '존재하지 않는 아이디입니다.'
         })
@@ -30,7 +29,8 @@ module.exports = (passport) => {
         if (sampleuser.userid === username && sampleuser.password !== password) return done(null, false, {
             message: '비밀번호가 일치하지 않습니다.'
         })
-
+        
+        await pool.query('delete from dlog_user_sessions where sid = ? ', sessionID)
         return done(null, sampleuser)
     }))
 }

@@ -3,9 +3,8 @@ import passport  from 'passport'
 
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     const error = req.flash('error')
-    
     res.render('login', {error: error[0]})
 })
 
@@ -18,5 +17,6 @@ router.post('/login',passport.authenticate('app-login', {
 router.get('/index', (req, res, next) => {
     res.render('index')
 })
+
 
 module.exports = router
