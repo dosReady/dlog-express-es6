@@ -1,13 +1,15 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+  <div id="app" class="container-fluid m-0 p-0">
+    <load-layout></load-layout>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    'LoadLayout': () => import('@/components/layouts/LoadLayout.vue')
+  }
 }
 </script>
 
@@ -19,5 +21,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  height: 100vh;
 }
 </style>
