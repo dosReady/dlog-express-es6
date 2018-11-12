@@ -4,12 +4,6 @@
             <h1>로그 라인</h1>
         </div>
         <div class="col-11 row container-fluid p-0 content">
-            <div class="row">
-
-            </div>
-            <div class="row">
-
-            </div>
         </div>
         <div class="col-11 row px-0">
             <div class="input-group">
@@ -17,10 +11,9 @@
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-info">입력</button>
                 </div>
-            </div>    
-        </div>                
+            </div>
+        </div>
     </div>
-
 </template>
 
 <script>
