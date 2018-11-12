@@ -9,6 +9,11 @@ export default new Router({
       path: '/',
       name: 'LoginForm',
       component: () => import('@/components/LoginForm')
+    },
+    {
+      path: '/logline',
+      name: 'LogLine',
+      component: () => import('@/components/LogLine')
     }
   ]
 })

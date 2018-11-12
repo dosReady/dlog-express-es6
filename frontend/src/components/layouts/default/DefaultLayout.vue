@@ -1,25 +1,18 @@
 <template>
     <div class="row">
-        <nav class='col-3 navbar navbar-dark bg-dark'>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
-            </ul>
-        </nav>
-        <router-view class="col-9 py-1"></router-view>
+        <div class="col bg-dark p-0">
+            <nav class='navbar mt-5 px-0'>
+                <ul class="nav flex-column w-100 m-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link text-white" to="/logline">로그라인</router-link>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <router-view class="col-10 container"></router-view>
     </div>
 </template>
 
@@ -32,5 +25,16 @@ export default {
 <style scoped>
 .row {
     height: 100vh
+}
+.nav-item {
+    margin-top: 30px
+}
+.nav-link {
+    padding-left: 0;
+    padding-right: 0
+}
+.nav-link:hover {
+    color: black!important;
+    background-color: white
 }
 </style>
