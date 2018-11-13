@@ -14,6 +14,11 @@ export default new Router({
       path: '/logline',
       name: 'LogLine',
       component: () => import('@/components/LogLine')
+    },
+    {
+      path: '/logline/reg',
+      name: 'LogLineForm',
+      component: () => import('@/components/LogLineForm')
     }
   ]
 })
