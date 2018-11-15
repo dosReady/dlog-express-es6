@@ -12,7 +12,7 @@
                 </ul>
             </nav>
         </div>
-        <router-view class="col-10 container px-5"></router-view>
+        <router-view class="col-10 container p-3"></router-view>
     </div>
 </template>
 

@@ -1,16 +1,16 @@
 <template>
     <div>
         <div class="row content">
-            <div class="col-1 mt-5">
+            <div class="col-sm-2 btn-group-vertical mr-3">
                 <router-link class="btn btn-outline-info" to="/logline/reg">등록</router-link>
             </div>
-            <div class="col-11 scrollbar">
+            <div class="col-sm-9 scrollbar">
                 <!--
                 <div class="row" v-for="(item, index) in loglines" :key="index">
                     <span :class="classObject">{{item}}</span>
                 </div>
                 -->
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="col-10 row card">
+                <div class="row card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -115,5 +115,9 @@ export default {
 .scrollbar {
     height: 100vh;
     overflow-y: scroll;
+}
+
+.btn-group-vertical {
+    max-height: 15%
 }
 </style>

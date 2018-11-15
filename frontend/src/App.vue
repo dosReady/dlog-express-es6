@@ -21,6 +21,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   height: 100vh;
-  overflow: hidden
+  overflow: hidden;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select:none;
 }
 </style>
