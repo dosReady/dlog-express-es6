@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row content">
-            <div class="col-sm-2 btn-group-vertical mr-3">
+            <div class="col-sm-2 btn-group-vertical mr-3 pr-0">
                 <router-link class="btn btn-outline-info" to="/logline/reg">등록</router-link>
             </div>
             <div class="col-sm-9 scrollbar">
@@ -12,11 +12,10 @@
                 -->
                 <div class="row card">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <h5 class="card-title">샘플 제목</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">샘플 주제</h6>
+                        <p class="card-text">샘플 내용입니다.</p>
+                        <router-link class="card-link" to="/logline/sampleid/detail">더 보기</router-link>
                     </div>
                 </div>
 

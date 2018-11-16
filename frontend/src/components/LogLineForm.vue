@@ -14,26 +14,26 @@
                 <textarea rows="5" class="form-control" v-model="data.content"></textarea>
             </div>
             <div class="form-group">
-                <label>할일</label>
-                <button class="btn btn-outline-danger p-1" @click="addWork">추가</button>
-                <ul class="list-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-white bg-info">할일</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="해야할 일을 입력하십시오." v-model="todoText" @keypress="enterWork">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-danger p-1" @click="addWork">추가</button>
+                    </div>
+                </div>
+                <ul class="list-group mt-2 scrollbar">
                     <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
-                        <input type="text" class="form-control" v-model="data.worklist[index].text">
-                        <button class="btn btn-outline-danger p-1" @click="removeWork(index)">삭제</button>
+                        <div class="input-group">
+                            <span class="col p-1">{{item.text}}</span>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger p-1" @click="removeWork(index)">삭제</button>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
-            <div class="form-group">
-                <label>첨부파일</label>
-                <button class="btn btn-outline-danger p-1" @click="addFile">추가</button>
-                <ul class="list-group">
-                    <li class="list-group-item" v-for="(item, index) in data.filelist" :key="index">
-                        {{item}}
-                        <button class="btn btn-outline-danger p-1" @click="removeFile(index)">삭제</button>
-                    </li>
-                </ul>
-            </div>
-
         </div>
     </div>
 </template>
@@ -43,6 +43,7 @@ export default {
   name: 'LogLineForm',
   data () {
     return {
+      todoText: '',
       data: {
         subject: '',
         content: '',
@@ -51,13 +52,23 @@ export default {
       }
     }
   },
+  created () {
+    console.log(this.$route.params.id)
+  },
   methods: {
+    enterWork (e) {
+      if (e.keyCode === 13) {
+        this.addWork()
+      }
+    },
     addWork () {
       this.data.worklist.push({
         level: '',
         category: '',
-        text: ''
+        text: this.todoText
       })
+
+      this.todoText = ''
     },
     removeWork (index) {
       this.data.worklist.splice(index, 1)
@@ -93,5 +104,10 @@ export default {
 
 .btn-group-vertical {
     max-height: 15%
+}
+
+.scrollbar {
+    height: 30vh;
+    overflow-y: scroll;
 }
 </style>
