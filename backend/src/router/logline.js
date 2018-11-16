@@ -48,4 +48,21 @@ router.post('/list', async (req, res, next) => {
     }
 })
 
+router.post('/detail', async (req, res, next) => {
+    try {
+        const id = req.body.id
+        const sql = `
+            SELECT 
+                logline_master_title as subject,
+                logline_master_content as content
+            FROM dlog_logline_master 
+            WHERE logline_master_seq = '${id}'
+        `
+        const result = await dao.query_one(sql)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router

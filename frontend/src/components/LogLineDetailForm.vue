@@ -7,11 +7,11 @@
         <div class="col-md-9">
             <div class="form-group mt-3">
                 <label>제목</label>
-                <input type="text" class="form-control" v-model="data.subject" placeholder="제목">
+                <span class="form-control">{{data.subject}}</span>
             </div>
             <div class="form-group">
                 <label>내용</label>
-                <textarea rows="5" class="form-control" v-model="data.content"></textarea>
+                <div class="form-control h-100" v-html="data.content"></div>
             </div>
             <div class="form-group">
                 <div class="input-group">
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'LogLineForm',
+  name: 'LogLineDetailForm',
   data () {
     return {
       todoText: '',
@@ -53,10 +53,8 @@ export default {
     }
   },
   async created () {
-    if (this.$route.params.id) {
-      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
-      this.data = data
-    }
+    const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+    this.data = data
   },
   methods: {
     enterWork (e) {

@@ -4,7 +4,7 @@ exports.query_one = async (sql, params) => {
     try {
         console.log(sql)
         const {rows} = await db.query(sql, params)
-        console.log(rows)
+        console.log(rows[0])
         return rows[0]
     } catch (error) {
         throw error
