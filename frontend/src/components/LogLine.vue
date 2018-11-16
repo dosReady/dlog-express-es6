@@ -16,6 +16,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">샘플 주제</h6>
                         <p class="card-text">샘플 내용입니다.</p>
                         <router-link class="card-link" to="/logline/sampleid/detail">더 보기</router-link>
+                        <router-link class="card-link" to="/logline/sampleid/edit">편집</router-link>
                     </div>
                 </div>
 

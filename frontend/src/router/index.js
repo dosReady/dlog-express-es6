@@ -24,6 +24,11 @@ export default new Router({
       path: '/logline/:id/detail',
       name: 'LogLineForm',
       component: () => import('@/components/LogLineForm')
+    },
+    {
+      path: '/logline/:id/edit',
+      name: 'LogLineForm',
+      component: () => import('@/components/LogLineForm')
     }
   ]
 })
