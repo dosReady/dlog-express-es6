@@ -1,6 +1,6 @@
 <template>
     <div class="row content">
-        <div class="col-md-2 btn-group-vertical mr-3">
+        <div class="col-md-2 btn-group-vertical pr-0 mr-3">
             <button class="btn btn-outline-info mb-2" @click="saveData">저장</button>
             <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
         </div>
@@ -83,9 +83,10 @@ export default {
     removeFile (index) {
       this.data.filelist.splice(index, 1)
     },
-    saveData () {
+    async saveData () {
       if (confirm('로그라인을 등록하시겠습니까?')) {
-        console.log(this.data)
+        const {data} = await this.$http.post('/logline/add', {data: this.data})
+        console.log(data)
       }
     }
   }

@@ -10,6 +10,7 @@ import modules from './modules'
 import app_passport from './setting/app_passport'
 import pgPool from './setting/db'
 import router from './router/index'
+import logline from './router/logline'
 
 const app = express()
 
@@ -41,7 +42,9 @@ app.use(modules.accesslog)
 
 // router
 
-app.use('/',router)
+app.use('/', router)
+app.use('/logline', logline)
+
 app.all('*',modules.httpcode_exception)
 
 // 하부 모듈 영역 
