@@ -6,29 +6,49 @@ router.post('/add', async (req, res, next) => {
     
     try {
         const data = req.body.data
+
+        // logline master insert
         const sql = `
-            INSERT INTO dlog_logline_master (
-                logline_master_seq,
-                logline_master_title,
-                logline_master_content,
-                logline_worklist_seq,
-                dlog_file_seq,
-                create_date,
-                update_date,
-                dog_action_seq
-            )
-            VALUES(
-                nextval('dlog_loline_master_seq'),
-                '${data.subject}',
-                '${data.content}',
-                null,
-                null,
-                now(),
-                now(),
-                null
-            )
+        INSERT INTO dlog_logline_master (
+            logline_master_seq,
+            logline_master_title,
+            logline_master_content,
+            logline_worklist_seq,
+            file_group_seq,
+            action_log_seq
+        )
+        VALUES(
+            nextval('dlog_logline_master_seq'),
+            '${data.subject}',
+            '${data.content}',
+            null,
+            null,
+            null
+        )
+        RETURNING logline_master_seq
         `
         const result = await dao.query_cud(sql)
+
+        const worklist = data.worklist
+        for (let work of worklist) {
+            console.log(work)
+            work.logline_master_seq = result.logline_master_seq
+        }
+
+        const worksql = `
+        INSERT INTO dlog_work_list (
+            work_content,
+            work_level,
+            logline_master_seq
+        ) VALUES (
+            $1.content,
+            $1.level,
+            $1.logline_master_seq
+        )
+        RETURNING work_seq
+        `
+        const workresult = await dao.query_cud(worksql, worklist)
+        console.log(workresult.work_seq)
         res.json(result)
     } catch (error) {
         next(error)

@@ -1,9 +1,9 @@
 import {Pool} from 'pg'
 
 const config = {
-    user: 'dlog',
+    user: 'dos',
     password: 'dos',
-    host: '192.168.0.12',
+    host: '106.10.33.118',
     database: 'dlog',
     port: 5432
 }

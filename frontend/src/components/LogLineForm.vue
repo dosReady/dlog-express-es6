@@ -26,7 +26,7 @@
                 <ul class="list-group mt-2 scrollbar">
                     <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
                         <div class="input-group">
-                            <span class="col p-1">{{item.text}}</span>
+                            <span class="col p-1">{{item.content}}</span>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-danger p-1" @click="removeWork(index)">삭제</button>
                             </div>
@@ -67,8 +67,7 @@ export default {
     addWork () {
       this.data.worklist.push({
         level: '',
-        category: '',
-        text: this.todoText
+        content: this.todoText
       })
 
       this.todoText = ''
