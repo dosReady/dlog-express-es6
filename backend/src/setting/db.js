@@ -1,13 +1,33 @@
-import {Pool} from 'pg'
-
+import session from 'express-session'
+import MySQLStore from 'express-mysql-session'
+import mysql from 'mysql2/promise'
 const config = {
-    user: 'dos',
-    password: 'dos',
     host: '106.10.33.118',
+    user: 'dlog',
+    password: 'dlog',
     database: 'dlog',
-    port: 5432
+    port: 3306
 }
 
-const pool = new Pool(config)
+const storeconfig = {
+    host: '106.10.33.118',
+    user: 'dlog',
+    password: 'dlog',
+    database: 'dlog',
+    port: 3306,
+    connectionLimit: 1,
+    endConnectionOnClose: true,
+    schema: {
+        tableName: 'dlog_user_sessions',
+        columnNames: {
+            session_id: 'sid',
+            expires: 'expires',
+            data: 'sess'
+        }
+    }
+}
+
+const pool = new mysql.createPool(config)
+pool.sessionStore = new (MySQLStore(session))(storeconfig)
 
 module.exports = pool

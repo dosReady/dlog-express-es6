@@ -1,6 +1,5 @@
 import express from 'express'
 import session from 'express-session'
-import pgSession from 'connect-pg-simple'
 import passport  from 'passport'
 import flash from 'connect-flash'
 import ejsLocals  from 'ejs-locals'
@@ -8,7 +7,7 @@ import bodyParser from 'body-parser'
 
 import modules from './modules'
 import app_passport from './setting/app_passport'
-import pgPool from './setting/db'
+import db from './setting/db'
 import router from './router/index'
 import logline from './router/logline'
 
@@ -20,11 +19,7 @@ app.set('views', __dirname +'/view')
 app.set('view engine', 'ejs')
 
 app.use(session({
-    store: new (pgSession(session))({
-        pool: pgPool,
-        tableName: 'dlog_user_sessions',
-        ttl: 1000
-    }),
+    store: db.sessionStore,
     secret: '@#@#@D#@L#@#@O@#@G',
     resave: false,
     saveUninitialized: true

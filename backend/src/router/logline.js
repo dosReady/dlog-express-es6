@@ -5,7 +5,11 @@ const router = express.Router()
 router.post('/add', async (req, res, next) => {
     
     try {
+        dao.begin()
+
         const data = req.body.data
+        const worklist = data.worklist
+        let worksqls =  []
 
         // logline master insert
         const sql = `
@@ -28,29 +32,30 @@ router.post('/add', async (req, res, next) => {
         RETURNING logline_master_seq
         `
         const result = await dao.query_cud(sql)
-
-        const worklist = data.worklist
+        dao.rollback()
         for (let work of worklist) {
             console.log(work)
-            work.logline_master_seq = result.logline_master_seq
+            const worksql = `
+            INSERT INTO dlog_work_list (
+                work_content,
+                work_level,
+                logline_master_seq
+            ) VALUES (
+                '${work.content}'
+                '${work.level}',
+                ${result.logline_master_seq}
+            )
+            RETURNING work_seq
+            `
+            worksqls.push(worksql)
         }
+        const workresult = await dao.query_cud_array(worksqls)
+        console.log(workresult)
 
-        const worksql = `
-        INSERT INTO dlog_work_list (
-            work_content,
-            work_level,
-            logline_master_seq
-        ) VALUES (
-            $1.content,
-            $1.level,
-            $1.logline_master_seq
-        )
-        RETURNING work_seq
-        `
-        const workresult = await dao.query_cud(worksql, worklist)
-        console.log(workresult.work_seq)
+        dao.commit()
         res.json(result)
     } catch (error) {
+        dao.rollback()
         next(error)
     }
 
