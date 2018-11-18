@@ -15,6 +15,9 @@ const storeconfig = {
     password: 'dlog',
     database: 'dlog',
     port: 3306,
+    clearExpired: true,
+    checkExpirationInterval: 1000,
+    expiration: 1000,
     connectionLimit: 1,
     endConnectionOnClose: true,
     schema: {

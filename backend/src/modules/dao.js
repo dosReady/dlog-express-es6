@@ -1,67 +1,78 @@
 import db from '../setting/db'
 
-
-exports.begin = async () => {
+exports.select = async (selectSql, params) => {
+    const connection = await db.getConnection()
     try {
-        await db.query("BEGIN")
-    } catch (error) {
-        throw error
-    }
-}
-
-exports.commit = async () => {
-    try {
-        await db.query("COMMIT")
-    } catch (error) {
-        throw error
-    }
-}
-
-exports.rollback = async () => {
-    try {
-        await db.query("ROLLBACK")
-    } catch (error) {
-        throw error
-    }
-}
-
-
-
-exports.query_list = async (sql, params) => {
-    try {
-        console.log(sql)
-        const {rows} = await db.query(sql, params)
-        console.log(rows)
+        const [rows] = await connection.query(selectSql, params)
+        connection.release()
+        console.log(selectSql)
+        if(params) console.log(params)
         return rows
     } catch (error) {
         throw error
     }
 }
 
-exports.query_cud = async (sql, params) => {
-    const client = db.connect()
+exports.insert = async (insertSql, params) => {
+    const connection = await db.getConnection()
     try {
-        console.log(sql)
-        const {rows} = await client.query(sql, params)
-        console.log(rows)
-        return rows
+        await connection.beginTransaction()
+        const [rows] = await connection.query(insertSql, params)
+        await connection.commit()
+        connection.release()
+        console.log(insertSql)
+        console.log(rows.insertId)
+        if(params) console.log(params)
+        return rows.insertId
     } catch (error) {
-        client.release()
+        await connection.rollback()
+        connection.release()
         throw error
     }
 }
 
-exports.query_cud_array = async (sqls, params) => {
+exports.delete = async (deleteSql, params) => {
+    const connection = await db.getConnection()
     try {
-        let rowarray = []
-        for(const sql of sqls) {
-            console.log(sql)
-            const {rows} = await db.query(sql, params)
-            console.log(rows)
-            rowarray.push(rows)
-        }
-        return rowarray
+        await connection.beginTransaction()
+        await connection.query(deleteSql, params)
+        await connection.commit()
+        connection.release()
+        console.log(deleteSql)
+        if(params) console.log(params)
     } catch (error) {
+        await connection.rollback()
+        connection.release()
+        throw error
+    }
+}
+
+exports.update = async (updateSql, params) => {
+    const connection = await db.getConnection()
+    try {
+        await connection.beginTransaction()
+        await connection.query(updateSql, params)
+        await connection.commit()
+        connection.release()
+        console.log(updateSql)
+        if(params) console.log(params)
+    } catch (error) {
+        await connection.rollback()
+        connection.release()
+        throw error
+    }
+}
+
+exports.transaction = async (req, callback) => {
+    const connection = await db.getConnection()
+    try {
+        await connection.beginTransaction()
+        await callback(req, connection)
+        await connection.commit()
+        connection.release()
+    } catch (error) {
+        await connection.rollback()
+        connection.release()
         throw error
     }
 }
