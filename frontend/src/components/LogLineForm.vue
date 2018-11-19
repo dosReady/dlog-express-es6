@@ -121,12 +121,27 @@ export default {
 }
 @media (min-width: 890px ) {
     .logline-header > input {
-        width: calc(90% - 80px)
+        width: calc(93% - 80px)
     }
 }
 @media (max-width: 889px ) {
     .logline-header > input {
-        width: calc(80% - 80px);
+        width: calc(90% - 80px);
+    }
+}
+@media (max-width: 625px ) {
+    .logline-header > input {
+        width: calc(87% - 80px);
+    }
+}
+@media (max-width: 488px ) {
+    .logline-header > input {
+        width: calc(84% - 80px);
+    }
+}
+@media (max-width: 402px ) {
+    .logline-header > input {
+        width: calc(81% - 80px);
     }
 }
 
@@ -138,7 +153,7 @@ export default {
 }
 .preview-content {
     padding: 1rem;
-    width: 98%;
+    width: 100%;
     height: 50vh;
     background-color: transparent!important;
     color: black!important;
@@ -149,11 +164,10 @@ export default {
     background-color: #3F5765;
     padding: 1rem;
     height: 40vh;
-    margin-right: 1rem;
 }
 textarea {
     width: 100%;
-    height: 98%;
+    height: 100%;
     border: none;
     background-color: transparent;
     color: white;

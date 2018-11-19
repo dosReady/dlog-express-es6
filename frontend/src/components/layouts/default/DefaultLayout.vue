@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="default-layout">
  <!--        <div class="leftmenu col p-0">
             <nav class='navbar mt-5 px-0'>
                 <ul class="nav flex-column w-100 m-0">
@@ -12,7 +12,7 @@
                 </ul>
             </nav>
         </div> -->
-        <router-view class="rightcontent"></router-view>
+        <router-view class="content"></router-view>
     </div>
 </template>
 
@@ -23,13 +23,12 @@ export default {
 </script>
 
 <style scoped>
-.row {
-    height: 100vh
+.default-layout {
+    width: 100vw;
+    height: 100vh;
+    padding: 0!important;
 }
-.leftmenu {
-    background-color: #2B3A42
-}
-.rightcontent {
+.content {
     background-color:  #EFEFEF
 }
 .nav-item {
