@@ -23,7 +23,7 @@
                         <button class="btn btn-outline-danger p-1" @click="addWork">추가</button>
                     </div>
                 </div>
-                <ul class="list-group mt-2 scrollbar">
+                <ul class="list-group mt-2" v-slimscroll>
                     <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
                         <div class="input-group">
                             <span class="col p-1">{{item.work_content}}</span>
@@ -66,8 +66,8 @@ export default {
     },
     addWork () {
       this.data.worklist.push({
-        level: '',
-        content: this.todoText
+        work_level: '',
+        work_content: this.todoText
       })
 
       this.todoText = ''

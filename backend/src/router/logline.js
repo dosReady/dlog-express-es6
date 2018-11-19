@@ -15,9 +15,20 @@ router.post('/add', async (req, res, next) => {
     }
 })
 
+router.post('/delete', async (req, res, next) => {
+    try {
+        await dao.transaction(req, logline.delete)
+        res.json({msg: '삭제처리 하였습니다.'})
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+
 router.post('/list', async (req, res, next) => {
     try {
-        const result =  await logline.list()
+        const result = await logline.list()
         res.json(result)
     } catch (error) {
         next(error)
@@ -26,26 +37,7 @@ router.post('/list', async (req, res, next) => {
 
 router.post('/detail', async (req, res, next) => {
     try {
-        const id = req.body.id
-        const mastersql = `
-            SELECT 
-                logline_master_title as subject,
-                logline_master_content as content
-            FROM dlog_logline_master 
-            WHERE logline_master_seq = '${id}'
-        `
-        const result = await dao.select(mastersql)
-
-        const worksql = `
-        SELECT
-            work_seq,
-            work_content,
-            work_level
-        FROM dlog.dlog_work_list
-        WHERE logline_master_seq = '${id}'
-        `
-        result.worklist = await dao.list(worksql)
-        console.log(result)
+        const result = await logline.detail(req)
         res.json(result)
     } catch (error) {
         next(error)

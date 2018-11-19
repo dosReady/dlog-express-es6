@@ -33,7 +33,7 @@ module.exports = class Logline {
             const worklist = data.worklist
             const workparms = []
             for (const work  of worklist) {
-                const workval = [work.content, work.level, rows.insertId]
+                const workval = [work.work_content, work.work_level, rows.insertId]
                 workparms.push(workval)
             }
             resultsql += worksqls
@@ -46,6 +46,49 @@ module.exports = class Logline {
             console.log(resultparams)
         }
     
+    }
+
+    async delete (req, connection) {
+        let resultsql = ''
+        try {
+            const seq = req.body.seq
+            const delWorksql = `
+                DELETE FROM dlog_work_list WHERE logline_master_seq = ${seq}
+            `
+            const delMstsql = `
+                DELETE FROM dlog_logline_master WHERE logline_master_seq = ${seq}
+            `
+            resultsql += delWorksql + '\n' + delMstsql
+            await connection.query(delWorksql)
+            await connection.query(delMstsql)
+        } catch (error) {
+            throw error
+        } finally {
+            console.log(resultsql)
+        }
+    }
+
+    async detail (req) {
+        const id = req.body.id
+        const mastersql = `
+            SELECT 
+                logline_master_title as subject,
+                logline_master_content as content
+            FROM dlog_logline_master 
+            WHERE logline_master_seq = '${id}'
+        `
+        const result = await dao.select(mastersql)
+
+        const worksql = `
+        SELECT
+            work_seq,
+            work_content,
+            work_level
+        FROM dlog_work_list
+        WHERE logline_master_seq = '${id}'
+        `
+        result.worklist = await dao.list(worksql)
+        return result
     }
 
     async list () {
