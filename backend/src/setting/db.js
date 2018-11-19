@@ -1,20 +1,22 @@
 import session from 'express-session'
 import MySQLStore from 'express-mysql-session'
 import mysql from 'mysql2/promise'
+import dbconfig from '../setting/config.json'
+
 const config = {
-    host: '106.10.33.118',
-    user: 'dlog',
-    password: 'dlog',
-    database: 'dlog',
-    port: 3306
+    host: dbconfig.db.host,
+    user: dbconfig.db.user,
+    password: dbconfig.db.password,
+    database: dbconfig.db.database,
+    port: dbconfig.port
 }
 
 const storeconfig = {
-    host: '106.10.33.118',
-    user: 'dlog',
-    password: 'dlog',
-    database: 'dlog',
-    port: 3306,
+    host: dbconfig.db.host,
+    user: dbconfig.db.user,
+    password: dbconfig.db.password,
+    database: dbconfig.db.database,
+    port: dbconfig.port,
     clearExpired: true,
     checkExpirationInterval: 1000,
     expiration: 1000,
