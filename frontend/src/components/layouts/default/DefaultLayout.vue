@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col bg-dark p-0">
+        <div class="leftmenu col p-0">
             <nav class='navbar mt-5 px-0'>
                 <ul class="nav flex-column w-100 m-0">
                     <li class="nav-item">
@@ -12,7 +12,7 @@
                 </ul>
             </nav>
         </div>
-        <router-view class="col-10 container p-3"></router-view>
+        <router-view class="rightcontent col-10 p-0"></router-view>
     </div>
 </template>
 
@@ -25,6 +25,12 @@ export default {
 <style scoped>
 .row {
     height: 100vh
+}
+.leftmenu {
+    background-color: #2B3A42
+}
+.rightcontent {
+    background-color:  #EFEFEF
 }
 .nav-item {
     margin-top: 30px;

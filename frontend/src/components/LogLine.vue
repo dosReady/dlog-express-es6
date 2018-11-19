@@ -4,7 +4,7 @@
             <div class="col-md-2 btn-group-vertical pr-0 mr-3">
                 <router-link class="btn btn-outline-info" to="/logline/add">등록</router-link>
             </div>
-            <div class="col-md-9" v-slimscroll="options">
+            <div class="col-md-9">
                 <!--
                 <div class="row" v-for="(item, index) in loglines" :key="index">
                     <span :class="classObject">{{item}}</span>
@@ -31,11 +31,7 @@ export default {
   name: 'LogLine',
   data () {
     return {
-      loglines: [],
-      options: {
-        width: '80%',
-        height: '100vh'
-      }
+      loglines: []
     }
   },
   async beforeCreate () {

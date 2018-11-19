@@ -1,94 +1,69 @@
 <template>
-    <div class="row content">
-        <div class="col-md-2 btn-group-vertical pr-0 mr-3">
-            <button class="btn btn-outline-info mb-2" @click="saveData">저장</button>
-            <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
+    <div>
+        <div class="logline-header">
+            <input type="text" v-model="subject" placeholder="제목">
+            <div class="button-group">
+                <button class="btn btn-outline-info" @click="saveLogline">저장</button>
+                <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
+            </div>
         </div>
-        <div class="col-md-9">
-            <div class="form-group mt-3">
-                <label>제목</label>
-                <input type="text" class="form-control" v-model="data.subject" placeholder="제목">
-            </div>
-            <div class="form-group">
-                <label>내용</label>
-                <textarea rows="5" class="form-control" v-model="data.content"></textarea>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text text-white bg-info">할일</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="해야할 일을 입력하십시오." v-model="todoText" @keypress="enterWork">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-danger p-1" @click="addWork">추가</button>
-                    </div>
-                </div>
-                <ul class="list-group mt-2" v-slimscroll>
-                    <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
-                        <div class="input-group">
-                            <span class="col p-1">{{item.work_content}}</span>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-danger p-1" @click="removeWork(index)">삭제</button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="preview-header">
+        </div>
+        <div class="preview-content">
+            <div v-html="compiledMarkdown"></div>
+        </div>
+        <div class="input-content">
+            <textarea v-model="content" placeholder="내용을 입력하세요"></textarea>
         </div>
     </div>
 </template>
 
 <script>
+import marked from 'marked'
+
 export default {
   name: 'LogLineForm',
   data () {
     return {
-      todoText: '',
+      result: '',
       data: {
         subject: '',
-        content: '',
-        worklist: [],
-        filelist: []
+        content: ''
       }
     }
   },
   async beforeCreate () {
-    if (this.$route.params.id) {
-      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
-      this.data = data
-    }
+    const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+    this.data = data
   },
   methods: {
-    enterWork (e) {
-      if (e.keyCode === 13) {
-        this.addWork()
+    async saveLogline () {
+      if (confirm('저장하시겠습니까?')) {
+        await this.$http.post('/logline/add', {data: this.data})
+        this.$router.push({path: '/logline'})
+      }
+    }
+  },
+  computed: {
+    compiledMarkdown () {
+      return marked(this.result, { sanitize: true })
+    },
+    subject: {
+      get () {
+        return this.data.subject
+      },
+      set (value) {
+        this.data.subject = value
+        this.result = '# ' + value + '\n* * *\n' + this.data.content
       }
     },
-    addWork () {
-      this.data.worklist.push({
-        work_level: '',
-        work_content: this.todoText
-      })
-
-      this.todoText = ''
-    },
-    removeWork (index) {
-      this.data.worklist.splice(index, 1)
-    },
-    addFile () {
-      this.data.filelist.push({
-        path: '',
-        name: '',
-        size: 0
-      })
-    },
-    removeFile (index) {
-      this.data.filelist.splice(index, 1)
-    },
-    async saveData () {
-      if (confirm('로그라인을 등록하시겠습니까?')) {
-        const {data} = await this.$http.post('/logline/add', {data: this.data})
-        console.log(data)
+    content: {
+      get () {
+        return this.data.content
+      },
+      set (value) {
+        this.data.content = value
+        this.result = '# ' + this.data.subject + '\n* * *\n' + value
       }
     }
   }
@@ -96,21 +71,63 @@ export default {
 </script>
 
 <style scoped>
-.row {
-    margin-top: 10px;
-    margin-left: 0px;
-    margin-right: 0px;
+.logline-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #3F5765;
+    font-size: 2rem;
+    padding: 1rem;
+    height: 10%
 }
-.content {
-    height: 100vh;
+.logline-header > .button-group {
+    padding: 1rem
 }
-
-.btn-group-vertical {
-    max-height: 15%
+.logline-header > input {
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding: 1rem;
+    width: 85%;
 }
-
-.scrollbar {
-    height: 30vh;
-    overflow-y: scroll;
+.logline-header > input:focus {
+    outline: none
+}
+.logline-header > input::placeholder {
+    color: white
+}
+.preview-header {
+    padding: 1rem;
+    border-bottom: #3F5765;
+    height: 5%
+}
+.preview-content {
+    padding: 1rem;
+    width: 99%;
+    height: 55%;
+    background-color: transparent!important;
+    color: black!important;
+    overflow: hidden;
+    overflow-y: scroll
+}
+.input-content {
+    background-color: #3F5765;
+    padding: 1rem;
+    height: 30%;
+}
+textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    resize: none
+}
+textarea::placeholder {
+    color: white
+}
+textarea:focus {
+    outline: none
 }
 </style>

@@ -25,7 +25,7 @@ module.exports = class Logline {
             `
             resultsql += mastersql + '\n'
             const [rows] = await connection.query(mastersql)
-            
+            /*
             const worksqls = `
             INSERT INTO dlog_work_list (work_content, work_level, logline_master_seq)
             VALUES ?
@@ -39,11 +39,12 @@ module.exports = class Logline {
             resultsql += worksqls
             resultparams.push(workparms)
             await connection.query(worksqls, [workparms])
+            */
         } catch (error) {
            throw error
         } finally {
             console.log(resultsql)
-            console.log(resultparams)
+            // console.log(resultparams)
         }
     
     }
@@ -78,7 +79,7 @@ module.exports = class Logline {
             WHERE logline_master_seq = '${id}'
         `
         const result = await dao.select(mastersql)
-
+        /*
         const worksql = `
         SELECT
             work_seq,
@@ -88,6 +89,7 @@ module.exports = class Logline {
         WHERE logline_master_seq = '${id}'
         `
         result.worklist = await dao.list(worksql)
+        */
         return result
     }
 
