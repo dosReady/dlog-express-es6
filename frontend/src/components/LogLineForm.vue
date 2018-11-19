@@ -3,11 +3,9 @@
         <div class="logline-header">
             <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             <div class="button-group">
-                <button class="btn btn-outline-info" @click="saveLogline">저장</button>
-                <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
+                <button class="btn-save btn btn-outline-info" @click="saveLogline">저장</button>
+                <router-link class="btn-list btn btn-outline-info" to="/logline">목록</router-link>
             </div>
-        </div>
-        <div class="preview-header">
         </div>
         <div class="preview-content">
             <div v-html="compiledMarkdown"></div>
@@ -104,33 +102,44 @@ export default {
     background-color: #3F5765;
     font-size: 2rem;
     padding: 1rem;
-    height: 10%
+    height: 10vh
+}
+.btn-list {
+    margin-left: 1rem;
+    padding-top: 0.6rem;
 }
 .logline-header > .button-group {
-    padding: 1rem
+    display: flex;
+    flex-wrap: wrap;
 }
 .logline-header > input {
     border: none;
     background-color: transparent;
     color: white;
     padding: 1rem;
-    width: 85%;
+    margin-right: 1rem;
 }
+@media (min-width: 890px ) {
+    .logline-header > input {
+        width: calc(90% - 80px)
+    }
+}
+@media (max-width: 889px ) {
+    .logline-header > input {
+        width: calc(80% - 80px);
+    }
+}
+
 .logline-header > input:focus {
     outline: none
 }
 .logline-header > input::placeholder {
     color: white
 }
-.preview-header {
-    padding: 1rem;
-    border-bottom: #3F5765;
-    height: 5%
-}
 .preview-content {
     padding: 1rem;
     width: 98%;
-    height: 55%;
+    height: 50vh;
     background-color: transparent!important;
     color: black!important;
     overflow: hidden;
@@ -139,7 +148,8 @@ export default {
 .input-content {
     background-color: #3F5765;
     padding: 1rem;
-    height: 30%;
+    height: 40vh;
+    margin-right: 1rem;
 }
 textarea {
     width: 100%;
@@ -155,4 +165,5 @@ textarea::placeholder {
 textarea:focus {
     outline: none
 }
+
 </style>

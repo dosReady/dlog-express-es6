@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="leftmenu col p-0">
+ <!--        <div class="leftmenu col p-0">
             <nav class='navbar mt-5 px-0'>
                 <ul class="nav flex-column w-100 m-0">
                     <li class="nav-item">
@@ -11,8 +11,8 @@
                     </li>
                 </ul>
             </nav>
-        </div>
-        <router-view class="rightcontent col-10 p-0"></router-view>
+        </div> -->
+        <router-view class="rightcontent"></router-view>
     </div>
 </template>
 

@@ -1,63 +1,101 @@
 <template>
-    <div class="row content">
-        <div class="col-md-2 btn-group-vertical pr-0 mr-3">
-            <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
+    <div>
+        <div class="preview-content">
+            <div v-html="compiledMarkdown"></div>
         </div>
-        <div class="col-md-9">
-            <div class="form-group mt-3">
-                <label>제목</label>
-                <span class="form-control">{{data.subject}}</span>
-            </div>
-            <div class="form-group">
-                <label>내용</label>
-                <div class="form-control h-100" v-html="data.content"></div>
-            </div>
-            <div class="form-group">
-                <label>할일</label>
-                <ul class="list-group mt-2" v-slimscroll>
-                    <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
-                        <div class="input-group">
-                            <span class="col p-1">{{item.work_content}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="comment-content">
         </div>
     </div>
 </template>
 
 <script>
+import marked from 'marked'
+
 export default {
   name: 'LogLineDetailForm',
   data () {
     return {
-      todoText: '',
+      result: '',
       data: {
         subject: '',
-        content: '',
-        worklist: [],
-        filelist: []
+        content: ''
       }
     }
   },
   async beforeCreate () {
-    const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
-    this.data = data
+    if (this.$route.params.id) {
+      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+      this.data = data
+      if (this.data.subject) {
+        this.result = '# ' + this.data.subject + '\n* * *\n' + this.data.content
+      } else {
+        this.result = this.data.content
+      }
+    }
+  },
+  methods: {
+  },
+  computed: {
+    compiledMarkdown () {
+      return marked(this.result, { sanitize: true })
+    },
+    subject: {
+      get () {
+        return this.data.subject
+      },
+      set (value) {
+        this.data.subject = value
+        if (value) {
+          this.result = '# ' + value + '\n* * *\n' + this.data.content
+        } else {
+          this.result = this.data.content
+        }
+      }
+    },
+    content: {
+      get () {
+        return this.data.content
+      },
+      set (value) {
+        this.data.content = value
+        if (this.data.subject) {
+          this.result = '# ' + this.data.subject + '\n* * *\n' + value
+        } else {
+          this.result = value
+        }
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.row {
-    margin-top: 10px;
-    margin-left: 0px;
-    margin-right: 0px;
+.preview-content {
+    padding: 1rem;
+    width: 98%;
+    height: 70%;
+    background-color: transparent!important;
+    color: black!important;
+    overflow: hidden;
+    overflow-y: scroll
 }
-.content {
-    height: 100vh;
+.comment-content {
+    background-color: #3F5765;
+    padding: 1rem;
+    height: 30%;
 }
-
-.btn-group-vertical {
-    max-height: 15%
+textarea {
+    width: 100%;
+    height: 98%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    resize: none
+}
+textarea::placeholder {
+    color: white
+}
+textarea:focus {
+    outline: none
 }
 </style>
