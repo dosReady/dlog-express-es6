@@ -129,7 +129,7 @@ export default {
 }
 .preview-content {
     padding: 1rem;
-    width: 99%;
+    width: 98%;
     height: 55%;
     background-color: transparent!important;
     color: black!important;
@@ -143,7 +143,7 @@ export default {
 }
 textarea {
     width: 100%;
-    height: 100%;
+    height: 98%;
     border: none;
     background-color: transparent;
     color: white;
