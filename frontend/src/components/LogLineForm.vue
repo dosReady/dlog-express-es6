@@ -26,7 +26,7 @@
                 <ul class="list-group mt-2 scrollbar">
                     <li class="list-group-item" v-for="(item, index) in data.worklist" :key="index">
                         <div class="input-group">
-                            <span class="col p-1">{{item.content}}</span>
+                            <span class="col p-1">{{item.work_content}}</span>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-danger p-1" @click="removeWork(index)">삭제</button>
                             </div>
@@ -52,7 +52,7 @@ export default {
       }
     }
   },
-  async created () {
+  async beforeCreate () {
     if (this.$route.params.id) {
       const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
       this.data = data
