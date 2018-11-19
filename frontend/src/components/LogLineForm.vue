@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="logline-header">
-            <input type="text" v-model="subject" placeholder="제목">
+            <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             <div class="button-group">
                 <button class="btn btn-outline-info" @click="saveLogline">저장</button>
                 <router-link class="btn btn-outline-info" to="/logline">목록</router-link>
@@ -33,14 +33,31 @@ export default {
     }
   },
   async beforeCreate () {
-    const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
-    this.data = data
+    if (this.$route.params.id) {
+      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+      this.data = data
+      if (this.data.subject) {
+        this.result = '# ' + this.data.subject + '\n* * *\n' + this.data.content
+      } else {
+        this.result = this.data.content
+      }
+    }
   },
   methods: {
     async saveLogline () {
       if (confirm('저장하시겠습니까?')) {
-        await this.$http.post('/logline/add', {data: this.data})
-        this.$router.push({path: '/logline'})
+        try {
+          if (!this.$route.params.id) {
+            await this.$http.post('/logline/add', {data: this.data})
+          } else {
+            await this.$http.post('/logline/edit', {seq: this.$route.params.id, data: this.data})
+          }
+          alert('저장이 완료되었습니다.')
+          this.$router.push({path: '/logline'})
+        } catch (error) {
+          console.log(error)
+          alert('저장 처리중 오류가 발생했습니다.')
+        }
       }
     }
   },
@@ -54,7 +71,11 @@ export default {
       },
       set (value) {
         this.data.subject = value
-        this.result = '# ' + value + '\n* * *\n' + this.data.content
+        if (value) {
+          this.result = '# ' + value + '\n* * *\n' + this.data.content
+        } else {
+          this.result = this.data.content
+        }
       }
     },
     content: {
@@ -63,7 +84,11 @@ export default {
       },
       set (value) {
         this.data.content = value
-        this.result = '# ' + this.data.subject + '\n* * *\n' + value
+        if (this.data.subject) {
+          this.result = '# ' + this.data.subject + '\n* * *\n' + value
+        } else {
+          this.result = value
+        }
       }
     }
   }

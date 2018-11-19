@@ -8,7 +8,16 @@ const logline = new Logline()
 
 router.post('/add', async (req, res, next) => {
     try {
-        const result = await dao.transaction(req, logline.loglineAdd)
+        const result = await dao.transaction(req, logline.add)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.post('/edit', async (req, res, next) => {
+    try {
+        const result = await dao.transaction(req, logline.update)
         res.json(result)
     } catch (error) {
         next(error)

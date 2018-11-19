@@ -2,7 +2,7 @@ import dao from '../modules/dao'
 
 module.exports = class Logline {
     constructor () {}
-    async loglineAdd (req, connection) {
+    async add (req, connection) {
         let resultsql = ''
         let resultparams = []
         try {
@@ -47,6 +47,27 @@ module.exports = class Logline {
             // console.log(resultparams)
         }
     
+    }
+
+    async update (req, connection) {
+        let resultsql = ''
+        try {
+            const seq = req.body.seq
+            const data = req.body.data
+            const updatesql = `
+            UPDATE dlog_logline_master
+            SET logline_master_title='${data.subject}',
+                logline_master_content='${data.content}',
+                update_date=CURRENT_TIMESTAMP
+            WHERE logline_master_seq=${seq}
+            `
+            resultsql += updatesql + '\n'
+            await connection.query(updatesql)
+        } catch (error) {
+            throw error
+        } finally {
+            console.log(resultsql)
+        }
     }
 
     async delete (req, connection) {
