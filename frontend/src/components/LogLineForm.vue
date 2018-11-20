@@ -12,7 +12,7 @@
         <div class="title-mobile-area">
           <input type="text" v-model="subject" placeholder="제목" maxlength="100">
         </div>
-        <div class="preview-content">
+        <div class="markdown-body preview-content">
             <div v-html="compiledMarkdown"></div>
         </div>
         <div class="input-content">
@@ -66,7 +66,6 @@ export default {
   },
   computed: {
     compiledMarkdown () {
-      console.log(this.result)
       return marked(this.result, { sanitize: true })
     },
     subject: {
@@ -100,6 +99,7 @@ export default {
 </script>
 
 <style scoped>
+@import '../../static/css/github-markdown.css';
 div.logline-header {
   flex: 0 0 10%;
   display: flex;

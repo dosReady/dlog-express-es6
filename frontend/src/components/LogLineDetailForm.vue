@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     compiledMarkdown () {
-      console.log(this.result)
       return marked(this.result, { sanitize: true })
     },
     subject: {

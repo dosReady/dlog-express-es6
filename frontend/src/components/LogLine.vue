@@ -186,6 +186,7 @@ a.page-link:hover {
 @media (max-width: 1024px) {
   div.card-container {
     width: calc(100% - 1.75rem);
+    margin-bottom: 2rem;
   }
 }
 </style>
