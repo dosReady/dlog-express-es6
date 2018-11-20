@@ -37,6 +37,7 @@ export default {
   },
   computed: {
     compiledMarkdown () {
+      console.log(this.result)
       return marked(this.result, { sanitize: true })
     },
     subject: {
@@ -70,32 +71,54 @@ export default {
 </script>
 
 <style scoped>
-.preview-content {
-    padding: 1rem;
-    width: 98%;
-    height: 70%;
-    background-color: transparent!important;
-    color: black!important;
-    overflow: hidden;
-    overflow-y: scroll
+div.preview-content {
+  font-size: 1.17rem;
+  margin: 0 auto;
+  padding-top: 3rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
+  width: 50%;
+  height: 70%;
+  background-color: transparent!important;
+  color: black!important;
+  overflow: hidden;
+  overflow-y: scroll
 }
 .comment-content {
-    background-color: #3F5765;
-    padding: 1rem;
-    height: 30%;
+  background-color: #3F5765;
+  padding: 1rem;
+  height: 30%;
 }
 textarea {
-    width: 100%;
-    height: 98%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    resize: none
+  width: 100%;
+  height: 98%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  resize: none
 }
 textarea::placeholder {
-    color: white
+  color: white
 }
 textarea:focus {
-    outline: none
+  outline: none
+}
+
+@media (max-width: 1920px) {
+}
+@media (max-width: 1600px) {
+  div.preview-content {
+    width: 60%;
+  }
+}
+@media (max-width: 1200px) {
+  div.preview-content {
+    width: 70%;
+  }
+}
+@media (max-width: 1024px) {
+  div.preview-content {
+    width: 80%;
+  }
 }
 </style>

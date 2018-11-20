@@ -119,8 +119,10 @@ module.exports = class Logline {
         SELECT
             logline_master_seq,
             logline_master_title,
-            LEFT(logline_master_content, 300) AS logline_master_content
+            LEFT(logline_master_content, 250) AS logline_master_content,
+            DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
         FROM dlog_logline_master
+        ORDER BY update_date DESC
         `
         const result = await dao.list(sql)
         return result

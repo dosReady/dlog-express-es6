@@ -21,6 +21,7 @@
                 <div class="card-bottom">
                   <router-link class="page-link mr-2" :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">더 보기</router-link>
                   <router-link class="page-link" :to="{name: 'LogLineEditForm', params: {id: item.logline_master_seq}}">편집</router-link>
+                  <span class="update-date">{{item.update_date}}</span>
                 </div>
               </div>
             </div>
@@ -107,7 +108,7 @@ div.logline-list-wrap > div.logline-list {
 div.card-container {
   position: relative;
   width: calc((100% - 8.75rem) / 5);
-  margin-right: 1rem;
+  margin-right: 1.75rem;
   margin-bottom: 1rem;
   height: 29rem;
 }
@@ -153,13 +154,17 @@ div.card-img img {
   height: 100%;
   object-fit: cover;
 }
+span.update-date {
+  margin-left: auto;
+  color: white;
+}
 
 a.page-link {
   background-color: transparent;
   color: white;
 }
 a.page-link:hover {
-  background-color: transparent;
+  background-color: white;
   color: black;
 }
 
