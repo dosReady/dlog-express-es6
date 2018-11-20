@@ -116,7 +116,11 @@ module.exports = class Logline {
 
     async list () {
         const sql = `
-        SELECT * FROM dlog_logline_master
+        SELECT
+            logline_master_seq,
+            logline_master_title,
+            LEFT(logline_master_content, 300) AS logline_master_content
+        FROM dlog_logline_master
         `
         const result = await dao.list(sql)
         return result

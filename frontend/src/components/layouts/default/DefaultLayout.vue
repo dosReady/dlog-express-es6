@@ -1,17 +1,5 @@
 <template>
     <div class="default-layout">
- <!--        <div class="leftmenu col p-0">
-            <nav class='navbar mt-5 px-0'>
-                <ul class="nav flex-column w-100 m-0">
-                    <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/">홈</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/logline">로그라인</router-link>
-                    </li>
-                </ul>
-            </nav>
-        </div> -->
         <router-view class="content"></router-view>
     </div>
 </template>
@@ -29,7 +17,10 @@ export default {
     padding: 0!important;
 }
 .content {
-    background-color:  #EFEFEF
+    display: flex;
+    flex-direction: column;
+    background-color:  #EFEFEF;
+    height: 100vh;
 }
 .nav-item {
     margin-top: 30px;

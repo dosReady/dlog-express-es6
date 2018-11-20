@@ -56,7 +56,7 @@ export default {
             await this.$http.post('/logline/edit', {seq: this.$route.params.id, data: this.data})
           }
           alert('저장이 완료되었습니다.')
-          this.$router.push({path: '/logline'})
+          this.$router.push({path: '/'})
         } catch (error) {
           console.log(error)
           alert('저장 처리중 오류가 발생했습니다.')
@@ -100,16 +100,16 @@ export default {
 
 <style scoped>
 div.logline-header {
-    display: flex;
-    align-items: center;
-    background-color: #2B3A42;
-    font-size: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    height: 5rem;
-    overflow: hidden;
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  background-color: #2B3A42;
+  font-size: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  overflow: hidden;
 }
 div.logline-header > .title-area {
     -ms-flex: 1 1;
@@ -142,30 +142,23 @@ div.logline-header > .button-group {
   display: flex;
   align-items: center;
 }
-@media (max-width: 480px) {
-  div.logline-header > .title-area {
-    display: none;
-  }
-  div.title-mobile-area {
-    display: flex;
-  }
-}
 div.preview-content {
+  flex: 0 0 51%;
   display: flex;
-  padding: 1rem;
+  padding: 2rem;
   width: 100%;
-  height: 50vh;
+  word-break: break-all;
   background-color: transparent!important;
   color: black!important;
   overflow: hidden;
   overflow-y: scroll
 }
 div.input-content {
+  flex: 0 0 40%;
   display: flex;
   background-color: #2B3A42;
-  padding: 1rem;
+  padding: 2rem;
   width: 100%;
-  height: 32vh;
 }
 textarea {
     width: 100%;
@@ -181,5 +174,16 @@ textarea::placeholder {
 textarea:focus {
     outline: none
 }
-
+@media (max-width: 480px) {
+  div.logline-header > .title-area {
+    display: none;
+  }
+  div.title-mobile-area {
+    display: flex;
+    flex: 0 0 5%;
+  }
+  div.input-content {
+    flex: 0 0 35%;
+  }
+}
 </style>
