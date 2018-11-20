@@ -17,6 +17,7 @@ const app = express()
 app.engine('ejs', ejsLocals)
 app.set('views', __dirname +'/view')
 app.set('view engine', 'ejs')
+app.use('/static', express.static(__dirname + '/view/dist/static'))
 
 app.use(session({
     store: db.sessionStore,
