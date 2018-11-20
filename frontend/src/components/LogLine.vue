@@ -100,10 +100,8 @@ div.logline-list-wrap > div.logline-list {
   flex-wrap: wrap;
   position:relative;
   flex: 0 0 100%;
-  height: 100vh;
+  height: 100%;
   padding: 1rem;
-  overflow: hidden;
-  overflow-y: scroll;
 }
 div.card-container {
   position: relative;

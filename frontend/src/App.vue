@@ -20,7 +20,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   -ms-user-select: none;
   -moz-user-select: -moz-none;

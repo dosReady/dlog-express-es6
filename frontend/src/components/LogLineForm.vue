@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="vh-conatiner">
         <div class="logline-header">
             <div class="title-area">
               <input type="text" v-model="subject" placeholder="제목" maxlength="100">
@@ -100,6 +100,9 @@ export default {
 
 <style scoped>
 @import '../../static/css/github-markdown.css';
+div.vh-conatiner {
+  height: 100vh;
+}
 div.logline-header {
   flex: 0 0 10%;
   display: flex;
@@ -113,9 +116,9 @@ div.logline-header {
   overflow: hidden;
 }
 div.logline-header > .title-area {
-    -ms-flex: 1 1;
-    flex: 1 1;
-    display: flex;
+  -ms-flex: 1 1;
+  flex: 1 1;
+  display: flex;
 }
 div.title-mobile-area {
   display: none;
@@ -126,18 +129,18 @@ div.title-mobile-area > input {
 }
 div.title-mobile-area > input,
 div.logline-header > .title-area > input {
-    border: none;
-    background-color: transparent;
-    color: white;
-    padding: 1rem;
+  border: none;
+  background-color: transparent;
+  color: white;
+  padding: 1rem;
 }
 div.title-mobile-area > input:focus,
 div.logline-header > .title-area > input:focus {
-    outline: none
+  outline: none
 }
 div.title-mobile-area > input::placeholder,
 div.logline-header > .title-area > input::placeholder {
-    color: white
+  color: white
 }
 div.logline-header > .button-group {
   display: flex;

@@ -12,15 +12,15 @@ export default {
 
 <style scoped>
 .default-layout {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     padding: 0!important;
 }
 .content {
     display: flex;
     flex-direction: column;
     background-color:  #EFEFEF;
-    height: 100vh;
+    height: 100%;
 }
 .nav-item {
     margin-top: 30px;
