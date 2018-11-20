@@ -5,13 +5,15 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    /*
     {
       path: '/',
       name: 'LoginForm',
       component: () => import('@/components/LoginForm')
     },
+    */
     {
-      path: '/logline',
+      path: '/',
       name: 'LogLine',
       component: () => import('@/components/LogLine')
     },

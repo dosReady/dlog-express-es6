@@ -1,11 +1,16 @@
 <template>
     <div>
         <div class="logline-header">
-            <input type="text" v-model="subject" placeholder="제목" maxlength="100">
-            <div class="button-group">
-                <button class="btn-save btn btn-outline-info" @click="saveLogline">저장</button>
-                <router-link class="btn-list btn btn-outline-info" to="/logline">목록</router-link>
+            <div class="title-area">
+              <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             </div>
+            <div class="button-group">
+                <button class="btn btn-outline-info" @click="saveLogline">저장</button>
+                <router-link class="btn btn-outline-info align-middle" to="/">목록</router-link>
+            </div>
+        </div>
+        <div class="title-mobile-area">
+          <input type="text" v-model="subject" placeholder="제목" maxlength="100">
         </div>
         <div class="preview-content">
             <div v-html="compiledMarkdown"></div>
@@ -94,76 +99,73 @@ export default {
 </script>
 
 <style scoped>
-.logline-header {
-    display: -ms-flexbox;
+div.logline-header {
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    background-color: #3F5765;
+    align-items: center;
+    background-color: #2B3A42;
     font-size: 2rem;
-    padding: 1rem;
-    height: 10vh
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    height: 5rem;
+    overflow: hidden;
 }
-.btn-list {
-    margin-left: 1rem;
-    padding-top: 0.6rem;
-}
-.logline-header > .button-group {
+div.logline-header > .title-area {
+    -ms-flex: 1 1;
+    flex: 1 1;
     display: flex;
-    flex-wrap: wrap;
 }
-.logline-header > input {
+div.title-mobile-area {
+  display: none;
+  background-color: #3F5866;
+}
+div.title-mobile-area > input {
+  width: 100%;
+}
+div.title-mobile-area > input,
+div.logline-header > .title-area > input {
     border: none;
     background-color: transparent;
     color: white;
     padding: 1rem;
-    margin-right: 1rem;
 }
-@media (min-width: 890px ) {
-    .logline-header > input {
-        width: calc(93% - 80px)
-    }
-}
-@media (max-width: 889px ) {
-    .logline-header > input {
-        width: calc(90% - 80px);
-    }
-}
-@media (max-width: 625px ) {
-    .logline-header > input {
-        width: calc(87% - 80px);
-    }
-}
-@media (max-width: 488px ) {
-    .logline-header > input {
-        width: calc(84% - 80px);
-    }
-}
-@media (max-width: 402px ) {
-    .logline-header > input {
-        width: calc(81% - 80px);
-    }
-}
-
-.logline-header > input:focus {
+div.title-mobile-area > input:focus,
+div.logline-header > .title-area > input:focus {
     outline: none
 }
-.logline-header > input::placeholder {
+div.title-mobile-area > input::placeholder,
+div.logline-header > .title-area > input::placeholder {
     color: white
 }
-.preview-content {
-    padding: 1rem;
-    width: 100%;
-    height: 50vh;
-    background-color: transparent!important;
-    color: black!important;
-    overflow: hidden;
-    overflow-y: scroll
+div.logline-header > .button-group {
+  display: flex;
+  align-items: center;
 }
-.input-content {
-    background-color: #3F5765;
-    padding: 1rem;
-    height: 40vh;
+@media (max-width: 480px) {
+  div.logline-header > .title-area {
+    display: none;
+  }
+  div.title-mobile-area {
+    display: flex;
+  }
+}
+div.preview-content {
+  display: flex;
+  padding: 1rem;
+  width: 100%;
+  height: 50vh;
+  background-color: transparent!important;
+  color: black!important;
+  overflow: hidden;
+  overflow-y: scroll
+}
+div.input-content {
+  display: flex;
+  background-color: #2B3A42;
+  padding: 1rem;
+  width: 100%;
+  height: 32vh;
 }
 textarea {
     width: 100%;
