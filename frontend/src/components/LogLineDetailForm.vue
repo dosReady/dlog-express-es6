@@ -12,7 +12,7 @@
             <span>{{data.update_date}}</span>
             <hr/>
           </div>
-          <div v-html="compiledMarkdown"></div>
+          <div class="markdown-body" v-html="compiledMarkdown"></div>
         </div>
         <div class="bottom-warp">
           <div class="comment-area">
@@ -74,6 +74,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '$static/css/github-markdown';
 div.detail-container {
   margin: 0 auto!important;
   width: 60%;

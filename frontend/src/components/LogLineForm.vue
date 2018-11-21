@@ -12,8 +12,8 @@
         <div class="title-mobile-area">
           <input type="text" v-model="subject" placeholder="제목" maxlength="100">
         </div>
-        <div class="markdown-body preview-content">
-            <div v-html="compiledMarkdown"></div>
+        <div class="preview-content">
+            <div class="markdown-body" v-html="compiledMarkdown"></div>
         </div>
         <div class="input-content">
             <textarea v-model="content" placeholder="내용을 입력하세요"></textarea>
