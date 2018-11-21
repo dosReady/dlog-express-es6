@@ -39,11 +39,6 @@ export default {
     if (this.$route.params.id) {
       const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
       this.data = data
-      if (this.data.subject) {
-        this.result = '# ' + this.data.subject + '\n* * *\n' + this.data.content
-      } else {
-        this.result = this.data.content
-      }
     }
   },
   methods: {
@@ -66,128 +61,127 @@ export default {
   },
   computed: {
     compiledMarkdown () {
-      return marked(this.result, { sanitize: true })
+      let content = ''
+      if (this.data.logline_master_content) {
+        content = this.data.logline_master_content
+      }
+      return marked(content, { sanitize: true })
     },
     subject: {
       get () {
-        return this.data.subject
+        return this.data.logline_master_title
       },
       set (value) {
-        this.data.subject = value
-        if (value) {
-          this.result = '# ' + value + '\n* * *\n' + this.data.content
-        } else {
-          this.result = this.data.content
-        }
+        this.data.logline_master_title = value
       }
     },
     content: {
       get () {
-        return this.data.content
+        return this.data.logline_master_content
       },
       set (value) {
-        this.data.content = value
-        if (this.data.subject) {
-          this.result = '# ' + this.data.subject + '\n* * *\n' + value
-        } else {
-          this.result = value
-        }
+        this.data.logline_master_content = value
       }
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import '../../static/css/github-markdown.css';
 div.vh-conatiner {
-  height: 100vh;
-}
-div.logline-header {
-  flex: 0 0 10%;
-  display: flex;
-  align-items: center;
-  background-color: #2B3A42;
-  font-size: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  overflow: hidden;
-}
-div.logline-header > .title-area {
-  -ms-flex: 1 1;
-  flex: 1 1;
-  display: flex;
-}
-div.title-mobile-area {
-  display: none;
-  background-color: #3F5866;
-}
-div.title-mobile-area > input {
-  width: 100%;
-}
-div.title-mobile-area > input,
-div.logline-header > .title-area > input {
-  border: none;
-  background-color: transparent;
-  color: white;
-  padding: 1rem;
-}
-div.title-mobile-area > input:focus,
-div.logline-header > .title-area > input:focus {
-  outline: none
-}
-div.title-mobile-area > input::placeholder,
-div.logline-header > .title-area > input::placeholder {
-  color: white
-}
-div.logline-header > .button-group {
-  display: flex;
-  align-items: center;
-}
-div.preview-content {
-  flex: 0 0 51%;
-  display: flex;
-  padding: 2rem;
-  width: 100%;
-  word-break: break-all;
-  background-color: transparent!important;
-  color: black!important;
-  overflow: hidden;
-  overflow-y: scroll
-}
-div.input-content {
-  flex: 0 0 40%;
-  display: flex;
-  background-color: #2B3A42;
-  padding: 2rem;
-  width: 100%;
-}
-textarea {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    resize: none
-}
-textarea::placeholder {
-    color: white
-}
-textarea:focus {
-    outline: none
-}
-@media (max-width: 480px) {
-  div.logline-header > .title-area {
-    display: none;
+  height: 99vh;
+  div.logline-header {
+    flex: 0 0 10%;
+    display: flex;
+    align-items: center;
+    background-color: #2B3A42;
+    font-size: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    overflow: hidden;
+    div.title-area {
+      -ms-flex: 1 1;
+      flex: 1 1;
+      display: flex;
+      input {
+        border: none;
+        background-color: transparent;
+        color: white;
+        padding: 1rem;
+      }
+      input:focus {
+        outline: none;
+      }
+      input::placeholder {
+        color: white;
+      }
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+    div.button-group {
+      display: flex;
+      align-items: center;
+    }
   }
   div.title-mobile-area {
+    display: none;
+    background-color: #3F5866;
+    input {
+      width: 100%;
+      border: none;
+      background-color: transparent;
+      color: white;
+      padding: 1rem;
+    }
+    input:focus {
+      outline: none
+    }
+    input::placeholder {
+      color: white;
+    }
+    @media (max-width: 480px) {
+      display: flex;
+      flex: 0 0 5%;
+    }
+  }
+  div.preview-content {
+    flex: 0 0 51%;
     display: flex;
-    flex: 0 0 5%;
+    padding: 2rem;
+    width: 100%;
+    word-break: break-all;
+    background-color: transparent!important;
+    color: black!important;
+    overflow: hidden;
+    overflow-y: scroll
   }
   div.input-content {
-    flex: 0 0 35%;
+    flex: 0 0 40%;
+    display: flex;
+    background-color: #2B3A42;
+    width: 100%;
+    textarea {
+      padding: 2rem;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: transparent;
+      color: white;
+      resize: none
+    }
+    textarea::placeholder {
+        color: white
+    }
+    textarea:focus {
+        outline: none
+    }
+    @media (max-width: 480px) {
+      flex: 0 0 35%;
+    }
   }
 }
 </style>

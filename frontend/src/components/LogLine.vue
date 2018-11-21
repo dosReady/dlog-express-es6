@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 div.logline-list-wrap {
   display: flex;
   flex: 0 0 100%;
@@ -84,107 +84,98 @@ div.logline-list-wrap {
   flex-wrap: wrap;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-div.logline-list-wrap > div.button-group {
-  display: flex;
-  flex: 0 0 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-top: 0.75rem;
-  margin-bottom: 0.1rem;
-  height: 2.5rem;
-  align-items: center;
-}
-div.logline-list-wrap > div.logline-list {
-  display: flex;
-  flex-wrap: wrap;
-  position:relative;
-  flex: 0 0 100%;
-  height: 100%;
-  padding: 1rem;
-}
-div.card-container {
-  position: relative;
-  width: calc((100% - 8.75rem) / 5);
-  margin-right: 1.75rem;
-  margin-bottom: 1rem;
-  height: 29rem;
-}
-div.card-container > div.card-wrap {
-  display: flex;
-  flex: 0 0 100%;
-  flex-direction: column;
-  background-color: white;
-  box-shadow: 0 -4px 16px rgba(0,0,0,.05);
-  padding: 1rem;
-}
-div.card-container > div.card-wrap > div.card-title {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.95rem;
-}
-div.card-container > div.card-wrap > div.card-content{
-  word-break: break-all;
-  overflow: hidden;
-  height: 5rem;
-}
-div.card-container div.card-bottom{
-  display: flex;
-  flex: 0 0 100%;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0 0 4px rgba(0,0,0,.05);
-  margin-top: 0;
-  padding: 1rem;
-  background-color: #3F5866;
-}
-div.card-container div.card-img {
-  display: block;
-  position: relative;
-  box-shadow: 0 0 4px rgba(0,0,0,.05);
-  height: 14rem;
-}
-div.card-img img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-span.update-date {
-  margin-left: auto;
-  color: white;
-}
+  div.button-group {
+    display: flex;
+    flex: 0 0 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.1rem;
+    height: 2.5rem;
+    align-items: center;
+  }
+  div.logline-list {
+    display: flex;
+    flex-wrap: wrap;
+    position:relative;
+    flex: 0 0 100%;
+    height: 100%;
+    padding: 1rem;
+    div.card-container {
+      position: relative;
+      width: calc((100% - 8.75rem) / 5);
+      margin-right: 1.75rem;
+      margin-bottom: 1rem;
+      height: 29rem;
+      @media (max-width: 1920px) {
+        width: calc(25% - 1.75rem)
+      }
+      @media (max-width: 1600px) {
+        width: calc(33.333% - 1.75rem)
+      }
+      @media (max-width: 1200px) {
+        width: calc(50% - 1.75rem)
+      }
+      @media (max-width: 1024px) {
+        width: calc(100% - 1.75rem);
+        margin-bottom: 2rem;
+      }
+      div.card-wrap {
+        display: flex;
+        flex: 0 0 100%;
+        flex-direction: column;
+        background-color: white;
+        box-shadow: 0 -4px 16px rgba(0,0,0,.05);
+        padding: 1rem;
+        div.card-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.95rem;
+        }
+        div.card-content{
+          word-break: break-all;
+          overflow: hidden;
+          height: 5rem;
+        }
+      }
+      div.card-bottom{
+        display: flex;
+        flex: 0 0 100%;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 0 4px rgba(0,0,0,.05);
+        margin-top: 0;
+        padding: 1rem;
+        background-color: #3F5866;
+        a.page-link {
+          background-color: transparent;
+          color: white;
+        }
+        a.page-link:hover {
+          background-color: white;
+          color: black;
+        }
+        span.update-date {
+          margin-left: auto;
+          color: white;
+        }
+      }
+      div.card-img {
+        display: block;
+        position: relative;
+        box-shadow: 0 0 4px rgba(0,0,0,.05);
+        height: 14rem;
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
 
-a.page-link {
-  background-color: transparent;
-  color: white;
-}
-a.page-link:hover {
-  background-color: white;
-  color: black;
-}
-
-@media (max-width: 1920px) {
-  div.card-container {
-    width: calc(25% - 1.75rem)
-  }
-}
-@media (max-width: 1600px) {
-  div.card-container {
-    width: calc(33.333% - 1.75rem)
-  }
-}
-@media (max-width: 1200px) {
-  div.card-container {
-    width: calc(50% - 1.75rem)
-  }
-}
-@media (max-width: 1024px) {
-  div.card-container {
-    width: calc(100% - 1.75rem);
-    margin-bottom: 2rem;
-  }
 }
 </style>

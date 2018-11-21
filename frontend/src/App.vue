@@ -14,14 +14,19 @@ export default {
 </script>
 
 <style>
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #EFEFEF;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Open Sans", sans-serif;
   color: #2c3e50;
   margin-top: 60px;
   height: 100%;
-  overflow: hidden;
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -webkit-user-select: none;

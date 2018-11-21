@@ -16,8 +16,8 @@ module.exports = class Logline {
                 action_log_seq
             )
             VALUES(
-                '${data.subject}',
-                '${data.content}',
+                '${data.logline_master_title}',
+                '${data.logline_master_content}',
                 null,
                 null,
                 null
@@ -56,8 +56,8 @@ module.exports = class Logline {
             const data = req.body.data
             const updatesql = `
             UPDATE dlog_logline_master
-            SET logline_master_title='${data.subject}',
-                logline_master_content='${data.content}',
+            SET logline_master_title='${data.logline_master_title}',
+                logline_master_content='${data.logline_master_content}',
                 update_date=CURRENT_TIMESTAMP
             WHERE logline_master_seq=${seq}
             `
@@ -94,8 +94,9 @@ module.exports = class Logline {
         const id = req.body.id
         const mastersql = `
             SELECT 
-                logline_master_title as subject,
-                logline_master_content as content
+                logline_master_title,
+                logline_master_content,
+                DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
             FROM dlog_logline_master 
             WHERE logline_master_seq = '${id}'
         `
