@@ -1,31 +1,24 @@
 <template>
-    <component :is='switchLayout'></component>
+    <component :is='switchLayout'>
+      <router-view></router-view>
+    </component>
 </template>
 
 <script>
+const defaultLayout = 'default'
 export default {
   name: 'LoadLayout',
-  data () {
-    return {
-      layout: ''
-    }
-  },
-  created () {
-    console.log(this.$route)
-  },
   components: {
-    'DefaultLayout': () => import('@/components/layouts/default/DefaultLayout')
+    'DefaultLayout': () => import('@/components/layouts/DefaultLayout'),
+    'LeftmenuLayout': () => import('@/components/layouts/LeftMenuLayout')
   },
   computed: {
     switchLayout () {
-      switch (this.layout) {
-        default:
-          return 'DefaultLayout'
-      }
+      return (this.$route.meta.layout || defaultLayout) + '-layout'
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>

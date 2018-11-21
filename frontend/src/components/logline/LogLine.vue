@@ -1,32 +1,30 @@
     <template>
-    <div>
-        <div class="logline-list-wrap">
-            <div class="add-bookmark">
-                <router-link class="page-link" to="/logline/add">등록</router-link>
-            </div>
-            <div class="logline-list">
-              <div class="card-container" v-for="(item, index) in loglines" :key="index">
-                <div class="card-img">
-                    <img src="static/image/default_img.jpg" alt="리액트의 새로운 기능, Hooks 알아보기">
-                </div>
-                <div class="card-wrap">
-                    <div class="card-title">
-                      <h5>{{item.logline_master_title}}</h5>
-                      <button class="btn btn-outline-danger ml-auto" @click="removeLogline(item.logline_master_seq)">ㅡ</button>
-                    </div>
-                    <div class="card-content">
-                      <p v-html="item.logline_master_content"></p>
-                    </div>
-                </div>
-                <div class="card-bottom">
-                  <router-link class="page-link mr-2" :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">더 보기</router-link>
-                  <router-link class="page-link" :to="{name: 'LogLineEditForm', params: {id: item.logline_master_seq}}">편집</router-link>
-                  <span class="update-date">{{item.update_date}}</span>
-                </div>
+      <div class="logline-list-wrap">
+          <div class="add-bookmark">
+              <router-link class="page-link" to="/logline/add">등록</router-link>
+          </div>
+          <div class="logline-list">
+            <div class="card-container" v-for="(item, index) in loglines" :key="index">
+              <div class="card-img">
+                  <img src="static/image/default_img.jpg" alt="리액트의 새로운 기능, Hooks 알아보기">
+              </div>
+              <div class="card-wrap">
+                  <div class="card-title">
+                    <h5>{{item.logline_master_title}}</h5>
+                    <button class="btn btn-outline-danger ml-auto" @click="removeLogline(item.logline_master_seq)">ㅡ</button>
+                  </div>
+                  <div class="card-content">
+                    <p v-html="item.logline_master_content"></p>
+                  </div>
+              </div>
+              <div class="card-bottom">
+                <router-link class="page-link mr-2" :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">더 보기</router-link>
+                <router-link class="page-link" :to="{name: 'LogLineEditForm', params: {id: item.logline_master_seq}}">편집</router-link>
+                <span class="update-date">{{item.update_date}}</span>
               </div>
             </div>
-        </div>
-    </div>
+          </div>
+      </div>
 </template>
 
 <script>
@@ -88,7 +86,7 @@ div.logline-list-wrap {
     display: flex;
     position: fixed;
     width: 6rem;
-    left: 2rem;
+    left: 16.3vw;
     top: 0rem;
     z-index:15;
     align-items: center;
@@ -97,6 +95,12 @@ div.logline-list-wrap {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     height: 5rem;
+    @media (max-width: 1900px) {
+      left: 17.3vw;
+    }
+    @media (max-width: 1024px) {
+      left: 19.3vw;
+    }
     a.page-link {
       width: 100%;
       border-radius: 0.25rem;
@@ -114,26 +118,20 @@ div.logline-list-wrap {
     display: flex;
     flex-wrap: wrap;
     position:relative;
+    align-items: center;
     height: 100%;
     padding: 1rem;
     div.card-container {
       position: relative;
-      width: calc((100% - 8.75rem) / 5);
+      width: calc((100% - 8.875rem) / 5);
       margin-right: 1.75rem;
       margin-bottom: 1rem;
       height: 29rem;
       @media (max-width: 1920px) {
-        width: calc(25% - 1.75rem)
+        width: calc((100% - 8.875rem) / 3);
       }
-      @media (max-width: 1600px) {
-        width: calc(33.333% - 1.75rem)
-      }
-      @media (max-width: 1200px) {
-        width: calc(50% - 1.75rem)
-      }
-      @media (max-width: 1024px) {
-        width: calc(100% - 1.75rem);
-        margin-bottom: 2rem;
+      @media (max-width: 1680px) {
+        width: calc((100% - 8.875rem) / 2);
       }
       div.card-wrap {
         display: flex;

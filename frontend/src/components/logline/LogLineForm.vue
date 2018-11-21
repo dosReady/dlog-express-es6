@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../static/css/github-markdown.css';
+@import '$static/css/github-markdown';
 div.vh-conatiner {
   height: 99vh;
   div.logline-header {

@@ -30,6 +30,10 @@ html, body {
     -webkit-user-select: none;
     -khtml-user-select: none;
     user-select:none;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
   }
   h1 {
     font-weight: 700!important;
