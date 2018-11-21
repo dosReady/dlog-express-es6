@@ -3,9 +3,7 @@
         <div class="leftmenu-container">
             메뉴
         </div>
-        <div class="right-container">
-            <slot></slot>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
@@ -30,8 +28,6 @@ div.leftmenu-layout {
         }
         @media (max-width: 530px) {
         }
-    }
-    div.right-container {
     }
 }
 </style>
