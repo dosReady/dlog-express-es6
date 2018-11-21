@@ -41,7 +41,7 @@ export default {
   },
   async beforeCreate () {
     if (this.$route.params.id) {
-      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+      const {data} = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
       this.data = data
     }
   },
@@ -81,12 +81,25 @@ div.detail-container {
   div.fix-menu {
     position: absolute;
     width: 4rem;
-    left: 3rem;
+    left: 0rem;
     top: 5.5rem;
     padding-top: 1rem;
+    @media (max-width: 1600px) {
+    }
+    @media (max-width: 1200px) {
+    }
+    @media (max-width: 1024px) {
+    }
     div.button-group {
+      display: flex;
+      flex-direction: column;
+      background-color: #3F5765;
       position: fixed;
       top: 1rem;
+      padding: 1rem;
+      border-top-right-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      height: 8rem;
       button {
         padding-left: 1rem;
         padding-right: 1rem;
@@ -95,6 +108,16 @@ div.detail-container {
       }
       button:hover {
         background-color: white;
+      }
+      a.page-link {
+        border-radius: 0.25rem;
+        background-color: transparent;
+        color: white;
+        border: 1px solid white;
+      }
+      a.page-link:hover {
+        background-color: white;
+        color: black;
       }
     }
   }
@@ -137,9 +160,14 @@ div.detail-container {
       overflow: hidden;
       overflow-y: scroll;
       word-break: break-all;
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
     }
     textarea::placeholder {
-      color: black;
+      color: white;
     }
     div.button-group {
       display: flex;

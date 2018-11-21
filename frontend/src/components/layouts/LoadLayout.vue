@@ -10,6 +10,9 @@ export default {
       layout: ''
     }
   },
+  created () {
+    console.log(this.$route)
+  },
   components: {
     'DefaultLayout': () => import('@/components/layouts/default/DefaultLayout')
   },

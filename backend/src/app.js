@@ -39,7 +39,7 @@ app.use(modules.accesslog)
 // router
 
 app.use('/', router)
-app.use('/logline', logline)
+app.use('/api', logline)
 
 app.all('*',modules.httpcode_exception)
 

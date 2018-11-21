@@ -4,18 +4,17 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
-    /*
     {
       path: '/',
-      name: 'LoginForm',
-      component: () => import('@/components/LoginForm')
+      redirect: '/logline'
     },
-    */
     {
-      path: '/',
+      path: '/logline',
       name: 'LogLine',
-      component: () => import('@/components/LogLine')
+      component: () => import('@/components/LogLine'),
+      meta: {layout: 'leftmenu-layout'}
     },
     {
       path: '/logline/add',
@@ -31,6 +30,10 @@ export default new Router({
       path: '/logline/:id/edit',
       name: 'LogLineEditForm',
       component: () => import('@/components/LogLineForm')
+    },
+    {
+      path: '*',
+      component: () => import('@/components/NotFoundComponent')
     }
   ]
 })

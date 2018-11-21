@@ -5,8 +5,8 @@
               <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             </div>
             <div class="button-group">
-                <button class="btn btn-outline-info" @click="saveLogline">저장</button>
-                <router-link class="btn btn-outline-info align-middle" to="/">목록</router-link>
+                <button @click="saveLogline">저장</button>
+                <router-link to="/">목록</router-link>
             </div>
         </div>
         <div class="title-mobile-area">
@@ -28,16 +28,15 @@ export default {
   name: 'LogLineForm',
   data () {
     return {
-      result: '',
       data: {
-        subject: '',
-        content: ''
+        logline_master_title: '',
+        logline_master_content: ''
       }
     }
   },
   async beforeCreate () {
     if (this.$route.params.id) {
-      const {data} = await this.$http.post('/logline/detail', {id: this.$route.params.id})
+      const {data} = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
       this.data = data
     }
   },
@@ -125,6 +124,29 @@ div.vh-conatiner {
     div.button-group {
       display: flex;
       align-items: center;
+      button:not(:disabled):not(.disabled) {
+        cursor: pointer;
+      }
+      a {
+        text-decoration:none;
+      }
+      a,
+      button {
+        background-color: transparent;
+        border: 1px solid white;
+        color: white;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 1rem;
+        margin-right: 1rem;
+      }
+      a:hover,
+      button:hover {
+        background-color: white;
+        color: black;
+      }
     }
   }
   div.title-mobile-area {

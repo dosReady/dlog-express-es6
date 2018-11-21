@@ -1,8 +1,8 @@
     <template>
     <div>
         <div class="logline-list-wrap">
-            <div class="button-group">
-                <router-link class="btn btn-outline-info" to="/logline/add">등록</router-link>
+            <div class="add-bookmark">
+                <router-link class="page-link" to="/logline/add">등록</router-link>
             </div>
             <div class="logline-list">
               <div class="card-container" v-for="(item, index) in loglines" :key="index">
@@ -39,7 +39,7 @@ export default {
   },
   async beforeCreate () {
     try {
-      const {data} = await this.$http.post('/logline/list')
+      const {data} = await this.$http.post('/api/logline/list')
       this.loglines = data
     } catch (error) {
       console.log(error)
@@ -50,7 +50,7 @@ export default {
     async removeLogline (seq) {
       if (confirm('로그라인을 삭제처리 하시겠습니까?')) {
         try {
-          await this.$http.post('/logline/delete', {seq: seq})
+          await this.$http.post('/api/logline/delete', {seq: seq})
           alert('삭제처리 되었습니다.')
           this.initLogine()
         } catch (error) {
@@ -60,7 +60,7 @@ export default {
       }
     },
     async initLogine () {
-      const {data} = await this.$http.post('/logline/list')
+      const {data} = await this.$http.post('/api/logline/list')
       this.loglines = data
     }
   },
@@ -79,26 +79,41 @@ export default {
 <style lang="scss" scoped>
 div.logline-list-wrap {
   display: flex;
-  flex: 0 0 100%;
   flex-direction: row;
   flex-wrap: wrap;
   padding-left: 1rem;
   padding-right: 1rem;
-  div.button-group {
+  margin-top: 5rem;
+  div.add-bookmark {
     display: flex;
-    flex: 0 0 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 0.75rem;
-    margin-bottom: 0.1rem;
-    height: 2.5rem;
+    position: fixed;
+    width: 6rem;
+    left: 2rem;
+    top: 0rem;
+    z-index:15;
     align-items: center;
+    background-color: #3F5765;
+    padding: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    height: 5rem;
+    a.page-link {
+      width: 100%;
+      border-radius: 0.25rem;
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      text-align: center;
+    }
+    a.page-link:hover {
+       background-color: white;
+      color: black;
+    }
   }
   div.logline-list {
     display: flex;
     flex-wrap: wrap;
     position:relative;
-    flex: 0 0 100%;
     height: 100%;
     padding: 1rem;
     div.card-container {
@@ -122,7 +137,6 @@ div.logline-list-wrap {
       }
       div.card-wrap {
         display: flex;
-        flex: 0 0 100%;
         flex-direction: column;
         background-color: white;
         box-shadow: 0 -4px 16px rgba(0,0,0,.05);
@@ -140,7 +154,6 @@ div.logline-list-wrap {
       }
       div.card-bottom{
         display: flex;
-        flex: 0 0 100%;
         align-items: center;
         background-color: white;
         box-shadow: 0 0 4px rgba(0,0,0,.05);

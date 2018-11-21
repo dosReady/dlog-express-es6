@@ -6,7 +6,7 @@ const router = express.Router()
 const logline = new Logline()
 
 
-router.post('/add', async (req, res, next) => {
+router.post('/logline/add', async (req, res, next) => {
     try {
         const result = await dao.transaction(req, logline.add)
         res.json(result)
@@ -15,7 +15,7 @@ router.post('/add', async (req, res, next) => {
     }
 })
 
-router.post('/edit', async (req, res, next) => {
+router.post('/logline/edit', async (req, res, next) => {
     try {
         const result = await dao.transaction(req, logline.update)
         res.json(result)
@@ -24,7 +24,7 @@ router.post('/edit', async (req, res, next) => {
     }
 })
 
-router.post('/delete', async (req, res, next) => {
+router.post('/logline/delete', async (req, res, next) => {
     try {
         await dao.transaction(req, logline.delete)
         res.json({msg: '삭제처리 하였습니다.'})
@@ -35,7 +35,7 @@ router.post('/delete', async (req, res, next) => {
 
 
 
-router.post('/list', async (req, res, next) => {
+router.post('/logline/list', async (req, res, next) => {
     try {
         const result = await logline.list()
         res.json(result)
@@ -44,7 +44,7 @@ router.post('/list', async (req, res, next) => {
     }
 })
 
-router.post('/detail', async (req, res, next) => {
+router.post('/logline/detail', async (req, res, next) => {
     try {
         const result = await logline.detail(req)
         res.json(result)

@@ -24,11 +24,15 @@ html, body {
     font-family: "Open Sans", sans-serif;
     margin-top: 60px;
     height: 100%;
+    font-size: 1rem!important;
     -ms-user-select: none;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     user-select:none;
+  }
+  h1 {
+    font-weight: 700!important;
   }
 }
 
