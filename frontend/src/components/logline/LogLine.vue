@@ -98,6 +98,9 @@ div.logline-list-wrap {
     @media (max-width: 1900px) {
       left: 17.3vw;
     }
+    @media (max-width: 1440px) {
+      left: 19vw;
+    }
     @media (max-width: 1024px) {
       left: 19.3vw;
     }
@@ -132,6 +135,9 @@ div.logline-list-wrap {
       }
       @media (max-width: 1680px) {
         width: calc((100% - 8.875rem) / 2);
+      }
+      @media (max-width: 1440px) {
+        width: calc((100% - 5.875rem) / 3);
       }
       div.card-wrap {
         display: flex;
