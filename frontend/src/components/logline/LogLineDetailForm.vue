@@ -6,6 +6,11 @@
             <router-link class="page-link" to="/">목록</router-link>
           </div>
         </div>
+        <div class="index-container">
+          <div class="indexlink-group">
+            <router-link class="page-link" to="/">목차영역</router-link>
+          </div>
+        </div>
         <div class="detail-content">
           <div class="detail-title">
             <h1>{{data.logline_master_title}}</h1>
@@ -78,18 +83,40 @@ export default {
 div.detail-container {
   margin: 0 auto!important;
   width: 60%;
+  div.index-container {
+    position: absolute;
+    width: 4rem;
+    left: 94%;
+    top: 5.5rem;
+    padding-top: 1rem;
+    div.indexlink-group {
+      display: flex;
+      flex-direction: column;
+      background-color: #3F5765;
+      position: fixed;
+      top: 1rem;
+      padding: 1rem;
+      border-top-left-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+      height: 8rem;
+      a.page-link {
+        border-radius: 0.25rem;
+        background-color: transparent;
+        color: white;
+        border: 1px solid white;
+      }
+      a.page-link:hover {
+        background-color: white;
+        color: black;
+      }
+    }
+  }
   div.fix-menu {
     position: absolute;
     width: 4rem;
     left: 0rem;
     top: 5.5rem;
     padding-top: 1rem;
-    @media (max-width: 1600px) {
-    }
-    @media (max-width: 1200px) {
-    }
-    @media (max-width: 1024px) {
-    }
     div.button-group {
       display: flex;
       flex-direction: column;

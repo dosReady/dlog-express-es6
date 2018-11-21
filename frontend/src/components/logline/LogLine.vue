@@ -6,7 +6,7 @@
           <div class="logline-list">
             <div class="card-container" v-for="(item, index) in loglines" :key="index">
               <div class="card-img">
-                  <img src="static/image/default_img.jpg" alt="리액트의 새로운 기능, Hooks 알아보기">
+                  <img src="static/image/default_img.jpg">
               </div>
               <div class="card-wrap">
                   <div class="card-title">

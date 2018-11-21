@@ -45,9 +45,9 @@ export default {
       if (confirm('저장하시겠습니까?')) {
         try {
           if (!this.$route.params.id) {
-            await this.$http.post('/logline/add', {data: this.data})
+            await this.$http.post('/api/logline/add', {data: this.data})
           } else {
-            await this.$http.post('/logline/edit', {seq: this.$route.params.id, data: this.data})
+            await this.$http.post('/api/logline/edit', {seq: this.$route.params.id, data: this.data})
           }
           alert('저장이 완료되었습니다.')
           this.$router.push({path: '/'})
@@ -106,6 +106,7 @@ div.vh-conatiner {
       flex: 1 1;
       display: flex;
       input {
+        width: 100%;
         border: none;
         background-color: transparent;
         color: white;
@@ -175,6 +176,7 @@ div.vh-conatiner {
     display: flex;
     padding: 2rem;
     width: 100%;
+    height: 50vh;
     word-break: break-all;
     background-color: transparent!important;
     color: black!important;
@@ -186,6 +188,7 @@ div.vh-conatiner {
     display: flex;
     background-color: #2B3A42;
     width: 100%;
+    height: 35vh;
     textarea {
       padding: 2rem;
       width: 100%;
