@@ -19,10 +19,15 @@
           <div class="markdown-body" v-html="compiledMarkdown"></div>
         </div>
         <div class="bottom-warp">
-          <div class="comment-area">
-            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content"></textarea>
+          <div class="comment-container">
+            <div class="comment-list" v-for="(item, index) in comments" :key="index">
+              {{item.comment_content}}
+              {{item.update_date}}
+              <button @click="delete_comment(item.comment_seq)">삭제</button>
+            </div>
+            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content" @keydown="enter_comment"></textarea>
             <div class="button-group">
-              <button class="button-add" @click="insertComment">댓글달기</button>
+              <button class="button-add" @click="add_comment">댓글달기</button>
             </div>
           </div>
           <div class="loginline-area">
@@ -38,7 +43,6 @@ export default {
   name: 'LogLineDetailForm',
   data () {
     return {
-      result: '',
       inputComment: {
         comment_content: this.insertComment,
         conmment_upper_seq: '',
@@ -52,15 +56,50 @@ export default {
   },
   async beforeCreate () {
     if (this.$route.params.id) {
-      const {data} = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
-      const result = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
-      console.log(result)
-      this.data = data
+      const logline = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
+      const comments = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+      this.comments = comments.data
+      this.data = logline.data
     }
   },
   methods: {
-    async insertComment () {
-      await this.$http.post('/api/comment/add', {data: this.inputComment})
+    async enter_comment (e) {
+      if (e.keyCode === 13) {
+        this.add_comment()
+      }
+    },
+    async add_comment () {
+      if (confirm('댓글을 저장하시겠습니까?')) {
+        try {
+          await this.$http.post('/api/comment/add', {data: this.inputComment})
+          alert('저장되었습니다.')
+          this.init_comment()
+        } catch (error) {
+          console.log(error)
+          alert('저장 처리중 오류가 발생했습니다.')
+        }
+      }
+    },
+    async delete_comment (paramsSeq) {
+      if (confirm('댓글을 삭제하시겠습니까?')) {
+        try {
+          await this.$http.post('/api/comment/delete', {seq: paramsSeq})
+          alert('삭제되었습니다.')
+          this.init_comment()
+        } catch (error) {
+          console.log(error)
+          alert('삭제 처리중 오류가 발생했습니다.')
+        }
+      }
+    },
+    async init_comment () {
+      try {
+        const comments = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+        this.inputComment = comments
+      } catch (error) {
+        console.log(error)
+        alert('댓글 조회중 오류가 발생했습니다.')
+      }
     }
   },
   computed: {
@@ -207,7 +246,7 @@ div.detail-container {
     width: 100%;
     align-items: center;
   }
-  div.comment-area {
+  div.comment-container {
     width: 100%;
     margin-top: 2rem;
     margin-bottom: 3rem;

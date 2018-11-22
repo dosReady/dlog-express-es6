@@ -49,9 +49,9 @@ module.exports = class Comments {
     }
     async delete (req, connection) {
         try {
-            const data = req.body.data
+            const seq = req.body.seq
             const commentsql = `
-            DELETE FROM dlog_comments WHERE comment_seq = '${data.seq}'
+            DELETE FROM dlog_comments WHERE comment_seq = '${seq}'
             `
             await dao.delete(commentsql)
         } catch (error) {
@@ -74,6 +74,7 @@ module.exports = class Comments {
                 comment_password
             FROM dlog_comments
             WHERE master_seq = ${seq}
+            ORDER BY update_date DESC
             `
             const result = await dao.list(commentsql)
             return result
@@ -97,6 +98,7 @@ module.exports = class Comments {
                 comment_password
             FROM dlog_comments
             WHERE conmment_upper_seq = ${seq}
+            ORDER BY update_date DESC
             `
             const result = await dao.list(commentsql)
             return result
