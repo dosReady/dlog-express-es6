@@ -81,22 +81,24 @@ export default {
 <style lang="scss">
 @import '$static/css/github-markdown';
 div.detail-container {
-  margin: 0 10rem 0 10rem!important;
+  width: 1000px;
+  margin: 0 auto!important;
   padding: 1rem;
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
+    width: 100%;
     margin:0!important;
   }
   div.fix-container {
     position: absolute;
     width: 100%;
     left: 0;
-    top: 0;
+    top: 5.5rem;
     div.fix-wrap {
       display: flex;
       flex-direction: row;
       width: 100%;
       position: fixed;
-      @media (max-width: 800px) {
+      @media (max-width: 1000px) {
         flex-direction: column;
       }
       div.button-group {
@@ -106,7 +108,7 @@ div.detail-container {
         background-color: #3F5765;
         border-top-right-radius: 0.55rem;
         border-bottom-right-radius: 0.55rem;
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
           width:5rem;
           font-size: 11px!important;
         }
@@ -142,7 +144,7 @@ div.detail-container {
         background-color: #3F5765;
         border-top-left-radius: 0.55rem;
         border-bottom-left-radius: 0.55rem;
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
           margin-top: 1rem;
           margin-left: 0;
           border-top-left-radius: 0;

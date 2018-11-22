@@ -113,12 +113,17 @@ div.logline-list-wrap {
     width: 100%;
     height: 100%;
     padding: 1rem;
+    @media(max-width: 800px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
     div.card-container {
       width: calc((100% - 8.75rem) / 5);
       word-break: break-all;
       margin-right: auto;
       margin-bottom: 1rem;
       height: 30rem;
+      box-shadow: 0 0 4px rgba(0,0,0,0.3);
       @media(max-width: 2038px) {
         width: calc(25% - 1.75rem);
       }
@@ -130,7 +135,7 @@ div.logline-list-wrap {
       }
       @media(max-width: 995px) {
         width: 100%;
-        margin-bottom: 3rem;
+        margin-bottom: 0.35rem;
       }
       @media(max-width: 800px) {
         width: 100%;
@@ -140,8 +145,8 @@ div.logline-list-wrap {
         flex-direction: column;
         background-color: white;
         box-shadow: 0 -4px 16px rgba(0,0,0,.05);
-        padding: 1rem;
         div.card-title {
+          padding: 1rem 1rem 0 1rem;
           display: flex;
           align-items: center;
           margin-bottom: 0.95rem;
@@ -150,11 +155,12 @@ div.logline-list-wrap {
           }
         }
         div.card-content{
+          padding: 1rem;
           word-break: break-all;
           overflow: hidden;
           height: 5rem;
           p {
-            font-weight: 300!important;
+            font-weight: 400!important;
           }
         }
       }
