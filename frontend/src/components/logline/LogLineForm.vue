@@ -125,6 +125,7 @@ div.vh-conatiner {
     div.button-group {
       display: flex;
       align-items: center;
+      margin-left: auto;
       button:not(:disabled):not(.disabled) {
         cursor: pointer;
       }
@@ -141,7 +142,6 @@ div.vh-conatiner {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
         font-size: 1rem;
-        margin-right: 1rem;
       }
       a:hover,
       button:hover {

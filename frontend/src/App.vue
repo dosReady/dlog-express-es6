@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container-fluid m-0 p-0">
+  <div id="app">
     <load-layout></load-layout>
   </div>
 </template>
@@ -14,15 +14,13 @@ export default {
 </script>
 
 <style lang="scss">
-html, body {
-  width: 100%;
+body {
   height: 100%;
-  background-color: #EFEFEF;
+  background-color: #EFEFEF!important;
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: "Open Sans", sans-serif;
-    margin-top: 60px;
     height: 100%;
     font-size: 1rem!important;
     -ms-user-select: none;
@@ -34,6 +32,9 @@ html, body {
     -ms-flex-direction: column;
     flex-direction: column;
     position: relative;
+    @media (max-width: 800px) {
+      font-size: 12px!important;
+    }
   }
   h1 {
     font-weight: 700!important;

@@ -3,9 +3,10 @@ import passport  from 'passport'
 import db from '../setting/db'
 const router = express.Router()
 
-router.get('/', async (req, res, next) => {
+router.get('/*', async (req, res, next) => {
     res.render('dist/index')
 })
+
 /*
 router.get('/', async (req, res, next) => {
     const error = req.flash('error')

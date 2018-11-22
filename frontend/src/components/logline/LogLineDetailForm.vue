@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="detail-container">
-        <div class="fix-menu">
-          <div class="button-group">
-            <router-link class="page-link" to="/">목록</router-link>
-          </div>
-        </div>
-        <div class="index-container">
-          <div class="indexlink-group">
-            <router-link class="page-link" to="/">목차영역</router-link>
+        <div class="fix-container">
+          <div class="fix-wrap">
+            <div class="button-group">
+              <router-link class="page-link" to="/">목록</router-link>
+            </div>
+            <div class="indexlink-group">
+              <router-link class="page-link" to="/">목차영역</router-link>
+            </div>
           </div>
         </div>
         <div class="detail-content">
@@ -81,70 +81,87 @@ export default {
 <style lang="scss">
 @import '$static/css/github-markdown';
 div.detail-container {
-  margin: 0 auto!important;
-  width: 60%;
-  div.index-container {
-    position: absolute;
-    width: 4rem;
-    left: 94%;
-    top: 5.5rem;
-    padding-top: 1rem;
-    div.indexlink-group {
-      display: flex;
-      flex-direction: column;
-      background-color: #3F5765;
-      position: fixed;
-      top: 1rem;
-      padding: 1rem;
-      border-top-left-radius: 1rem;
-      border-bottom-left-radius: 1rem;
-      height: 8rem;
-      a.page-link {
-        border-radius: 0.25rem;
-        background-color: transparent;
-        color: white;
-        border: 1px solid white;
-      }
-      a.page-link:hover {
-        background-color: white;
-        color: black;
-      }
-    }
+  margin: 0 10rem 0 10rem!important;
+  padding: 1rem;
+  @media (max-width: 800px) {
+    margin:0!important;
   }
-  div.fix-menu {
+  div.fix-container {
     position: absolute;
-    width: 4rem;
-    left: 0rem;
-    top: 5.5rem;
-    padding-top: 1rem;
-    div.button-group {
+    width: 100%;
+    left: 0;
+    top: 0;
+    div.fix-wrap {
       display: flex;
-      flex-direction: column;
-      background-color: #3F5765;
+      flex-direction: row;
+      width: 100%;
       position: fixed;
-      top: 1rem;
-      padding: 1rem;
-      border-top-right-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      height: 8rem;
-      button {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        background-color: transparent;
-        color: black;
+      @media (max-width: 800px) {
+        flex-direction: column;
       }
-      button:hover {
-        background-color: white;
+      div.button-group {
+        width: 9rem;
+        height: 5rem;
+        padding: 1rem;
+        background-color: #3F5765;
+        border-top-right-radius: 0.55rem;
+        border-bottom-right-radius: 0.55rem;
+        @media (max-width: 800px) {
+          width:5rem;
+          font-size: 11px!important;
+        }
+        button {
+          padding-left: 1rem;
+          padding-right: 1rem;
+          @media (max-width: 800px) {
+            padding-left: 0rem;
+            padding-right: 0rem;
+          }
+          background-color: transparent;
+          color: black;
+        }
+        button:hover {
+          background-color: white;
+        }
+        a.page-link {
+          border-radius: 0.25rem;
+          background-color: transparent;
+          color: white;
+          border: 1px solid white;
+        }
+        a.page-link:hover {
+          background-color: white;
+          color: black;
+        }
       }
-      a.page-link {
-        border-radius: 0.25rem;
-        background-color: transparent;
-        color: white;
-        border: 1px solid white;
-      }
-      a.page-link:hover {
-        background-color: white;
-        color: black;
+      div.indexlink-group {
+        width: 9rem;
+        height: 8rem;
+        padding: 1rem;
+        margin-left: auto;
+        background-color: #3F5765;
+        border-top-left-radius: 0.55rem;
+        border-bottom-left-radius: 0.55rem;
+        @media (max-width: 800px) {
+          margin-top: 1rem;
+          margin-left: 0;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-top-right-radius: 0.55rem;
+          border-bottom-right-radius: 0.55rem;
+          width:5rem;
+          font-size: 11px!important;
+        }
+        a.page-link {
+          border-radius: 0.25rem;
+          background-color: transparent;
+          color: white;
+          border: 1px solid white;
+        }
+        a.page-link:hover {
+          background-color: white;
+          color: black;
+        }
       }
     }
   }

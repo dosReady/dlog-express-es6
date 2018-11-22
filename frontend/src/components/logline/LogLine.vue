@@ -79,31 +79,19 @@ div.logline-list-wrap {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-top: 5rem;
+  @media (max-width: 420px) {
+    width: 100%;
+  }
   div.add-bookmark {
     display: flex;
-    position: fixed;
     width: 6rem;
-    left: 16.3vw;
-    top: 0rem;
-    z-index:15;
     align-items: center;
     background-color: #3F5765;
+    margin-left: 1rem;
     padding: 1rem;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     height: 5rem;
-    @media (max-width: 1900px) {
-      left: 17.3vw;
-    }
-    @media (max-width: 1440px) {
-      left: 19vw;
-    }
-    @media (max-width: 1024px) {
-      left: 19.3vw;
-    }
     a.page-link {
       width: 100%;
       border-radius: 0.25rem;
@@ -122,22 +110,30 @@ div.logline-list-wrap {
     flex-wrap: wrap;
     position:relative;
     align-items: center;
+    width: 100%;
     height: 100%;
     padding: 1rem;
     div.card-container {
-      position: relative;
-      width: calc((100% - 8.875rem) / 5);
-      margin-right: 1.75rem;
+      width: calc((100% - 8.75rem) / 5);
+      word-break: break-all;
+      margin-right: auto;
       margin-bottom: 1rem;
-      height: 29rem;
-      @media (max-width: 1920px) {
-        width: calc((100% - 8.875rem) / 3);
+      height: 30rem;
+      @media(max-width: 2038px) {
+        width: calc(25% - 1.75rem);
       }
-      @media (max-width: 1680px) {
-        width: calc((100% - 8.875rem) / 2);
+      @media(max-width: 1702px) {
+        width: calc(33.333% - 1.75rem);
       }
-      @media (max-width: 1440px) {
-        width: calc((100% - 5.875rem) / 3);
+      @media(max-width: 1350px) {
+        width: calc(50% - 1.75rem);
+      }
+      @media(max-width: 995px) {
+        width: 100%;
+        margin-bottom: 3rem;
+      }
+      @media(max-width: 800px) {
+        width: 100%;
       }
       div.card-wrap {
         display: flex;
@@ -149,11 +145,17 @@ div.logline-list-wrap {
           display: flex;
           align-items: center;
           margin-bottom: 0.95rem;
+          h5 {
+            font-weight: 700!important;
+          }
         }
         div.card-content{
           word-break: break-all;
           overflow: hidden;
           height: 5rem;
+          p {
+            font-weight: 300!important;
+          }
         }
       }
       div.card-bottom{
@@ -164,6 +166,9 @@ div.logline-list-wrap {
         margin-top: 0;
         padding: 1rem;
         background-color: #3F5866;
+        @media (max-width: 800px) {
+          font-size: 0.75rem!important;
+        }
         a.page-link {
           background-color: transparent;
           color: white;

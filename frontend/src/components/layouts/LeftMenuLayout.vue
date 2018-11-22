@@ -33,6 +33,9 @@ export default {
 div.leftmenu-layout {
     height: 100%;
     margin-left: 15rem;
+    @media (max-width: 800px) {
+        margin-left: 0;
+    }
     div.leftmenu-container {
         display: flex;
         flex-wrap: wrap;
@@ -44,6 +47,9 @@ div.leftmenu-layout {
         background-color: #7B9BA6;
         box-shadow: 0px 5px 5px rgb(98, 102, 102);
         padding-top: 2rem;
+        @media (max-width: 800px) {
+            display: none;
+        }
         div.menu-top {
             width: 100%;
             div.top-image {
