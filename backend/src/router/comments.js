@@ -1,15 +1,13 @@
 import express from 'express'
-import dao from '../modules/dao'
-import Logline from '../dpos/logline'
+import Comments from '../dpos/comments'
 
 const router = express.Router()
-const logline = new Logline()
-
+const comments =  new Comments()
 
 router.post('/add', async (req, res, next) => {
     try {
-        const result = await dao.transaction(req, logline.insert)
-        res.json(result)
+        await comments.insert(req)
+        res.json('')
     } catch (error) {
         next(error)
     }
@@ -17,8 +15,8 @@ router.post('/add', async (req, res, next) => {
 
 router.post('/edit', async (req, res, next) => {
     try {
-        const result = await dao.transaction(req, logline.update)
-        res.json(result)
+        await comments.update(req)
+        res.json('')
     } catch (error) {
         next(error)
     }
@@ -26,27 +24,25 @@ router.post('/edit', async (req, res, next) => {
 
 router.post('/delete', async (req, res, next) => {
     try {
-        await dao.transaction(req, logline.delete)
-        res.json({msg: '삭제처리 하였습니다.'})
+        await comments.delete(req)
+        res.json('')
     } catch (error) {
         next(error)
     }
 })
 
-
-
 router.post('/list', async (req, res, next) => {
     try {
-        const result = await logline.list()
+        const result = await comments.list(req)
         res.json(result)
     } catch (error) {
         next(error)
     }
 })
 
-router.post('/detail', async (req, res, next) => {
+router.post('/get/children', async (req, res, next) => {
     try {
-        const result = await logline.detail(req)
+        const result = await comments.select_children(req)
         res.json(result)
     } catch (error) {
         next(error)

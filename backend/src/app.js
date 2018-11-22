@@ -9,7 +9,8 @@ import modules from './modules'
 import app_passport from './setting/app_passport'
 import db from './setting/db'
 import router from './router/index'
-import logline from './router/logline'
+import loglines from './router/logline'
+import comments from './router/comments'
 
 const app = express()
 
@@ -38,7 +39,8 @@ app.use(modules.accesslog)
 
 // router
 app.use('/', router)
-app.use('/api', logline)
+app.use('/api/logline', loglines)
+app.use('/api/comment', comments)
 
 app.all('*',modules.httpcode_exception)
 

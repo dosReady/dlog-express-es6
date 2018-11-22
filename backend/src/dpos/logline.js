@@ -2,7 +2,7 @@ import dao from '../modules/dao'
 
 module.exports = class Logline {
     constructor () {}
-    async add (req, connection) {
+    async insert (req, connection) {
         let resultsql = ''
         let resultparams = []
         try {

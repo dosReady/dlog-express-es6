@@ -32,8 +32,8 @@ exports.list = async (selectSql, params) => {
 exports.insert = async (insertSql, params) => {
     const connection = await db.getConnection()
     try {
-        const [rows] = await connection.query(insertSql, [params])
         console.log(insertSql)
+        const [rows] = await connection.query(insertSql, [params])
         console.log(rows.insertId)
         if(params) console.log(params)
         connection.release()

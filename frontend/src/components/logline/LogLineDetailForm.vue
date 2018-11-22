@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="detail-container">
         <div class="fix-container">
           <div class="fix-wrap">
@@ -21,16 +20,15 @@
         </div>
         <div class="bottom-warp">
           <div class="comment-area">
-            <textarea rows="3" placeholder="댓글을 입력하세요"></textarea>
+            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content"></textarea>
             <div class="button-group">
-              <button class="button-add">댓글달기</button>
+              <button class="button-add" @click="insertComment">댓글달기</button>
             </div>
           </div>
           <div class="loginline-area">
           </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -41,13 +39,28 @@ export default {
   data () {
     return {
       result: '',
-      data: {}
+      inputComment: {
+        comment_content: this.insertComment,
+        conmment_upper_seq: '',
+        master_seq: this.$route.params.id,
+        is_private: 'N',
+        comment_password: ''
+      },
+      data: {},
+      comments: []
     }
   },
   async beforeCreate () {
     if (this.$route.params.id) {
       const {data} = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
+      const result = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+      console.log(result)
       this.data = data
+    }
+  },
+  methods: {
+    async insertComment () {
+      await this.$http.post('/api/comment/add', {data: this.inputComment})
     }
   },
   computed: {
@@ -82,7 +95,7 @@ export default {
 @import '$static/css/github-markdown';
 div.detail-container {
   width: 1000px;
-  margin: 0 auto!important;
+  margin: 5rem auto!important;
   padding: 1rem;
   @media (max-width: 1000px) {
     width: 100%;

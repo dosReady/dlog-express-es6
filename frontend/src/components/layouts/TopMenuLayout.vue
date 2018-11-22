@@ -3,7 +3,7 @@
         <div class="topmenu-container">
             <div class="title-group">
                 <router-link to="/">
-                    <img src="static/image/dlog_logo.png">
+                    <img src="/static/image/dlog_logo.png">
                 </router-link>
             </div>
             <div class="button-page-group">
@@ -11,7 +11,7 @@
             </div>
             <!-- <div class="category-info">카테고리</div> -->
             <div class="button-right-group">
-                <img src="static/icons/typicons/src/svg/th-menu.svg">
+                <img src="/static/icons/typicons/src/svg/th-menu.svg">
             </div>
         </div>
         <slot></slot>
