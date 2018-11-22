@@ -1,28 +1,21 @@
     <template>
-      <div class="logline-list-wrap">
-          <div class="add-bookmark">
-              <router-link class="page-link" to="/logline/add">등록</router-link>
-          </div>
-          <div class="logline-list">
-            <div class="card-container" v-for="(item, index) in loglines" :key="index">
-              <div class="card-img">
-                  <img src="static/image/default_img.jpg">
-              </div>
-              <div class="card-wrap">
-                  <div class="card-title">
-                    <h5>{{item.logline_master_title}}</h5>
-                    <button class="btn btn-outline-danger ml-auto" @click="removeLogline(item.logline_master_seq)">ㅡ</button>
+      <div class="logline-page-container">
+          <div class="logline-list-container">
+              <div class="logline-container" v-for="(item, index) in loglines" :key="index">
+                <router-link :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">
+                  <div class="img-wrap">
+                      <img src="static/image/dlog_logo.png">
                   </div>
-                  <div class="card-content">
-                    <p v-html="item.logline_master_content"></p>
+                  <div class="logline-body">
+                    <div class="logline-title">
+                      <h2>{{item.logline_master_title}}</h2>
+                      <hr>
+                    </div>
+                    <div class="logline-content"><p>{{item.logline_master_content}}</p></div>
+                    <div class="logline-bottom"></div>
                   </div>
+                </router-link>
               </div>
-              <div class="card-bottom">
-                <router-link class="page-link mr-2" :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">더 보기</router-link>
-                <router-link class="page-link" :to="{name: 'LogLineEditForm', params: {id: item.logline_master_seq}}">편집</router-link>
-                <span class="update-date">{{item.update_date}}</span>
-              </div>
-            </div>
           </div>
       </div>
 </template>
@@ -61,148 +54,67 @@ export default {
       const {data} = await this.$http.post('/api/logline/list')
       this.loglines = data
     }
-  },
-  computed: {
-    classObject: () => {
-      return {
-        'col-6': true,
-        'form-control': true,
-        'ml-auto': false
-      }
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-div.logline-list-wrap {
+div.logline-page-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
-  @media (max-width: 420px) {
-    width: 100%;
-  }
-  div.add-bookmark {
+  margin-top: 7rem;
+  div.logline-list-container {
     display: flex;
-    width: 6rem;
-    align-items: center;
-    background-color: #3F5765;
-    margin-left: 1rem;
-    padding: 1rem;
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    height: 5rem;
-    a.page-link {
-      width: 100%;
-      border-radius: 0.25rem;
-      background-color: transparent;
-      border: 1px solid white;
-      color: white;
-      text-align: center;
-    }
-    a.page-link:hover {
-       background-color: white;
-      color: black;
-    }
-  }
-  div.logline-list {
-    display: flex;
-    flex-wrap: wrap;
-    position:relative;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    @media(max-width: 800px) {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    div.card-container {
-      width: calc((100% - 8.75rem) / 5);
-      word-break: break-all;
-      margin-right: auto;
-      margin-bottom: 1rem;
-      height: 30rem;
-      @media(max-width: 2038px) {
-        width: calc(25% - 1.75rem);
-      }
-      @media(max-width: 1702px) {
-        width: calc(33.333% - 1.75rem);
-      }
-      @media(max-width: 1350px) {
-        width: calc(50% - 1.75rem);
-      }
-      @media(max-width: 995px) {
-        width: 100%;
-        margin-bottom: 0.35rem;
-      }
-      @media(max-width: 800px) {
+    flex-direction: column;
+    div.logline-container {
+      width: 820px;
+      background-color: white;
+      margin: 0 auto 1rem auto;
+      border-radius:3px;
+      box-shadow:3px 3px 3px 3px #999;
+      @media (max-width: 820px) {
         width: 100%;
       }
-      div.card-wrap {
-        display: flex;
-        flex-direction: column;
-        background-color: white;
-        box-shadow: 0 -4px 16px rgba(0,0,0,.05);
-        div.card-title {
-          padding: 1rem 1rem 0 1rem;
-          display: flex;
-          align-items: center;
-          margin-bottom: 0.95rem;
-          h5 {
-            font-weight: 700!important;
-          }
-        }
-        div.card-content{
-          padding: 1rem;
-          word-break: break-all;
-          overflow: hidden;
-          height: 5rem;
-          p {
-            font-weight: 400!important;
-          }
-        }
-      }
-      div.card-bottom{
+      a {
         display: flex;
         align-items: center;
-        background-color: white;
-        box-shadow: 0 0 4px rgba(0,0,0,.05);
-        margin-top: 0;
-        padding: 1rem;
-        background-color: #3F5866;
-        @media (max-width: 800px) {
-          font-size: 0.75rem!important;
+        color: black;
+        div.img-wrap {
+          display: block;
+          position: relative;
+          width: 15rem;
+          height: 10rem;
+          margin-right: 1rem;
+          img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
-        a.page-link {
-          background-color: transparent;
-          color: white;
-        }
-        a.page-link:hover {
-          background-color: white;
-          color: black;
-        }
-        span.update-date {
-          margin-left: auto;
-          color: white;
-        }
-      }
-      div.card-img {
-        display: block;
-        position: relative;
-        box-shadow: 0 0 4px rgba(0,0,0,.05);
-        height: 14rem;
-        img {
-          position: absolute;
-          top: 0;
-          left: 0;
+        div.logline-body {
+          display: flex;
+          flex-direction: column;
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          padding: 1rem;
+          div.logline-title {
+            display: block;
+            text-align: left;
+            h2 {
+              font-weight: 550;
+            }
+          }
+          div.logline-content {
+            p {
+              word-break: break-all;
+            }
+          }
         }
       }
     }
   }
-
 }
 </style>

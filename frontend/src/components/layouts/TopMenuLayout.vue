@@ -6,8 +6,11 @@
                     <img src="static/image/dlog_logo.png">
                 </router-link>
             </div>
+            <div class="button-page-group">
+                <router-link v-if="path === '/logline'" class="page-link" to="/logline/add">등록</router-link>
+            </div>
             <!-- <div class="category-info">카테고리</div> -->
-            <div class="button-group">
+            <div class="button-right-group">
                 <img src="static/icons/typicons/src/svg/th-menu.svg">
             </div>
         </div>
@@ -17,7 +20,15 @@
 
 <script>
 export default {
-  name: 'topmenuLayout'
+  name: 'topmenuLayout',
+  data () {
+    return {
+      path: ''
+    }
+  },
+  created () {
+    this.path = this.$route.path
+  }
 }
 </script>
 
@@ -62,10 +73,30 @@ div.topmenu-layout {
                 object-fit: cover;
             }
         }
+        div.button-page-group {
+            padding: 1rem;
+            a {
+                text-decoration:none;
+            }
+            a {
+                background-color: transparent;
+                border: 1px solid white;
+                color: white;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                font-size: 1rem;
+            }
+            a:hover {
+                background-color: white;
+                color: black;
+            }
+        }
         div.category-info{
             padding: 1rem;
         }
-        div.button-group{
+        div.button-right-group{
             padding-top: 1rem;
             padding-bottom: 1rem;
             padding-right: 1.75rem;
