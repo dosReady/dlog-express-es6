@@ -2,10 +2,10 @@
       <div class="logline-page-container">
           <div class="logline-list-container">
               <div class="logline-container" v-for="(item, index) in loglines" :key="index">
+                <div class="img-wrap">
+                  <img src="static/image/dlog_logo.png">
+                </div>
                 <router-link :to="{name: 'LogLineDetailForm', params: {id: item.logline_master_seq}}">
-                  <div class="img-wrap">
-                      <img src="static/image/dlog_logo.png">
-                  </div>
                   <div class="logline-body">
                     <div class="logline-title">
                       <h2>{{item.logline_master_title}}</h2>
@@ -62,12 +62,11 @@ export default {
 div.logline-page-container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   margin-top: 7rem;
   div.logline-list-container {
-    display: flex;
-    flex-direction: column;
     div.logline-container {
+      display: flex;
+      flex-direction: row;
       width: 820px;
       background-color: white;
       margin: 0 auto 1rem auto;
@@ -76,29 +75,25 @@ div.logline-page-container {
       @media (max-width: 820px) {
         width: 100%;
       }
-      a {
-        display: flex;
-        align-items: center;
-        color: black;
-        div.img-wrap {
-          display: block;
-          position: relative;
-          width: 15rem;
-          height: 10rem;
-          margin-right: 1rem;
-          img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-        div.logline-body {
-          display: flex;
-          flex-direction: column;
+      div.img-wrap {
+        display: block;
+        position: relative;
+        width: 15rem;
+        height: auto;
+        margin-right: 1rem;
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      a {
+        width: 50%;
+        color: black;
+        div.logline-body {
           padding: 1rem;
           div.logline-title {
             display: block;
@@ -108,8 +103,9 @@ div.logline-page-container {
             }
           }
           div.logline-content {
+            display: block;
             p {
-              word-break: break-all;
+              overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
             }
           }
         }
