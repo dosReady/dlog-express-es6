@@ -1,5 +1,7 @@
 <template>
+  <div class="page-container">
     <div class="detail-container">
+        <!--
         <div class="fix-container">
           <div class="fix-wrap">
             <div class="button-group">
@@ -10,6 +12,7 @@
             </div>
           </div>
         </div>
+        -->
         <div class="detail-content">
           <div class="detail-title">
             <h1>{{data.logline_master_title}}</h1>
@@ -20,20 +23,32 @@
         </div>
         <div class="bottom-warp">
           <div class="comment-container">
-            <div class="comment-list" v-for="(item, index) in comments" :key="index">
-              {{item.comment_content}}
-              {{item.update_date}}
-              <button @click="delete_comment(item.comment_seq)">삭제</button>
+            <div class="comment-wrap">
+              <div class="comment-list" v-for="(item, index) in comments" :key="index">
+                <div class="comment-top">
+                  <img src="/static/icons/typicons/src/svg/user.svg">
+                  <span class="comment-user">등록자</span>
+                  <span class="comment-date">{{item.update_date}}</span>
+                  <div class="button-group">
+                    <button @click="delete_comment(item.comment_seq)">수정</button>
+                    <button @click="delete_comment(item.comment_seq)">삭제</button>
+                  </div>
+                </div>
+                <div class="comment-body">
+                  <p class="comment-content">{{item.comment_content}}</p>
+                </div>
+              </div>
             </div>
-            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content" @keydown="enter_comment"></textarea>
+            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content"></textarea>
             <div class="button-group">
               <button class="button-add" @click="add_comment">댓글달기</button>
             </div>
           </div>
-          <div class="loginline-area">
-          </div>
         </div>
     </div>
+    <div class="page-bottom">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -63,11 +78,6 @@ export default {
     }
   },
   methods: {
-    async enter_comment (e) {
-      if (e.keyCode === 13) {
-        this.add_comment()
-      }
-    },
     async add_comment () {
       if (confirm('댓글을 저장하시겠습니까?')) {
         try {
@@ -94,8 +104,8 @@ export default {
     },
     async init_comment () {
       try {
-        const comments = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
-        this.inputComment = comments
+        const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+        this.comments = data
       } catch (error) {
         console.log(error)
         alert('댓글 조회중 오류가 발생했습니다.')
@@ -132,160 +142,214 @@ export default {
 
 <style lang="scss">
 @import '$static/css/github-markdown';
-div.detail-container {
-  width: 1000px;
-  margin: 5rem auto!important;
-  padding: 1rem;
-  @media (max-width: 1000px) {
-    width: 100%;
-    margin:0!important;
+div.page-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  div.page-bottom {
+    flex: 1 1;
+    background-color: #2B3A42;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    border-top: 1px solid #e9ecef
   }
-  div.fix-container {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 5.5rem;
-    div.fix-wrap {
-      display: flex;
-      flex-direction: row;
+  div.detail-container {
+    width: 1000px;
+    margin: 5rem auto!important;
+    padding: 1rem;
+    @media (max-width: 1000px) {
       width: 100%;
-      position: fixed;
-      @media (max-width: 1000px) {
-        flex-direction: column;
-      }
-      div.button-group {
-        width: 9rem;
-        height: 5rem;
-        padding: 1rem;
-        background-color: #3F5765;
-        border-top-right-radius: 0.55rem;
-        border-bottom-right-radius: 0.55rem;
+      margin: 3rem 0 0 0!important;
+      padding: 0;
+    }
+    div.fix-container {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 5.5rem;
+      div.fix-wrap {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: fixed;
         @media (max-width: 1000px) {
-          width:5rem;
-          font-size: 11px!important;
+          flex-direction: column;
         }
-        button {
-          padding-left: 1rem;
-          padding-right: 1rem;
-          @media (max-width: 800px) {
-            padding-left: 0rem;
-            padding-right: 0rem;
-          }
-          background-color: transparent;
-          color: black;
-        }
-        button:hover {
-          background-color: white;
-        }
-        a.page-link {
-          border-radius: 0.25rem;
-          background-color: transparent;
-          color: white;
-          border: 1px solid white;
-        }
-        a.page-link:hover {
-          background-color: white;
-          color: black;
-        }
-      }
-      div.indexlink-group {
-        width: 9rem;
-        height: 8rem;
-        padding: 1rem;
-        margin-left: auto;
-        background-color: #3F5765;
-        border-top-left-radius: 0.55rem;
-        border-bottom-left-radius: 0.55rem;
-        @media (max-width: 1000px) {
-          margin-top: 1rem;
-          margin-left: 0;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
+        div.button-group {
+          width: 9rem;
+          height: 5rem;
+          padding: 1rem;
+          background-color: #3F5765;
           border-top-right-radius: 0.55rem;
           border-bottom-right-radius: 0.55rem;
-          width:5rem;
-          font-size: 11px!important;
+          @media (max-width: 1000px) {
+            width:5rem;
+            font-size: 11px!important;
+          }
+          button {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            @media (max-width: 800px) {
+              padding-left: 0rem;
+              padding-right: 0rem;
+            }
+            background-color: transparent;
+            color: black;
+          }
+          button:hover {
+            background-color: white;
+          }
+          a.page-link {
+            border-radius: 0.25rem;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+          }
+          a.page-link:hover {
+            background-color: white;
+            color: black;
+          }
         }
-        a.page-link {
-          border-radius: 0.25rem;
-          background-color: transparent;
-          color: white;
-          border: 1px solid white;
-        }
-        a.page-link:hover {
-          background-color: white;
-          color: black;
+        div.indexlink-group {
+          width: 9rem;
+          height: 8rem;
+          padding: 1rem;
+          margin-left: auto;
+          background-color: #3F5765;
+          border-top-left-radius: 0.55rem;
+          border-bottom-left-radius: 0.55rem;
+          @media (max-width: 1000px) {
+            margin-top: 1rem;
+            margin-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.55rem;
+            border-bottom-right-radius: 0.55rem;
+            width:5rem;
+            font-size: 11px!important;
+          }
+          a.page-link {
+            border-radius: 0.25rem;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+          }
+          a.page-link:hover {
+            background-color: white;
+            color: black;
+          }
         }
       }
     }
-  }
-  div.detail-title {
-    margin-bottom: 3rem;
-  }
-  div.detail-content {
-    font-size: 1.17rem;
-    padding-top: 3rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    background-color: transparent!important;
-    color: black!important;
-    height: 100%;
-    margin-bottom: 2rem;
-    @media (max-width: 1600px) {
+    div.detail-title {
+      margin-bottom: 3rem;
     }
-    @media (max-width: 1200px) {
+    div.detail-content {
+      font-size: 1.17rem;
+      padding-top: 3rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background-color: transparent!important;
+      color: black!important;
+      height: 100%;
+      margin-bottom: 2rem;
+      @media (max-width: 1600px) {
+      }
+      @media (max-width: 1200px) {
+      }
+      @media (max-width: 1024px) {
+      }
     }
-    @media (max-width: 1024px) {
-    }
-  }
-  div.bottom-warp {
-    display: flex;
-    flex-direction: column;
-    background-color: #3F5765;
-    padding: 1rem;
-    width: 100%;
-    align-items: center;
-  }
-  div.comment-container {
-    width: 100%;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-    textarea {
-      margin: 0 auto;
-      width: 100%;
-      resize: none;
-      outline: none;
-      overflow: hidden;
-      overflow-y: scroll;
-      word-break: break-all;
-      background-color: transparent;
-      border: 1px solid white;
-      color: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-    textarea::placeholder {
-      color: white;
-    }
-    div.button-group {
+    div.bottom-warp {
       display: flex;
-      justify-content: flex-end!important;
-      button.button-add:not(:disabled):not(.disabled) {
-        cursor: pointer;
+      flex-direction: column;
+      padding: 1rem;
+      width: 100%;
+      align-items: center;
+      @media (max-width: 1000px) {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
       }
-      button.button-add {
-        border-radius: 0.25rem;
-        padding-top: 0.5rem!important;
-        padding-bottom: 0.5rem!important;
-        padding-left: 0.5rem!important;
-        padding-right: 0.5rem!important;
-        background-color: transparent!important;
-        border: 1px solid white;
-        color: white!important;
-      }
-      button.button-add:hover {
-        background-color: white!important;
-        color: black!important;
+      div.comment-container {
+        width: 100%;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        div.comment-wrap {
+          padding-top: 1.75rem;
+          padding-bottom: 1.75rem;
+          margin-bottom: 2rem;
+          div.comment-list {
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            div.comment-top {
+              margin-bottom: 1rem;
+              span.comment-user {
+              font-weight: 600!important;
+              }
+              span.comment-date {
+                font-weight: 100!important;
+                font-size: 0.75rem!important;
+              }
+              img {
+                width:32px;
+                height: 32px;
+                background-color: white;
+                border-radius: 50%;
+              }
+              div.button-group {
+                margin-left: auto;
+                button {
+                  margin-left: auto;
+                }
+              }
+            }
+            div.comment-body {
+              div.comment-content {
+                word-break: all;
+              }
+            }
+          }
+        }
+        textarea {
+          margin: 0 auto;
+          width: 100%;
+          resize: none;
+          outline: none;
+          overflow: hidden;
+          overflow-y: scroll;
+          word-break: break-all;
+          background-color: transparent;
+          border: 1px solid #3F5765;
+          color: #3F5765;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        textarea::placeholder {
+          color: #3F5765;
+        }
+        div.button-group {
+          display: flex;
+          justify-content: flex-end!important;
+          button.button-add:not(:disabled):not(.disabled) {
+            cursor: pointer;
+          }
+          button.button-add {
+            border-radius: 0.25rem;
+            padding-top: 0.5rem!important;
+            padding-bottom: 0.5rem!important;
+            padding-left: 0.5rem!important;
+            padding-right: 0.5rem!important;
+            background-color: transparent!important;
+            border: 1px solid #3F5765;
+            color: #3F5765!important;
+          }
+          button.button-add:hover {
+            background-color: #3F5765!important;
+            color: white!important;
+          }
+        }
       }
     }
   }

@@ -14,7 +14,9 @@ export default {
 </script>
 
 <style lang="scss">
-body {
+html {
+  height: 100%;
+  body {
   height: 100%;
   background-color: #EFEFEF!important;
   #app {
@@ -39,6 +41,7 @@ body {
   h1 {
     font-weight: 700!important;
   }
+}
 }
 
 </style>

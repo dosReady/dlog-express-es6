@@ -9,7 +9,11 @@
             <div class="button-page-group">
                 <router-link v-if="path === '/logline'" class="page-link" to="/logline/add">등록</router-link>
             </div>
-            <!-- <div class="category-info">카테고리</div> -->
+            <div class="page-link-group">
+                <router-link class="page-link" to="/">ISSUE LOG</router-link>
+                <router-link class="page-link" to="/">LOG LINE</router-link>
+                <router-link class="page-link" to="/">ETC</router-link>
+            </div>
             <div class="button-right-group">
                 <img src="/static/icons/typicons/src/svg/th-menu.svg">
             </div>
@@ -28,6 +32,11 @@ export default {
   },
   created () {
     this.path = this.$route.path
+  },
+  watch: {
+    '$route' (to, from) {
+      this.path = to.path
+    }
   }
 }
 </script>
@@ -56,6 +65,25 @@ div.topmenu-layout {
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
+        }
+        div.page-link-group {
+            display: flex;
+            margin: auto 0rem auto 3rem;
+            @media (max-width: 680px){
+                display: none;
+            }
+            a.page-link {
+                font-size: 1.5rem!important;
+                border: none;
+                color: white;
+                background-color: transparent;
+                margin-right: 1rem;
+            }
+            a.page-link:focus {
+                z-index: 2;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            }
         }
         div.title-group {
             padding: 1rem;
@@ -97,10 +125,14 @@ div.topmenu-layout {
             padding: 1rem;
         }
         div.button-right-group{
+            display: none;
             padding-top: 1rem;
             padding-bottom: 1rem;
             padding-right: 1.75rem;
             margin-left: auto;
+            @media (max-width: 680px){
+                display: block;
+            }
             img:not(:disabled):not(.disabled) {
                 cursor: pointer;
             }
