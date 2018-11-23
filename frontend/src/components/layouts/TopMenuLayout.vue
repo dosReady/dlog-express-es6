@@ -61,11 +61,6 @@ div.topmenu-layout {
         z-index: 15;
         width: 100%;
         font-size: 1rem!important;
-        @media (max-width: 800px) {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-        }
         div.page-link-group {
             display: flex;
             margin: auto 0rem auto 3rem;

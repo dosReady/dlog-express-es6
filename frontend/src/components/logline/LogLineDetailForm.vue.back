@@ -1,0 +1,363 @@
+<template>
+  <div class="page-container">
+    <div class="detail-container">
+        <!--
+        <div class="fix-container">
+          <div class="fix-wrap">
+            <div class="button-group">
+              <router-link class="page-link" to="/">목록</router-link>
+            </div>
+            <div class="indexlink-group">
+              <router-link class="page-link" to="/">목차영역</router-link>
+            </div>
+          </div>
+        </div>
+        -->
+        <div class="detail-content">
+          <div class="detail-title">
+            <h1>{{data.logline_master_title}}</h1>
+            <span>{{data.update_date}}</span>
+            <hr/>
+          </div>
+          <div class="markdown-body" v-html="compiledMarkdown"></div>
+        </div>
+        <div class="bottom-warp">
+          <div class="comment-container">
+            <div class="comment-wrap">
+              <div class="comment-list" v-for="(item, index) in comments" :key="index">
+                <div class="comment-top">
+                  <router-link to="/">
+                    <img src="/static/icons/typicons/src/svg/user.svg">
+                    <span class="comment-user">등록자</span>
+                    <span class="comment-date">{{item.update_date}}</span>
+                  </router-link>
+                  <div class="comments-button-group">
+                    <button @click="delete_comment(item.comment_seq)">수정</button>
+                    <button @click="delete_comment(item.comment_seq)">삭제</button>
+                  </div>
+                </div>
+                <div class="comment-body">
+                  <p class="comment-content">{{item.comment_content}}</p>
+                </div>
+              </div>
+            </div>
+            <textarea rows="3" placeholder="댓글을 입력하세요" v-model="inputComment.comment_content"></textarea>
+            <div class="button-group">
+              <button class="button-add" @click="add_comment">댓글달기</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="page-bottom">
+    </div>
+  </div>
+</template>
+
+<script>
+import marked from 'marked'
+
+export default {
+  name: 'LogLineDetailForm',
+  data () {
+    return {
+      inputComment: {
+        comment_content: this.insertComment,
+        conmment_upper_seq: '',
+        master_seq: this.$route.params.id,
+        is_private: 'N',
+        comment_password: ''
+      },
+      data: {},
+      comments: []
+    }
+  },
+  async beforeCreate () {
+    if (this.$route.params.id) {
+      const logline = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
+      const comments = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+      this.comments = comments.data
+      this.data = logline.data
+    }
+  },
+  methods: {
+    async add_comment () {
+      if (confirm('댓글을 저장하시겠습니까?')) {
+        try {
+          await this.$http.post('/api/comment/add', {data: this.inputComment})
+          alert('저장되었습니다.')
+          this.init_comment()
+        } catch (error) {
+          console.log(error)
+          alert('저장 처리중 오류가 발생했습니다.')
+        }
+      }
+    },
+    async delete_comment (paramsSeq) {
+      if (confirm('댓글을 삭제하시겠습니까?')) {
+        try {
+          await this.$http.post('/api/comment/delete', {seq: paramsSeq})
+          alert('삭제되었습니다.')
+          this.init_comment()
+        } catch (error) {
+          console.log(error)
+          alert('삭제 처리중 오류가 발생했습니다.')
+        }
+      }
+    },
+    async init_comment () {
+      try {
+        const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+        this.comments = data
+      } catch (error) {
+        console.log(error)
+        alert('댓글 조회중 오류가 발생했습니다.')
+      }
+    }
+  },
+  computed: {
+    compiledMarkdown () {
+      let content = ''
+      if (this.data.logline_master_content) {
+        content = this.data.logline_master_content
+      }
+      return marked(content, { sanitize: true })
+    },
+    subject: {
+      get () {
+        return this.data.logline_master_title
+      },
+      set (value) {
+        this.data.logline_master_title = value
+      }
+    },
+    content: {
+      get () {
+        return this.data.logline_master_content
+      },
+      set (value) {
+        this.data.logline_master_content = value
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import '$static/css/github-markdown';
+div.page-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  div.page-bottom {
+    flex: 1 1;
+    background-color: #2B3A42;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    border-top: 1px solid #e9ecef
+  }
+  div.detail-container {
+    width: 1000px;
+    margin: 5rem auto!important;
+    padding: 1rem;
+    @media (max-width: 1000px) {
+      width: 100%;
+      margin: 3rem 0 0 0!important;
+      padding: 0;
+    }
+    div.fix-container {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 5.5rem;
+      div.fix-wrap {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: fixed;
+        @media (max-width: 1000px) {
+          flex-direction: column;
+        }
+        div.button-group {
+          width: 9rem;
+          height: 5rem;
+          padding: 1rem;
+          background-color: #3F5765;
+          border-top-right-radius: 0.55rem;
+          border-bottom-right-radius: 0.55rem;
+          @media (max-width: 1000px) {
+            width:5rem;
+            font-size: 11px!important;
+          }
+          button {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            @media (max-width: 800px) {
+              padding-left: 0rem;
+              padding-right: 0rem;
+            }
+            background-color: transparent;
+            color: black;
+          }
+          button:hover {
+            background-color: white;
+          }
+          a.page-link {
+            border-radius: 0.25rem;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+          }
+          a.page-link:hover {
+            background-color: white;
+            color: black;
+          }
+        }
+        div.indexlink-group {
+          width: 9rem;
+          height: 8rem;
+          padding: 1rem;
+          margin-left: auto;
+          background-color: #3F5765;
+          border-top-left-radius: 0.55rem;
+          border-bottom-left-radius: 0.55rem;
+          @media (max-width: 1000px) {
+            margin-top: 1rem;
+            margin-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.55rem;
+            border-bottom-right-radius: 0.55rem;
+            width:5rem;
+            font-size: 11px!important;
+          }
+          a.page-link {
+            border-radius: 0.25rem;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+          }
+          a.page-link:hover {
+            background-color: white;
+            color: black;
+          }
+        }
+      }
+    }
+    div.detail-title {
+      margin-bottom: 3rem;
+    }
+    div.detail-content {
+      font-size: 1.17rem;
+      padding-top: 3rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background-color: transparent!important;
+      color: black!important;
+      height: 100%;
+      margin-bottom: 2rem;
+      @media (max-width: 1600px) {
+      }
+      @media (max-width: 1200px) {
+      }
+      @media (max-width: 1024px) {
+      }
+    }
+    div.bottom-warp {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      width: 100%;
+      align-items: center;
+      @media (max-width: 1000px) {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+      div.comment-container {
+        width: 100%;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        div.comment-wrap {
+          padding-top: 1.75rem;
+          padding-bottom: 1.75rem;
+          margin-bottom: 2rem;
+          div.comment-list {
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            div.comment-top {
+              display: flex;
+              margin-bottom: 1rem;
+              span.comment-user {
+                text-decoration: none;
+                margin-right: 1rem;
+                font-weight: 600!important;
+              }
+              span.comment-date {
+                font-weight: 100!important;
+                font-size: 0.75rem!important;
+              }
+              img {
+                width:32px;
+                height: 32px;
+                background-color: white;
+                border-radius: 50%;
+              }
+              div.comments-button-group {
+                margin-left: auto;
+                button {
+                  background-color: transparent;
+                  border: 1px solid rgba(0, 0, 0, 0.1);
+                }
+              }
+            }
+            div.comment-body {
+              div.comment-content {
+                word-break: all;
+              }
+            }
+          }
+        }
+        textarea {
+          margin: 0 auto;
+          width: 100%;
+          resize: none;
+          outline: none;
+          overflow: hidden;
+          overflow-y: scroll;
+          word-break: break-all;
+          background-color: transparent;
+          border: 1px solid #3F5765;
+          color: #3F5765;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        textarea::placeholder {
+          color: #3F5765;
+        }
+        div.button-group {
+          display: flex;
+          justify-content: flex-end!important;
+          button.button-add:not(:disabled):not(.disabled) {
+            cursor: pointer;
+          }
+          button.button-add {
+            border-radius: 0.25rem;
+            padding-top: 0.5rem!important;
+            padding-bottom: 0.5rem!important;
+            padding-left: 0.5rem!important;
+            padding-right: 0.5rem!important;
+            background-color: transparent!important;
+            border: 1px solid #3F5765;
+            color: #3F5765!important;
+          }
+          button.button-add:hover {
+            background-color: #3F5765!important;
+            color: white!important;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
