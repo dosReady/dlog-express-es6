@@ -15,17 +15,10 @@
           </div>
           <div class="comment-content">
             <p>{{item.comment_content}}</p>
-            <div class="btn-wrap">
-              <button class="btn btn-default">답글달기</button>
-            </div>
+            <reply :reply-data="{conmment_upper_seq:item.comment_seq, master_seq:$route.params.id}"></reply>
           </div>
         </div>
-        <div class="comment-pagnation">
-          <ul>
-            <li><button class="btn active">1</button></li>
-            <li><button class="btn btn-outline-default">2</button></li>
-          </ul>
-        </div>
+        <pagnation class="comment-pagnation"></pagnation>
         <div class="comment-input">
           <textarea v-model="inputComment.comment_content" placeholder="댓글을 입력해주세요."></textarea>
           <div class="btn-wrap">
@@ -39,7 +32,8 @@
 
 <script>
 import marked from 'marked'
-
+import Reply from '@/components/Reply'
+import Pagnation from '@/components/Pagnation'
 export default {
   name: 'LogLineDetailForm',
   data () {
@@ -47,13 +41,15 @@ export default {
       inputComment: {
         comment_content: '',
         conmment_upper_seq: '',
-        master_seq: this.$route.params.id,
-        is_private: 'N',
-        comment_password: ''
+        master_seq: this.$route.params.id
       },
       data: {},
       comments: []
     }
+  },
+  components: {
+    Reply,
+    Pagnation
   },
   async beforeCreate () {
     if (this.$route.params.id) {
@@ -181,18 +177,6 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  textarea {
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    padding: 1rem;
-    border: 1px solid #e9ecef;
-    border-radius: 4px;
-    resize: none;
-    color: #212529;
-    display: block;
-    line-height: 1.5
-  }
   .btn-wrap {
     margin-top: 1rem;
     display: flex;
