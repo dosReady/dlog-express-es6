@@ -10,13 +10,11 @@ module.exports = class Comments {
             const commentsql = `
             INSERT INTO dlog_comments (
                 comment_content,
-                conmment_upper_seq,
                 master_seq,
                 is_private,
                 comment_password)
             VALUES(
                 '${data.comment_content}',
-                ${util.nvl(data.conmment_upper_seq, 'string')},
                 ${data.master_seq},
                 '',
                 ''
@@ -35,7 +33,7 @@ module.exports = class Comments {
             UPDATE dlog_comments
                 SET comment_content='${data.comment_content}',
                     action_log_seq=0,
-                    conmment_upper_seq=0,
+                    comment_upper_seq=0,
                     update_date=CURRENT_TIMESTAMP,
                     master_seq=${data.master_seq},
             WHERE comment_seq=${data.comment_seq}
@@ -78,7 +76,16 @@ module.exports = class Comments {
             AND c2.comment_upper_seq IS NOT NULL
             ORDER BY c1.update_date desc, c2.update_date desc
             `
-            const comments = await dao.list(commentsql)
+            const commenfakesql = `
+            SELECT 
+                comment_seq,
+                comment_content,
+                DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date,
+                user_id
+            FROM dlog_comments
+            WHERE master_seq = ${seq}
+            `
+            const comments = await dao.list(commenfakesql)
             let result = []
             for (const comment of comments) {
                 let commentObj = {}
@@ -125,14 +132,14 @@ module.exports = class Comments {
                 comment_seq,
                 comment_content,
                 action_log_seq,
-                conmment_upper_seq,
+                comment_upper_seq,
                 user_id,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date,
                 master_seq,
                 is_private,
                 comment_password
             FROM dlog_comments
-            WHERE conmment_upper_seq = ${seq}
+            WHERE comment_upper_seq = ${seq}
             ORDER BY update_date DESC
             `
             const result = await dao.list(commentsql)

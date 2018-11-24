@@ -15,7 +15,7 @@
           </div>
           <div class="comment-content">
             <p>{{item.comment_content}}</p>
-            <reply :reply-data="{conmment_upper_seq:item.comment_seq, master_seq:$route.params.id}"></reply>
+            <reply :reply-data="{comment_upper_seq:item.comment_seq, master_seq:$route.params.id}"></reply>
           </div>
         </div>
         <pagnation class="comment-pagnation"></pagnation>
@@ -40,7 +40,6 @@ export default {
     return {
       inputComment: {
         comment_content: '',
-        conmment_upper_seq: '',
         master_seq: this.$route.params.id
       },
       data: {},
@@ -88,7 +87,7 @@ export default {
       try {
         const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
         this.comments = data
-        this.inputComment = ''
+        this.inputComment.comment_content = ''
       } catch (error) {
         console.log(error)
         alert('댓글 조회중 오류가 발생했습니다.')

@@ -62,7 +62,7 @@ export default {
     return {
       inputComment: {
         comment_content: this.insertComment,
-        conmment_upper_seq: '',
+        comment_upper_seq: '',
         master_seq: this.$route.params.id,
         is_private: 'N',
         comment_password: ''

@@ -18,7 +18,7 @@ export default {
   name: 'Reply',
   props: {
     replyData: {
-      conmment_upper_seq: Number,
+      comment_upper_seq: Number,
       master_seq: Number
     }
   },
@@ -59,7 +59,7 @@ export default {
     async insertReply () {
       try {
         const paramsData = {
-          conmment_upper_seq: this.$props.replyData.conmment_upper_seq,
+          comment_upper_seq: this.$props.replyData.comment_upper_seq,
           comment_content: this.comment_content,
           master_seq: this.$props.replyData.master_seq
         }
