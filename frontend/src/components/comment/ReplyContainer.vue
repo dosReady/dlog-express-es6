@@ -20,8 +20,6 @@ export default {
 
 <style lang="scss" scoped>
 .reply-container {
-    display: flex;
-    flex-direction: column;
     margin-left:2rem;
 }
 </style>

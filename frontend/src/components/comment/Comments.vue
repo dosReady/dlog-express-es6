@@ -64,9 +64,12 @@ export default {
     padding-bottom: 1rem;
     border-bottom: 1px solid #355c7d;
     .comment-top {
-        h4 {
-            font-size: 1.25rem!important;
-        }
+      display: flex;
+      align-items: center;
+      h4 {
+        margin-right: 0.25rem;
+        font-size: 1.25rem!important;
+      }
     }
     .comment-bottom {
       .comment-input-wrap {

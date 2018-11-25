@@ -92,7 +92,7 @@ module.exports = class Comments {
                     commentObj = {
                         comment_seq: comment.comment_seq,
                         comment_content: comment.comment_content,
-                        update_date: comment.update_date,
+                        comment_update_date: comment.comment_update_date,
                         user_id: comment.user_id,
                         reply: []
                     }
