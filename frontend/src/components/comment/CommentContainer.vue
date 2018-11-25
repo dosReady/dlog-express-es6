@@ -16,3 +16,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.comment-container {
+  word-break: break-all;
+}
+</style>
