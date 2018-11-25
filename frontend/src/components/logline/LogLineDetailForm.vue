@@ -22,6 +22,10 @@
 <script>
 import marked from 'marked'
 import CommentContainer from '@/components/comment/CommentContainer'
+const renderer = new marked.Renderer()
+renderer.link = (href, title, text) => {
+  return `<a target="_blank" href="${href}" title="${title}">${text}</a>`
+}
 export default {
   name: 'LogLineDetailForm',
   data () {
@@ -90,7 +94,7 @@ export default {
       if (this.data.logline_master_content) {
         content = this.data.logline_master_content
       }
-      return marked(content, { sanitize: true })
+      return marked(content, { renderer: renderer, sanitize: true })
     },
     subject: {
       get () {
