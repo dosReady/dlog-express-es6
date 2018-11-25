@@ -73,7 +73,7 @@ module.exports = class Comments {
                 dlog_comment_replys b
             ON a.comment_seq =  b.comment_seq
             WHERE a.master_seq = ${seq}
-            ORDER BY comment_update_date DESC
+            ORDER BY comment_update_date DESC, reply_update_date DESC
             `
             const comments = await dao.list(commentsql)
             let result = []

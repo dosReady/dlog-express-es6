@@ -11,6 +11,7 @@ import db from './setting/db'
 import router from './router/index'
 import loglines from './router/logline'
 import comments from './router/comments'
+import replys from './router/replys' 
 
 const app = express()
 
@@ -41,6 +42,7 @@ app.use(modules.accesslog)
 app.use('/', router)
 app.use('/api/logline', loglines)
 app.use('/api/comment', comments)
+app.use('/api/reply', replys)
 
 app.all('*',modules.httpcode_exception)
 

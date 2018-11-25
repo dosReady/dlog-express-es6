@@ -7,9 +7,9 @@
         <div class="reply-body">{{data.reply_content}}</div>
         <div class="reply-bottom">
             <div :class="inputWrapClass">
-                <textarea></textarea>
+                <textarea v-model="inputReplyData.reply_content"></textarea>
             <div class="button-wrap">
-                <button class="btn btn-default" style="margin-right:.25rem">저장</button>
+                <button class="btn btn-default" style="margin-right:.25rem"  @click="addComment">저장</button>
                 <button class="btn btn-default" @click="hideInputWrap">취소</button>
             </div>
             </div>
@@ -29,6 +29,11 @@ export default {
   },
   data () {
     return {
+      inputReplyData: {
+        comment_seq: 0,
+        reply_content: '',
+        target_user_id: ''
+      },
       inputWrapClass: {
         'comment-input-wrap': true,
         'hide': true
@@ -47,6 +52,24 @@ export default {
     hideInputWrap () {
       this.inputWrapClass.hide = true
       this.buttonWrapClass.hide = false
+    },
+    async addComment () {
+      try {
+        console.log(this.$props)
+        this.inputReplyData.comment_seq = this.$props.comment_seq
+        this.inputReplyData.target_user_id = this.data.reply_user_id
+        await this.$http.post('/api/reply/add', {data: this.inputReplyData})
+        this.reloadComment()
+      } catch (error) {
+        console.log(error)
+        alert('댓글 저장처리중 오류가 발생했습니다.')
+      }
+    },
+    reloadComment () {
+      this.inputReplyData.reply_content = ''
+      this.inputReplyData.target_user_id = ''
+      this.hideInputWrap()
+      this.$eventbus.$emit('reloadComments')
     }
   }
 }

@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 // Vue.use(BootstrapVue)
 
 Vue.prototype.$http = axios
-
+Vue.prototype.$eventbus = new Vue()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

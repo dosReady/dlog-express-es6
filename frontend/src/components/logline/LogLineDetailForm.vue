@@ -45,17 +45,20 @@ export default {
       this.data = logline.data
     }
   },
+  created () {
+    this.$eventbus.$on('reloadComments', () => {
+      this.init_comment()
+    })
+  },
   methods: {
     async add_comment () {
-      if (confirm('댓글을 저장하시겠습니까?')) {
-        try {
-          await this.$http.post('/api/comment/add', {data: this.inputComment})
-          alert('저장되었습니다.')
-          this.init_comment()
-        } catch (error) {
-          console.log(error)
-          alert('저장 처리중 오류가 발생했습니다.')
-        }
+      try {
+        await this.$http.post('/api/comment/add', {data: this.inputComment})
+        alert('저장되었습니다.')
+        this.init_comment()
+      } catch (error) {
+        console.log(error)
+        alert('저장 처리중 오류가 발생했습니다.')
       }
     },
     async delete_comment (paramsSeq) {

@@ -1,6 +1,6 @@
 <template>
     <div class="reply-container">
-        <reply v-for="(item, index) in data" :key="index" :data="item" :comment_seq="comment_seq"></reply>
+        <reply v-for="(item, index) in data" :key="index" :data="item" :comment_seq="$props.comment_seq"></reply>
     </div>
 </template>
 
