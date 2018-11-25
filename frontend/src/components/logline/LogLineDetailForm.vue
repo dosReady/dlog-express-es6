@@ -8,17 +8,7 @@
           <hr>
         </div>
         <div class="logline-content markdown-body" v-html="compiledMarkdown"></div>
-        <div class="comment-container" v-for="(item, index) in comments" :key="index">
-          <div class="comment-top">
-            <h4>등록자</h4>
-            <span class="update-date">{{item.update_date}}</span>
-          </div>
-          <div class="comment-content">
-            <p>{{item.comment_content}}</p>
-            <reply :reply-data="{comment_upper_seq:item.comment_seq, master_seq:$route.params.id}"></reply>
-          </div>
-        </div>
-        <pagnation class="comment-pagnation"></pagnation>
+        <comment-container :data="comments"></comment-container>
         <div class="comment-input">
           <textarea v-model="inputComment.comment_content" placeholder="댓글을 입력해주세요."></textarea>
           <div class="btn-wrap">
@@ -32,8 +22,8 @@
 
 <script>
 import marked from 'marked'
-import Reply from '@/components/Reply'
 import Pagnation from '@/components/Pagnation'
+import CommentContainer from '@/components/CommentContainer'
 export default {
   name: 'LogLineDetailForm',
   data () {
@@ -47,8 +37,8 @@ export default {
     }
   },
   components: {
-    Reply,
-    Pagnation
+    Pagnation,
+    CommentContainer
   },
   async beforeCreate () {
     if (this.$route.params.id) {

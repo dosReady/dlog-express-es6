@@ -59,33 +59,23 @@ module.exports = class Comments {
             const seq = req.body.id
             const commentsql = `
             SELECT
-                c1.comment_seq,
-                c1.comment_content,
-                DATE_FORMAT(c1.update_date, '%Y-%m-%d %H:%i') AS update_date,
-                c1.user_id,
-                c2.comment_seq as reply_seq,
-                c2.comment_content as reply_content,
-                DATE_FORMAT(c2.update_date, '%Y-%m-%d %H:%i') AS reply_update_date,
-                c2.user_id as reply_user_id
+            a.comment_seq,
+            a.comment_content,
+            a.user_id AS comment_user_id,
+            DATE_FORMAT(a.update_date, '%Y-%m-%d %H:%i') AS comment_update_date,
+            b.reply_seq,
+            b.reply_content,
+            DATE_FORMAT(b.update_date, '%Y-%m-%d %H:%i') AS reply_update_date,
+            b.user_id AS reply_user_id
             FROM 
-                dlog_comments c1
-            LEFT JOIN
-                dlog_comments c2
-            ON c2.comment_upper_seq = c1.comment_seq
-            WHERE c1.master_seq = ${seq}
-            AND c2.comment_upper_seq IS NOT NULL
-            ORDER BY c1.update_date desc, c2.update_date desc
+                dlog_comments a
+            LEFT OUTER JOIN
+                dlog_comment_replys b
+            ON a.comment_seq =  b.comment_seq
+            WHERE a.master_seq = ${seq}
+            ORDER BY comment_update_date DESC
             `
-            const commenfakesql = `
-            SELECT 
-                comment_seq,
-                comment_content,
-                DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date,
-                user_id
-            FROM dlog_comments
-            WHERE master_seq = ${seq}
-            `
-            const comments = await dao.list(commenfakesql)
+            const comments = await dao.list(commentsql)
             let result = []
             for (const comment of comments) {
                 let commentObj = {}
@@ -115,8 +105,9 @@ module.exports = class Comments {
                         }
                         commentObj.reply.push(replyObj)
                     }
+                    result.push(commentObj)
                 }
-                result.push(commentObj)
+                
             }
             console.log(result)
             return result

@@ -1,14 +1,20 @@
 <template>
     <div class="reply-container">
-      <div :class="inputReplyClass">
-        <textarea v-model="comment_content"></textarea>
-        <div class="btn-wrap">
-        <button class="btn btn-default" style="margin-right:1rem" @click="insertReply">답글 저장</button>
-        <button class="btn btn-default" @click="hideInputReply">취소</button>
-        </div>
-      </div>
-      <div :class="btnReplyWrapClass">
-        <button class="btn btn-default" @click="showInputReply">답글달기</button>
+      <div class="reply-list-container">
+          <div class="reply-list-wrap" v-for="(item, index) in replyData.replys" :key="index">
+              <h4>{{item.reply_user_id}}</h4>
+              <p>{{item.reply_content}}</p>
+              <div :class="inputReplyClass">
+                <textarea v-model="comment_content"></textarea>
+                <div class="btn-wrap">
+                <button class="btn btn-default" style="margin-right:1rem" @click="insertReply">답글 저장</button>
+                <button class="btn btn-default" @click="hideInputReply">취소</button>
+                </div>
+              </div>
+              <div :class="btnReplyWrapClass">
+                <button class="btn btn-default" @click="showInputReply">답글달기</button>
+              </div>
+          </div>
       </div>
     </div>
 </template>
@@ -19,11 +25,13 @@ export default {
   props: {
     replyData: {
       comment_upper_seq: Number,
-      master_seq: Number
+      master_seq: Number,
+      replys: Array
     }
   },
   data () {
     return {
+      replys: [],
       comment_content: '',
       inputReplyClass: {
         'input-reply-hide': true,
@@ -80,21 +88,28 @@ export default {
 
 <style lang="scss" scoped>
 .reply-container {
-  .input-reply-show {
-    display: flex;
-    flex-direction: column;
+  .reply-list-container {
+    margin-left:3em;
+    .reply-list-wrap {
+      border-bottom: 1px solid #e7edf3;
+      margin-bottom: 1rem;
+    }
   }
-  .input-reply-hide {
-    display: none;
-  }
-  .btn-wrap-show {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1rem
-  }
-  .btn-wrap-hide {
-    display: none;
-  }
+}
+.input-reply-show {
+  display: flex;
+  flex-direction: column;
+}
+.input-reply-hide {
+  display: none;
+}
+.btn-wrap-show {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem
+}
+.btn-wrap-hide {
+  display: none;
 }
 </style>
