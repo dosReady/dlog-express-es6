@@ -69,7 +69,6 @@
     color: white!important;
     background-color: #355c7d!important;
 }
-
 textarea {
     border: none;
     outline: none;
@@ -81,4 +80,8 @@ textarea {
     color: #212529;
     display: block;
     line-height: 1.5
-  }
+}
+
+.hide {
+    display: none!important;
+}

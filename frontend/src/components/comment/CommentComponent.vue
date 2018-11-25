@@ -2,7 +2,7 @@
     <div class="comment-input">
         <textarea v-model="data.comment_content" placeholder="댓글을 입력해주세요."></textarea>
         <div class="btn-wrap">
-            <button class="btn btn-default" @click="add_comment">댓글 저장</button>
+            <button class="btn btn-default" @click="add_comment">댓글 달기</button>
         </div>
     </div>
 </template>
