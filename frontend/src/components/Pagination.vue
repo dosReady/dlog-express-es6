@@ -34,7 +34,7 @@ export default {
       page_start: 0,
       page_end: 0,
       page_stack: [],
-      page_count: 5
+      page_count: 3
     }
   },
   created () {
@@ -59,7 +59,7 @@ export default {
           this.page_stack.push(i)
         }
       } else {
-        for (let i = n - 2; i <= n + 2; i++) {
+        for (let i = n - ((this.page_count - 1) / 2); i <= n + ((this.page_count - 1) / 2); i++) {
           this.page_stack.push(i)
         }
       }
