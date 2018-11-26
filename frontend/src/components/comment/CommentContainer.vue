@@ -1,18 +1,19 @@
 <template>
     <div class="comment-container">
-      <comments v-for="(item, index) in data" :key="index" :data="item"></comments>
+      <comments v-for="(item, index) in data.comments" :key="index" :data="item"></comments>
+      <pagination :size="data.comment_total_cnt" :link="'/api/comment/list'"></pagination>
     </div>
 </template>
 
 <script>
 import Comments from '@/components/comment/Comments'
+import Pagination from '@/components/Pagination'
 export default {
   name: 'CommentContainer',
-  props: {
-    data: Array
-  },
+  props: [ 'data' ],
   components: {
-    Comments
+    Comments,
+    Pagination
   }
 }
 </script>

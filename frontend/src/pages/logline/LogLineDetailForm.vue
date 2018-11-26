@@ -44,14 +44,14 @@ export default {
   async beforeCreate () {
     if (this.$route.params.id) {
       const logline = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
-      const comments = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
-      this.comments = comments.data
+      const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+      this.comments = data
       this.data = logline.data
     }
   },
-  created () {
-    this.$eventbus.$on('reloadComments', () => {
-      this.init_comment()
+  async created () {
+    this.$eventbus.$on('reloadComments', (pagination) => {
+      this.init_comment(pagination)
     })
   },
   methods: {
@@ -77,9 +77,9 @@ export default {
         }
       }
     },
-    async init_comment () {
+    async init_comment (pagination) {
       try {
-        const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
+        const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id, pagination: pagination})
         this.comments = data
         this.inputComment.comment_content = ''
       } catch (error) {

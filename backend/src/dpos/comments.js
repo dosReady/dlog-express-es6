@@ -57,6 +57,13 @@ module.exports = class Comments {
     async list (req, connection) {
         try {
             const seq = req.body.id
+            let page = 0 
+            let max = 10
+            if (req.body.pagination) {
+                const pagination = req.body.pagination
+                page = (pagination.page -1)
+                max = pagination.max
+            }
             const commentsql = `
             SELECT
             a.comment_seq,
@@ -72,9 +79,11 @@ module.exports = class Comments {
             WHERE a.master_seq = ${seq}
             GROUP BY a.comment_seq, a.comment_content, a.user_id, a.update_date
             ORDER BY comment_update_date DESC
+            LIMIT ${page * max}, ${max}
             `
+            const totalResult = await dao.select('SELECT COUNT(*) AS comment_total_cnt FROM dlog_comments')
             const comments = await dao.list(commentsql)
-            return comments
+            return {comments: comments, comment_total_cnt: totalResult.comment_total_cnt}
         } catch (error) {
             throw error
         }
