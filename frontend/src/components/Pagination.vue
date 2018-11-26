@@ -49,16 +49,17 @@ export default {
         n = this.pagination.page + 1
         if (n === this.page_end) n = this.page_end
       }
-      if (n + (this.page_count - 1) <= this.page_end) {
-        this.page_stack = []
-        for (let i = n; i < n + this.page_count; i++) {
-          if (i > this.page_end) break
+      this.page_stack = []
+      if (n - 1 === 1 || n === 1) {
+        for (let i = 1; i <= this.page_count; i++) {
           this.page_stack.push(i)
         }
-      }
-      if (n === this.page_end) {
-        this.page_stack = []
+      } else if (n + 1 === this.page_end || n === this.page_end) {
         for (let i = (this.page_end - this.page_count) + 1; i <= this.page_end; i++) {
+          this.page_stack.push(i)
+        }
+      } else {
+        for (let i = n - 2; i <= n + 2; i++) {
           this.page_stack.push(i)
         }
       }
