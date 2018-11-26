@@ -1,14 +1,14 @@
 <template>
     <div class="pagination-container">
         <ul>
-            <li v-if="this.size > 5"><button class="btn" @click="goPage('first', $event)">처음</button></li>
-            <li><button class="btn" @click="goPage('prev', $event)">이전</button></li>
+            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('first', $event)">처음</button></li>
+            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
             <li v-for="n in pagination.size_length" :key="n">
                 <button v-if="pagination.page === n" class="btn active" @click="goPage(n, $event)">{{n}}</button>
                 <button v-else class="btn" @click="goPage(n, $event)">{{n}}</button>
             </li>
-            <li><button class="btn" @click="goPage('next', $event)">다음</button></li>
-            <li><button class="btn" @click="goPage('last', $event)">끝</button></li>
+            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('next', $event)">다음</button></li>
+            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('last', $event)">끝</button></li>
         </ul>
     </div>
 </template>
