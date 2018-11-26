@@ -2,12 +2,12 @@
     <div class="pagination-container">
         <ul>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage(1, $event)">처음</button></li>
-            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1 && this.width > 600"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
             <li v-for="n in page_stack" :key="n">
                 <button v-if="pagination.page === n" class="btn active" @click="goPage(n, $event)">{{n}}</button>
                 <button v-else class="btn" @click="goPage(n, $event)">{{n}}</button>
             </li>
-            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== this.page_end"><button class="btn" @click="goPage('next', $event)">다음</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== this.page_end && this.width > 600"><button class="btn" @click="goPage('next', $event)">다음</button></li>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== this.page_end"><button class="btn" @click="goPage(page_end, $event)">끝</button></li>
         </ul>
     </div>
@@ -34,10 +34,12 @@ export default {
       page_start: 0,
       page_end: 0,
       page_stack: [],
-      page_count: 3
+      page_count: 5, // 3 이하 넣지말자
+      width: window.innerWidth || document.body.clientWidth
     }
   },
   created () {
+    if (this.width <= 600) this.page_count = 3
   },
   methods: {
     goPage (n, event) {
