@@ -13,28 +13,28 @@ export default new Router({
     {
       path: '/logline',
       name: 'LogLine',
-      component: () => import('@/components/logline/LogLine'),
+      component: () => import('@/pages/logline/LogLine'),
       meta: {layout: 'topmenu'}
     },
     {
       path: '/logline/add',
       name: 'LogLineAddForm',
-      component: () => import('@/components/logline/LogLineForm')
+      component: () => import('@/pages/logline/LogLineForm')
     },
     {
       path: '/logline/:id/detail',
       name: 'LogLineDetailForm',
-      component: () => import('@/components/logline/LogLineDetailForm'),
+      component: () => import('@/pages/logline/LogLineDetailForm'),
       meta: {layout: 'topmenu'}
     },
     {
       path: '/logline/:id/edit',
       name: 'LogLineEditForm',
-      component: () => import('@/components/logline/LogLineForm')
+      component: () => import('@/pages/logline/LogLineForm')
     },
     {
       path: '*',
-      component: () => import('@/components/NotFoundComponent')
+      component: () => import('@/pages/NotFoundComponent')
     }
   ]
 })
