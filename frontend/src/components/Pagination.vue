@@ -3,7 +3,10 @@
         <ul>
             <li v-if="this.size > 5"><button class="btn" @click="goPage('first', $event)">처음</button></li>
             <li><button class="btn" @click="goPage('prev', $event)">이전</button></li>
-            <li v-for="n in pagination.size_length" :key="n"><button class="btn" @click="goPage(n, $event)">{{n}}</button></li>
+            <li v-for="n in pagination.size_length" :key="n">
+                <button v-if="pagination.page === n" class="btn active" @click="goPage(n, $event)">{{n}}</button>
+                <button v-else class="btn" @click="goPage(n, $event)">{{n}}</button>
+            </li>
             <li><button class="btn" @click="goPage('next', $event)">다음</button></li>
             <li><button class="btn" @click="goPage('last', $event)">끝</button></li>
         </ul>
@@ -37,13 +40,7 @@ export default {
   },
   methods: {
     goPage (n, event) {
-      const ultag = event.target.parentElement.parentElement
-      for (let item of ultag.children) {
-        const button = item.querySelector('button')
-        button.classList.remove('active')
-      }
       this.pagination.page = n
-      event.target.classList.add('active')
       this.$eventbus.$emit('reloadComments', this.pagination)
     }
   },
