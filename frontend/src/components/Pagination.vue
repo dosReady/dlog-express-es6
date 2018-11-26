@@ -1,14 +1,14 @@
 <template>
     <div class="pagination-container">
         <ul>
-            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('first', $event)">처음</button></li>
-            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage(1, $event)">처음</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
             <li v-for="n in pagination.size_length" :key="n">
                 <button v-if="pagination.page === n" class="btn active" @click="goPage(n, $event)">{{n}}</button>
                 <button v-else class="btn" @click="goPage(n, $event)">{{n}}</button>
             </li>
-            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('next', $event)">다음</button></li>
-            <li v-if="this.pagination.size > 5"><button class="btn" @click="goPage('last', $event)">끝</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== this.page_end"><button class="btn" @click="goPage('next', $event)">다음</button></li>
+            <li v-if="this.pagination.size_length > 5 && this.pagination.page !== this.page_end"><button class="btn" @click="goPage(page_end, $event)">끝</button></li>
         </ul>
     </div>
 </template>
@@ -20,7 +20,7 @@ export default {
     size: Number,
     max: {
       type: Number,
-      default: 10
+      default: 5
     },
     link: String
   },
@@ -36,23 +36,26 @@ export default {
     }
   },
   created () {
-    console.log(this)
   },
   methods: {
     goPage (n, event) {
+      if (n === 'prev') {
+        n = this.pagination.page - 1
+        if (n === 0) n = 1
+      }
+      if (n === 'next') {
+        n = this.pagination.page + 1
+        if (n === this.page_end) n = this.page_end
+      }
       this.pagination.page = n
       this.$eventbus.$emit('reloadComments', this.pagination)
     }
-  },
-  computed: {
   },
   watch: {
     size () {
       this.pagination.size_length = Math.floor(this.size / this.max) + 1
       this.page_start = ((this.pagination.page - 1) / this.$props.size) * this.$props.size + 1
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)
-      console.log(this.page_start)
-      console.log(this.page_end)
     }
   }
 }

@@ -58,7 +58,7 @@ module.exports = class Comments {
         try {
             const seq = req.body.id
             let page = 0 
-            let max = 10
+            let max = 5
             if (req.body.pagination) {
                 const pagination = req.body.pagination
                 page = (pagination.page -1)
