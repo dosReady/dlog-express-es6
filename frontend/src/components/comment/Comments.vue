@@ -16,10 +16,11 @@
             </div>
             </div>
             <div :class="buttonWrapClass">
-              <button class="btn btn-default" @click="showInputWrap">댓글 달기</button>
+              <button class="btn btn-font-default" @click="toggleReplys(data.comment_seq)">{{getReplysBtnText}}</button>
+              <button class="btn btn-default" @click="showInputWrap">답글 달기</button>
             </div>
+            <reply-container :data="replys"></reply-container>
         </div>
-        <reply-container :data="data.reply" :comment_seq="data.comment_seq"></reply-container>
     </div>
 </template>
 
@@ -44,10 +45,36 @@ export default {
       buttonWrapClass: {
         'button-wrap': true,
         'hide': false
-      }
+      },
+      replys: [],
+      isReplyShow: false
+    }
+  },
+  computed: {
+    getReplysBtnText () {
+      let result = `${this.$props.data.reply_cnt} 개의 답글`
+      if (this.isReplyShow) result = '숨기기'
+      return result
     }
   },
   methods: {
+    async toggleReplys (commentSeq) {
+      try {
+        if (!this.isReplyShow) {
+          const result = await this.$http.post('/api/reply/list', {seq: commentSeq})
+          this.replys = result.data
+          this.isReplyShow = true
+        } else {
+          this.isReplyShow = false
+          this.replys = []
+        }
+      } catch (error) {
+        console.log(error)
+        alert('답글 조회중 오류가 발생했습니다.')
+      }
+    },
+    hideReplys () {
+    },
     showInputWrap () {
       this.inputWrapClass.hide = false
       this.buttonWrapClass.hide = true
@@ -101,10 +128,14 @@ export default {
         textarea {
           margin-bottom: 1rem;
         }
+        .button-wrap {
+          display: flex;
+          justify-content: flex-end;
+        }
       }
       .button-wrap {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
       }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="reply-container">
-        <reply v-for="(item, index) in data" :key="index" :data="item" :comment_seq="$props.comment_seq"></reply>
+        <reply v-for="(item, index) in data" :key="index" :data="item"></reply>
     </div>
 </template>
 
@@ -9,8 +9,7 @@ import Reply from '@/components/comment/Reply'
 export default {
   name: 'ReplyContainer',
   props: {
-    data: Array,
-    comment_seq: Number
+    data: Array
   },
   components: {
     Reply

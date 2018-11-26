@@ -4,7 +4,6 @@ module.exports = class Replys {
     async insert (req, connection) {
         try {
             const data = req.body.data
-            console.log(data)
             const sql = `
             INSERT INTO dlog_comment_replys (
                 reply_content,
@@ -23,6 +22,28 @@ module.exports = class Replys {
             )
             `
             await dao.insert(sql)
+        } catch (error) {
+            throw error
+        }
+    }
+    async list (req, connection) {
+        try {
+            const seq = req.body.seq
+            const sql = `
+            SELECT 
+                reply_seq,
+                reply_content,
+                comment_seq,
+                target_user_id,
+                user_id,
+                DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS reply_update_date
+            FROM
+                dlog_comment_replys 
+            WHERE comment_seq = ${seq}
+            ORDER BY update_date DESC
+            `
+            const result = await dao.list(sql)
+            return result
         } catch (error) {
             throw error
         }

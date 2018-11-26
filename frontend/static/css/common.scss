@@ -8,7 +8,7 @@
    .page-content {
         border-radius: .25rem;
         padding: 1.75rem;
-        box-shadow: 0 0 4px rgba(0,0,0,.05);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
         background-color: white;
         width: 1000px;
         height: auto;
@@ -68,6 +68,15 @@
 .btn-outline-default:hover {
     color: white!important;
     background-color: #355c7d!important;
+}
+.btn-font-default {
+    background-color:white!important;
+    color: #355c7d!important;
+    font-weight: 620;
+}
+.btn-font-default:hover {
+    background-color: #355c7d!important;
+    color: white!important;
 }
 textarea {
     border: none;

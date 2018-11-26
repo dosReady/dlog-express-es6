@@ -63,54 +63,18 @@ module.exports = class Comments {
             a.comment_content,
             a.user_id AS comment_user_id,
             DATE_FORMAT(a.update_date, '%Y-%m-%d %H:%i') AS comment_update_date,
-            b.reply_seq,
-            b.reply_content,
-            DATE_FORMAT(b.update_date, '%Y-%m-%d %H:%i') AS reply_update_date,
-            b.user_id AS reply_user_id
+            COUNT(b.reply_seq) AS reply_cnt
             FROM 
                 dlog_comments a
             LEFT OUTER JOIN
                 dlog_comment_replys b
             ON a.comment_seq =  b.comment_seq
             WHERE a.master_seq = ${seq}
-            ORDER BY comment_update_date DESC, reply_update_date DESC
+            GROUP BY a.comment_seq, a.comment_content, a.user_id, a.update_date
+            ORDER BY comment_update_date DESC
             `
             const comments = await dao.list(commentsql)
-            let result = []
-            for (const comment of comments) {
-                let commentObj = {}
-                const idx = result.findIndex(item => item.comment_seq === comment.comment_seq)
-                if (idx > -1) {
-                    const replyObj = {
-                        reply_seq: comment.reply_seq,
-                        reply_content: comment.reply_content,
-                        reply_update_date: comment.reply_update_date,
-                        reply_user_id: comment.reply_user_id
-                    }
-                    result[idx].reply.push(replyObj)
-                } else {
-                    commentObj = {
-                        comment_seq: comment.comment_seq,
-                        comment_content: comment.comment_content,
-                        comment_update_date: comment.comment_update_date,
-                        user_id: comment.user_id,
-                        reply: []
-                    }
-                    if(comment.reply_seq) {
-                        const replyObj = {
-                            reply_seq: comment.reply_seq,
-                            reply_content: comment.reply_content,
-                            reply_update_date: comment.reply_update_date,
-                            reply_user_id: comment.reply_user_id
-                        }
-                        commentObj.reply.push(replyObj)
-                    }
-                    result.push(commentObj)
-                }
-                
-            }
-            console.log(result)
-            return result
+            return comments
         } catch (error) {
             throw error
         }

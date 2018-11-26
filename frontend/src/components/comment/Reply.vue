@@ -1,7 +1,7 @@
 <template>
     <div class="reply-wrap">
         <div class="reply-top">
-            <h4>{{data.reply_user_id}}</h4>
+            <h4>{{data.user_id}}</h4>
             <span>{{data.reply_update_date}}</span>
         </div>
         <div class="reply-body">{{data.reply_content}}</div>
@@ -14,7 +14,7 @@
             </div>
             </div>
             <div :class="buttonWrapClass">
-              <button class="btn btn-default" @click="showInputWrap">댓글 달기</button>
+              <button class="btn btn-default" @click="showInputWrap">답글 달기</button>
             </div>
         </div>
     </div>
@@ -24,8 +24,7 @@
 export default {
   name: 'Reply',
   props: {
-    data: Object,
-    comment_seq: Number
+    data: Object
   },
   data () {
     return {
@@ -56,8 +55,8 @@ export default {
     async addComment () {
       try {
         console.log(this.$props)
-        this.inputReplyData.comment_seq = this.$props.comment_seq
-        this.inputReplyData.target_user_id = this.data.reply_user_id
+        this.inputReplyData.comment_seq = this.data.comment_seq
+        this.inputReplyData.target_user_id = this.data.target_user_id
         await this.$http.post('/api/reply/add', {data: this.inputReplyData})
         this.reloadComment()
       } catch (error) {
@@ -79,7 +78,6 @@ export default {
 .reply-wrap {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #355c7d;
     .reply-top {
         display: flex;
         align-items: center;
