@@ -3,7 +3,7 @@
         <ul>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage(1, $event)">처음</button></li>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage('prev', $event)">이전</button></li>
-            <li v-for="n in pageStack" :key="n">
+            <li v-for="n in page_stack" :key="n">
                 <button v-if="pagination.page === n" class="btn active" @click="goPage(n, $event)">{{n}}</button>
                 <button v-else class="btn" @click="goPage(n, $event)">{{n}}</button>
             </li>
@@ -33,8 +33,8 @@ export default {
       },
       page_start: 0,
       page_end: 0,
-      pageStack: [],
-      pageCount: 5
+      page_stack: [],
+      page_count: 5
     }
   },
   created () {
@@ -49,10 +49,18 @@ export default {
         n = this.pagination.page + 1
         if (n === this.page_end) n = this.page_end
       }
-      this.pageStack = []
-      for (let i = n; i <= n + this.pageCount; i++) {
-        if (i > this.page_end) break
-        this.pageStack.push(i)
+      if (n + (this.page_count - 1) <= this.page_end) {
+        this.page_stack = []
+        for (let i = n; i < n + this.page_count; i++) {
+          if (i > this.page_end) break
+          this.page_stack.push(i)
+        }
+      }
+      if (n === this.page_end) {
+        this.page_stack = []
+        for (let i = (this.page_end - this.page_count) + 1; i <= this.page_end; i++) {
+          this.page_stack.push(i)
+        }
       }
       this.pagination.page = n
       this.$eventbus.$emit('reloadComments', this.pagination)
@@ -61,8 +69,8 @@ export default {
   watch: {
     size () {
       this.pagination.size_length = Math.floor(this.size / this.max) + 1
-      for (let i = 1; i <= this.pageCount; i++) {
-        this.pageStack.push(i)
+      for (let i = 1; i <= this.page_count; i++) {
+        this.page_stack.push(i)
       }
       this.page_start = ((this.pagination.page - 1) / this.$props.size) * this.$props.size + 1
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)
@@ -73,16 +81,18 @@ export default {
 
 <style lang="scss" scoped>
 .pagination-container {
-    padding: 1rem;
-    ul {
-        display: flex;
-        align-items: center;
-        list-style: none;
-        padding: 0;
-        margin: 0 auto;
-        li {
-            margin-right: 1rem;
-        }
-    }
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      li {
+          margin-right: 1rem;
+      }
+  }
 }
 </style>
