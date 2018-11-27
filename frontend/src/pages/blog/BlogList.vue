@@ -8,6 +8,9 @@
           <p>모든것을 기록하자</p>
         </header>
       </section>
+      <section>
+        <tags :emit="'searchBlog'"></tags>
+      </section>
     </div>
     <div id="list-wrap">
       <article class="post" v-for="(item, index) in blogs" :key="index">
@@ -34,6 +37,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import Tags from '@/components/Tags'
 export default {
   name: 'BlogList',
   data () {
@@ -46,6 +50,9 @@ export default {
     try {
       this.$eventbus.$on('reloadBlogs', (pagination) => {
         this.initBlog(pagination)
+      })
+      this.$eventbus.$on('searchBlog', (tag) => {
+        console.log(tag)
       })
       this.initBlog()
     } catch (error) {
@@ -82,7 +89,8 @@ export default {
     }
   },
   components: {
-    Pagination
+    Pagination,
+    Tags
   }
 }
 </script>

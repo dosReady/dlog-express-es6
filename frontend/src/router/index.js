@@ -34,7 +34,8 @@ export default new Router({
     },
     {
       path: '*',
-      component: () => import('@/pages/NotFoundComponent')
+      component: () => import('@/pages/NotFoundComponent'),
+      meta: {layout: 'topmenu'}
     }
   ]
 })

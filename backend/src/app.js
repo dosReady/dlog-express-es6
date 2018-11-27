@@ -11,6 +11,7 @@ import db from './setting/db'
 import router from './router/index'
 import blogs from './router/blog'
 import comments from './router/comments'
+import tags from './router/tags'
 import replys from './router/replys' 
 
 const app = express()
@@ -40,6 +41,7 @@ app.use(modules.accesslog)
 
 // router
 app.use('/', router)
+app.use('/api/tag', tags)
 app.use('/api/blog', blogs)
 app.use('/api/comment', comments)
 app.use('/api/reply', replys)

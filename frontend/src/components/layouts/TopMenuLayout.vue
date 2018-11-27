@@ -5,15 +5,17 @@
             <nav class="links">
                 <ul>
                     <menu-btn :path="'/blog'">blog</menu-btn>
-                    <menu-btn :path="'/blog/Add'">Add</menu-btn>
+                    <menu-btn :path="'/logline'">logline</menu-btn>
                 </ul>
             </nav>
+            <!--
             <nav class="icons">
                 <ul>
                     <li><router-link to="/"><font-awesome-icon icon="search" /></router-link></li>
                     <li><router-link to="/"><font-awesome-icon icon="bars" /></router-link></li>
                 </ul>
             </nav>
+            -->
         </div>
         <slot></slot>
     </div>
