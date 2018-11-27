@@ -8,16 +8,16 @@ module.exports = class Blog {
         try {
             const data = req.body.data
             const mastersql = `
-            INSERT INTO dlog_blog_master (
-                blog_master_title,
-                blog_master_content,
+            INSERT INTO dlog_blog (
+                blog_title,
+                blog_content,
                 blog_worklist_seq,
                 file_group_seq,
                 action_log_seq
             )
             VALUES(
-                '${data.blog_master_title}',
-                '${data.blog_master_content}',
+                '${data.blog_title}',
+                '${data.blog_content}',
                 null,
                 null,
                 null
@@ -27,7 +27,7 @@ module.exports = class Blog {
             const [rows] = await connection.query(mastersql)
             /*
             const worksqls = `
-            INSERT INTO dlog_work_list (work_content, work_level, blog_master_seq)
+            INSERT INTO dlog_work_list (work_content, work_level, blog_seq)
             VALUES ?
             `
             const worklist = data.worklist
@@ -55,11 +55,11 @@ module.exports = class Blog {
             const seq = req.body.seq
             const data = req.body.data
             const updatesql = `
-            UPDATE dlog_blog_master
-            SET blog_master_title='${data.blog_master_title}',
-                blog_master_content='${data.blog_master_content}',
+            UPDATE dlog_blog
+            SET blog_title='${data.blog_title}',
+                blog_content='${data.blog_content}',
                 update_date=CURRENT_TIMESTAMP
-            WHERE blog_master_seq=${seq}
+            WHERE blog_seq=${seq}
             `
             resultsql += updatesql + '\n'
             await connection.query(updatesql)
@@ -75,10 +75,10 @@ module.exports = class Blog {
         try {
             const seq = req.body.seq
             const delWorksql = `
-                DELETE FROM dlog_work_list WHERE blog_master_seq = ${seq}
+                DELETE FROM dlog_work_list WHERE blog_seq = ${seq}
             `
             const delMstsql = `
-                DELETE FROM dlog_blog_master WHERE blog_master_seq = ${seq}
+                DELETE FROM dlog_blog WHERE blog_seq = ${seq}
             `
             resultsql += delWorksql + '\n' + delMstsql
             await connection.query(delWorksql)
@@ -94,38 +94,39 @@ module.exports = class Blog {
         const id = req.body.id
         const mastersql = `
             SELECT 
-                blog_master_title,
-                blog_master_content,
+                blog_title,
+                blog_content,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
-            FROM dlog_blog_master 
-            WHERE blog_master_seq = '${id}'
+            FROM dlog_blog 
+            WHERE blog_seq = '${id}'
         `
         const result = await dao.select(mastersql)
-        /*
-        const worksql = `
-        SELECT
-            work_seq,
-            work_content,
-            work_level
-        FROM dlog_work_list
-        WHERE blog_master_seq = '${id}'
-        `
-        result.worklist = await dao.list(worksql)
-        */
         return result
     }
 
-    async list () {
+    async list (req) {
+        let page = 0 
+        let max = 5
+        if (req.body.pagination) {
+            const pagination = req.body.pagination
+            page = (pagination.page -1)
+            max = pagination.max
+        }
+        const totalsql = `
+        SELECT COUNT(*) AS total FROM dlog_blog
+        `
         const sql = `
         SELECT
-            blog_master_seq,
-            blog_master_title,
-            LEFT(blog_master_content, 250) AS blog_master_content,
+            blog_seq,
+            blog_title,
+            LEFT(blog_content, 250) AS blog_content,
             DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
-        FROM dlog_blog_master
+        FROM dlog_blog
         ORDER BY update_date DESC
+        LIMIT ${page * max}, ${max}
         `
-        const result = await dao.list(sql)
-        return result
+        const list = await dao.list(sql)
+        const totalresult = await dao.select(totalsql)
+        return {list: list, total: totalresult.total}
     }
 }

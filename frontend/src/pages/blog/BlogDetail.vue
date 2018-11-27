@@ -3,7 +3,7 @@
     <div class="page-top"></div>
     <div class="page-content">
         <div class="blog-title">
-          <h1>{{data.blog_master_title}}</h1>
+          <h1>{{data.blog_title}}</h1>
           <span class="update-date">{{data.update_date}}</span>
           <hr>
         </div>
@@ -91,25 +91,25 @@ export default {
   computed: {
     compiledMarkdown () {
       let content = ''
-      if (this.data.blog_master_content) {
-        content = this.data.blog_master_content
+      if (this.data.blog_content) {
+        content = this.data.blog_content
       }
       return marked(content, { renderer: renderer, sanitize: true })
     },
     subject: {
       get () {
-        return this.data.blog_master_title
+        return this.data.blog_title
       },
       set (value) {
-        this.data.blog_master_title = value
+        this.data.blog_title = value
       }
     },
     content: {
       get () {
-        return this.data.blog_master_content
+        return this.data.blog_content
       },
       set (value) {
-        this.data.blog_master_content = value
+        this.data.blog_content = value
       }
     }
   }
@@ -118,7 +118,6 @@ export default {
 
 <style lang="scss">
 @import '$static/css/github-markdown';
-@import '$static/css/common';
 .blog-title {
   word-break: break-all;
   margin-bottom: 1.75rem;

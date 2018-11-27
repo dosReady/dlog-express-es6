@@ -1,7 +1,7 @@
 <template>
     <div class="comment-container">
       <comments v-for="(item, index) in data.comments" :key="index" :data="item"></comments>
-      <pagination :size="data.comment_total_cnt" :link="'/api/comment/list'"></pagination>
+      <pagination :size="data.comment_total_cnt" :mode="'comment'"></pagination>
     </div>
 </template>
 

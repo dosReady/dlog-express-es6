@@ -37,7 +37,7 @@ router.post('/delete', async (req, res, next) => {
 
 router.post('/list', async (req, res, next) => {
     try {
-        const result = await blog.list()
+        const result = await blog.list(req)
         res.json(result)
     } catch (error) {
         next(error)

@@ -29,8 +29,8 @@ export default {
   data () {
     return {
       data: {
-        blog_master_title: '',
-        blog_master_content: ''
+        blog_title: '',
+        blog_content: ''
       }
     }
   },
@@ -61,25 +61,25 @@ export default {
   computed: {
     compiledMarkdown () {
       let content = ''
-      if (this.data.blog_master_content) {
-        content = this.data.blog_master_content
+      if (this.data.blog_content) {
+        content = this.data.blog_content
       }
       return marked(content, { sanitize: true })
     },
     subject: {
       get () {
-        return this.data.blog_master_title
+        return this.data.blog_title
       },
       set (value) {
-        this.data.blog_master_title = value
+        this.data.blog_title = value
       }
     },
     content: {
       get () {
-        return this.data.blog_master_content
+        return this.data.blog_content
       },
       set (value) {
-        this.data.blog_master_content = value
+        this.data.blog_content = value
       }
     }
   }

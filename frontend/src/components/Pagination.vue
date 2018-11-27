@@ -22,7 +22,7 @@ export default {
       type: Number,
       default: 5
     },
-    link: String
+    mode: String
   },
   data () {
     return {
@@ -51,32 +51,40 @@ export default {
         n = this.pagination.page + 1
         if (n === this.page_end) n = this.page_end
       }
-      this.page_stack = []
-      if (n - 1 === 1 || n === 1) {
-        for (let i = 1; i <= this.page_count; i++) {
-          this.page_stack.push(i)
-        }
-      } else if (n + 1 === this.page_end || n === this.page_end) {
-        for (let i = (this.page_end - this.page_count) + 1; i <= this.page_end; i++) {
-          this.page_stack.push(i)
-        }
-      } else {
-        for (let i = n - ((this.page_count - 1) / 2); i <= n + ((this.page_count - 1) / 2); i++) {
-          this.page_stack.push(i)
+      if (this.page_end > this.page_count) {
+        this.page_stack = []
+        if (n - 1 === 1 || n === 1) {
+          for (let i = 1; i <= this.page_count; i++) {
+            this.page_stack.push(i)
+          }
+        } else if (n + 1 === this.page_end || n === this.page_end) {
+          for (let i = (this.page_end - this.page_count) + 1; i <= this.page_end; i++) {
+            this.page_stack.push(i)
+          }
+        } else {
+          for (let i = n - ((this.page_count - 1) / 2); i <= n + ((this.page_count - 1) / 2); i++) {
+            this.page_stack.push(i)
+          }
         }
       }
       this.pagination.page = n
-      this.$eventbus.$emit('reloadComments', this.pagination)
+      if (this.$props.mode === 'comment') {
+        this.$eventbus.$emit('reloadComments', this.pagination)
+      } else if (this.$props.mode === 'blog') {
+        this.$eventbus.$emit('reloadBlogs', this.pagination)
+      }
     }
   },
   watch: {
     size () {
       this.pagination.size_length = Math.floor(this.size / this.max) + 1
-      for (let i = 1; i <= this.page_count; i++) {
-        this.page_stack.push(i)
-      }
       this.page_start = ((this.pagination.page - 1) / this.$props.size) * this.$props.size + 1
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)
+      let loop = this.page_count
+      if (this.page_end < this.page_count) loop = this.page_end
+      for (let i = 1; i < loop; i++) {
+        this.page_stack.push(i)
+      }
     }
   }
 }

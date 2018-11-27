@@ -12,37 +12,43 @@
     <div id="list-wrap">
       <article class="post" v-for="(item, index) in blogs" :key="index">
         <header>
-          <router-link class="image featured" :to="{name: 'BlogDetail', params: {id: item.blog_master_seq}}"><img src="static/image/website-bg-img.jpg"></router-link>
+          <router-link class="image featured" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}"><img src="static/image/website-bg-img.jpg"></router-link>
         </header>
         <div class="post-body">
           <div class="post-title">
-            <h2>{{item.blog_master_title}}</h2>
+            <h2>{{item.blog_title}}</h2>
           </div>
-          <p v-html="item.blog_master_content"></p>
+          <p v-html="item.blog_content"></p>
         </div>
         <footer>
           <ul class="actions">
-            <li><router-link class="btn btn-default" :to="{name: 'BlogDetail', params: {id: item.blog_master_seq}}">더 보기</router-link></li>
-            <li><router-link class="btn btn-default" :to="{name: 'BlogEdit', params: {id: item.blog_master_seq}}">편집</router-link></li>
+            <li><router-link class="btn btn-default" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}">더 보기</router-link></li>
+            <li><router-link class="btn btn-default" :to="{name: 'BlogEdit', params: {id: item.blog_seq}}">편집</router-link></li>
           </ul>
         </footer>
       </article>
+      <pagination :size="blogsTotal" :mode="'blog'"></pagination>
     </div>
     </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
 export default {
   name: 'BlogList',
   data () {
     return {
-      blogs: []
+      blogs: [],
+      blogsTotal: 0
     }
   },
-  async beforeCreate () {
+  async created () {
     try {
-      const {data} = await this.$http.post('/api/blog/list')
-      this.blogs = data
+      this.$eventbus.$on('reloadBlogs', (pagination) => {
+        console.log(pagination)
+        this.initBlog(pagination)
+      })
+      this.initBlog()
     } catch (error) {
       console.log(error)
       alert('로그라인 목록조회중 오류가 발생했습니다.')
@@ -54,16 +60,17 @@ export default {
         try {
           await this.$http.post('/api/blog/delete', {seq: seq})
           alert('삭제처리 되었습니다.')
-          this.initLogine()
+          this.initBlog()
         } catch (error) {
           console.log(error)
           alert('삭제처리중 오류가 발생했습니다.')
         }
       }
     },
-    async initLogine () {
-      const {data} = await this.$http.post('/api/blog/list')
-      this.blogs = data
+    async initBlog (pagination) {
+      const {data} = await this.$http.post('/api/blog/list', {pagination: pagination})
+      this.blogs = data.list
+      this.blogsTotal = data.total
     }
   },
   computed: {
@@ -74,12 +81,14 @@ export default {
         'ml-auto': false
       }
     }
+  },
+  components: {
+    Pagination
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '$static/css/common';
 #blog-container {
   display: flex;
   flex-direction: row;
