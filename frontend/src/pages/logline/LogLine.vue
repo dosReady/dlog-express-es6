@@ -3,7 +3,7 @@
           <div class="logline-list">
             <div class="card-container" v-for="(item, index) in loglines" :key="index">
               <div class="card-img">
-                  <img src="static/image/default_img.jpg">
+                  <img src="static/image/website-bg-img.jpg">
               </div>
               <div class="card-wrap">
                   <div class="card-title">

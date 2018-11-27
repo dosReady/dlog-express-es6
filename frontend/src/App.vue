@@ -22,7 +22,7 @@ html {
   background-color: #EFEFEF!important;
   box-sizing: border-box;
   #app {
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Roboto', '맑은 고딕', malgun gothic, '돋움', Dotum, 'Helvetica Neue', Helvetica, verdana, Arial, sans-serif;
     height: 100%;
     font-size: 1rem!important;
     user-select:none;

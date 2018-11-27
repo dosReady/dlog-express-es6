@@ -1,22 +1,19 @@
 <template>
-    <div class="topmenu-layout">
-        <div class="topmenu-container">
-            <div class="title-group">
-                <router-link to="/">
-                    <img src="/static/image/dlog_logo.png">
-                </router-link>
-            </div>
-            <div class="button-page-group">
-                <router-link v-if="path === '/logline'" class="page-link" to="/logline/add">등록</router-link>
-            </div>
-            <div class="page-link-group">
-                <router-link class="page-link" to="/">ISSUE LOG</router-link>
-                <router-link class="page-link" to="/">LOG LINE</router-link>
-                <router-link class="page-link" to="/">ETC</router-link>
-            </div>
-            <div class="button-right-group">
-                <img src="/static/icons/typicons/src/svg/th-menu.svg">
-            </div>
+    <div id="topmenu-layout">
+        <div id="topmenu-container">
+            <h1><router-link to="/">dlog</router-link></h1>
+            <nav class="links">
+                <ul>
+                    <li><router-link to="/">logline</router-link></li>
+                    <li><router-link to="/">blog</router-link></li>
+                </ul>
+            </nav>
+            <nav class="icons">
+                <ul>
+                    <li><router-link to="/"><font-awesome-icon icon="search" /></router-link></li>
+                    <li><router-link to="/"><font-awesome-icon icon="bars" /></router-link></li>
+                </ul>
+            </nav>
         </div>
         <slot></slot>
     </div>
@@ -42,97 +39,82 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.topmenu-layout {
+@import '$static/fontawesome/scss/fontawesome';
+@import '$static/css/common';
+#topmenu-layout {
     height: 100%;
-    @media (max-width: 800px) {
-        margin-left: 0;
-    }
-    div.topmenu-container {
+    #topmenu-container {
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        height: 4rem;
-        background-color: #2B3A42;
-        opacity: 0.98;
-        box-shadow: 0px 5px 5px rgb(98, 102, 102);
-        color: white;
-        margin-bottom: 1rem;
+        justify-content: space-between;
+        background-color: #ffffff;
+        border-bottom: solid 1px rgba(160, 160, 160, 0.3);
+        height: 3.5em;
+        top: 0;
+        left: 0;
+        line-height: 3.5em;
         position: fixed;
-        z-index: 15;
         width: 100%;
-        font-size: 1rem!important;
-        div.page-link-group {
-            display: flex;
-            margin: auto 0rem auto 3rem;
-            @media (max-width: 680px){
-                display: none;
-            }
-            a.page-link {
-                font-size: 1.5rem!important;
-                border: none;
-                color: white;
-                background-color: transparent;
-                margin-right: 1rem;
-            }
-            a.page-link:focus {
-                z-index: 2;
-                outline: 0;
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        z-index: 10000;
+        h1 {
+            height: inherit;
+            line-height: inherit;
+            padding: 0 0 0 1.5em;
+            white-space: nowrap;
+        }
+        .links {
+            flex: 1;
+            border-left: solid 1px rgba(160, 160, 160, 0.3);
+            height: inherit;
+            line-height: inherit;
+            margin-left: 1.5em;
+            overflow: hidden;
+            padding-left: 1.5em;
+            ul {
+                li:first-child {
+                    border-left: 0;
+                    margin-left: 0;
+                    padding-left: 0;
+                }
+                li {
+                    display: inline-block;
+                    border-left: solid 1px rgba(160, 160, 160, 0.3);
+                    line-height: 1;
+                    margin-left: 1em;
+                    padding-left: 1em;
+                    a {
+                        border-bottom: 0;
+                        font-size: 0.95em;
+                        font-weight: 400;
+                        letter-spacing: 0.25em;
+                        text-transform: uppercase
+                    }
+                }
             }
         }
-        div.title-group {
-            padding: 1rem;
-            margin-right: 1rem;
-            display: block;
-            position: relative;
-            box-shadow: 0 0 4px rgba(0,0,0,.05);
-            width: 4rem;
-            img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-        div.button-page-group {
-            padding: 1rem;
-            a {
-                text-decoration:none;
-            }
-            a {
-                background-color: transparent;
-                border: 1px solid white;
-                color: white;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                font-size: 1rem;
-            }
-            a:hover {
-                background-color: white;
-                color: black;
-            }
-        }
-        div.category-info{
-            padding: 1rem;
-        }
-        div.button-right-group{
-            display: none;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            padding-right: 1.75rem;
-            margin-left: auto;
-            @media (max-width: 680px){
-                display: block;
-            }
-            img:not(:disabled):not(.disabled) {
-                cursor: pointer;
-            }
-            img {
-                height: 2rem;
+        .icons {
+            height: inherit;
+            line-height: inherit;
+            ul {
+                height: inherit;
+                line-height: inherit;
+                li {
+                    height: inherit;
+                    line-height: inherit;
+                    white-space: nowrap;
+                    border-left: solid 1px rgba(160, 160, 160, 0.3);
+                    padding: 0.15em 1.3em 0.15em 1.5em;
+                    a {
+                        border-bottom: 0;
+                        color: #aaaaaa!important;
+                        overflow: hidden;
+                        position: relative;
+                        text-indent: 4em;
+                        width: 4em
+                    }
+                    a:hover {
+                        color: black!important;
+                    }
+                }
             }
         }
     }

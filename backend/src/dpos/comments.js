@@ -81,7 +81,7 @@ module.exports = class Comments {
             ORDER BY comment_update_date DESC
             LIMIT ${page * max}, ${max}
             `
-            const totalResult = await dao.select('SELECT COUNT(*) AS comment_total_cnt FROM dlog_comments')
+            const totalResult = await dao.select('SELECT COUNT(*) AS comment_total_cnt FROM dlog_comments WHERE master_seq = ?', seq)
             const comments = await dao.list(commentsql)
             return {comments: comments, comment_total_cnt: totalResult.comment_total_cnt}
         } catch (error) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="pagination-container">
+    <div v-if="$props.size > 0" class="pagination-container">
         <ul>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1"><button class="btn" @click="goPage(1, $event)">처음</button></li>
             <li v-if="this.pagination.size_length > 5 && this.pagination.page !== 1 && this.width > 600"><button class="btn" @click="goPage('prev', $event)">이전</button></li>

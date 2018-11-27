@@ -10,7 +10,8 @@ export default {
   name: 'LoadLayout',
   components: {
     'DefaultLayout': () => import('@/components/layouts/DefaultLayout'),
-    'TopmenuLayout': () => import('@/components/layouts/TopmenuLayout')
+    'TopmenuLayout': () => import('@/components/layouts/TopmenuLayout'),
+    'LeftmenuLayout': () => import('@/components/layouts/LeftmenuLayout')
   },
   computed: {
     switchLayout () {
