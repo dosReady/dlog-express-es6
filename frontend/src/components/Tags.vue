@@ -1,10 +1,8 @@
 <template>
     <div class="tag-container">
-        <ul>
-            <li v-for="(item, index) in data" :key="index">
-                <button @click="goTag({emit:$props.emit, tag:item.tag_name})" class="btn btn-outline-default">{{item.tag_name}}</button>
-            </li>
-        </ul>
+        <div class="tag-wrap" v-for="(item, index) in data" :key="index">
+            <button @click="goTag({emit:$props.emit, tag:item.tag_name})" class="btn btn-outline-default">{{item.tag_name}}</button>
+        </div>
     </div>
 </template>
 
@@ -41,10 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 .tag-container {
-    ul {
-        li {
-            margin-bottom: 1rem;
-        }
+    .tag-wrap {
+        display: inline-block;
+        margin-right: .75rem;
+        margin-bottom: .75rem;
     }
 }
 </style>
