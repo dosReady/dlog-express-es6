@@ -1,7 +1,10 @@
 <template>
     <div class="tag-container">
         <div class="tag-wrap" v-for="(item, index) in data" :key="index">
-            <button @click="goTag({emit:$props.emit, tag:item.tag_name})" class="btn btn-outline-default">{{item.tag_name}}</button>
+            <button @click="goTag({emit:$props.emit, tag:item.tag_name})" class="btn btn-outline-default">
+                <div class="tag-name">{{item.tag_name}}</div>
+                <div class="tag-cnt">{{item.tag_cnt}}</div>
+            </button>
         </div>
     </div>
 </template>
