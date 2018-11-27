@@ -5,7 +5,7 @@
             <nav class="links">
                 <ul>
                     <menu-btn :path="'/blog'">blog</menu-btn>
-                    <menu-btn :path="'/blog/56/detail'">Detail</menu-btn>
+                    <menu-btn :path="'/blog/Add'">Add</menu-btn>
                 </ul>
             </nav>
             <nav class="icons">
