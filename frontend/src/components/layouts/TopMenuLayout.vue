@@ -4,8 +4,8 @@
             <h1><router-link to="/">dlog</router-link></h1>
             <nav class="links">
                 <ul>
-                    <li><router-link to="/">blog</router-link></li>
-                    <li><router-link to="/">logline</router-link></li>
+                    <menu-btn :path="'/blog'">blog</menu-btn>
+                    <menu-btn :path="'/blog/56/detail'">Detail</menu-btn>
                 </ul>
             </nav>
             <nav class="icons">
@@ -20,20 +20,11 @@
 </template>
 
 <script>
+import MenuBtn from '@/components/MenuBtn'
 export default {
   name: 'topmenuLayout',
-  data () {
-    return {
-      path: ''
-    }
-  },
-  created () {
-    this.path = this.$route.path
-  },
-  watch: {
-    '$route' (to, from) {
-      this.path = to.path
-    }
+  components: {
+    MenuBtn
   }
 }
 </script>
@@ -62,31 +53,22 @@ export default {
         }
         .links {
             flex: 1;
-            border-left: solid 1px rgba(160, 160, 160, 0.3);
             height: inherit;
             line-height: inherit;
             margin-left: 1.5em;
-            overflow: hidden;
             padding-left: 1.5em;
+            @media (max-width: 700px) {
+                display: none;
+            }
             ul {
-                li:first-child {
-                    border-left: 0;
-                    margin-left: 0;
-                    padding-left: 0;
-                }
+                display: flex;
+                align-items: center;
                 li {
-                    display: inline-block;
                     border-left: solid 1px rgba(160, 160, 160, 0.3);
-                    line-height: 1;
-                    margin-left: 1em;
+                    margin-left: 0;
+                    margin-right: 0;
                     padding-left: 1em;
-                    a {
-                        border-bottom: 0;
-                        font-size: 0.95em;
-                        font-weight: 400;
-                        letter-spacing: 0.25em;
-                        text-transform: uppercase
-                    }
+                    padding-right: 1em;
                 }
             }
         }

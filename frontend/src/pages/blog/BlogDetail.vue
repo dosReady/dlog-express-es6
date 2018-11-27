@@ -118,6 +118,29 @@ export default {
 
 <style lang="scss">
 @import '$static/css/github-markdown';
+.page-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    height: 100%;
+   .page-content {
+        border-radius: .25rem;
+        padding: 1.75rem;
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
+        background-color: white;
+        width: 1000px;
+        height: auto;
+        margin: 0 auto 1.75rem auto;
+        @media (max-width: 1000px) {
+            width: 100%;
+            padding: 1rem;
+        }
+   }
+   .page-bottom {
+        background-color: #DDD7D0;
+        height:auto;
+   }
+}
 .blog-title {
   word-break: break-all;
   margin-bottom: 1.75rem;
