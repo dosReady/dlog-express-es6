@@ -182,6 +182,7 @@ export default {
   }
   #left-side {
     margin-top: 5em;
+    margin-right: 2rem;
     width: 22em;
     @media (max-width: 1400px) {
       display: none;
