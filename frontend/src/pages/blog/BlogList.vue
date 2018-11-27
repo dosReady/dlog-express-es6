@@ -45,7 +45,6 @@ export default {
   async created () {
     try {
       this.$eventbus.$on('reloadBlogs', (pagination) => {
-        console.log(pagination)
         this.initBlog(pagination)
       })
       this.initBlog()
