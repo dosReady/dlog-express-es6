@@ -1,6 +1,6 @@
 import dao from '../modules/dao'
 
-module.exports = class Logline {
+module.exports = class Blog {
     constructor () {}
     async insert (req, connection) {
         let resultsql = ''
@@ -8,16 +8,16 @@ module.exports = class Logline {
         try {
             const data = req.body.data
             const mastersql = `
-            INSERT INTO dlog_logline_master (
-                logline_master_title,
-                logline_master_content,
-                logline_worklist_seq,
+            INSERT INTO dlog_blog_master (
+                blog_master_title,
+                blog_master_content,
+                blog_worklist_seq,
                 file_group_seq,
                 action_log_seq
             )
             VALUES(
-                '${data.logline_master_title}',
-                '${data.logline_master_content}',
+                '${data.blog_master_title}',
+                '${data.blog_master_content}',
                 null,
                 null,
                 null
@@ -27,7 +27,7 @@ module.exports = class Logline {
             const [rows] = await connection.query(mastersql)
             /*
             const worksqls = `
-            INSERT INTO dlog_work_list (work_content, work_level, logline_master_seq)
+            INSERT INTO dlog_work_list (work_content, work_level, blog_master_seq)
             VALUES ?
             `
             const worklist = data.worklist
@@ -55,11 +55,11 @@ module.exports = class Logline {
             const seq = req.body.seq
             const data = req.body.data
             const updatesql = `
-            UPDATE dlog_logline_master
-            SET logline_master_title='${data.logline_master_title}',
-                logline_master_content='${data.logline_master_content}',
+            UPDATE dlog_blog_master
+            SET blog_master_title='${data.blog_master_title}',
+                blog_master_content='${data.blog_master_content}',
                 update_date=CURRENT_TIMESTAMP
-            WHERE logline_master_seq=${seq}
+            WHERE blog_master_seq=${seq}
             `
             resultsql += updatesql + '\n'
             await connection.query(updatesql)
@@ -75,10 +75,10 @@ module.exports = class Logline {
         try {
             const seq = req.body.seq
             const delWorksql = `
-                DELETE FROM dlog_work_list WHERE logline_master_seq = ${seq}
+                DELETE FROM dlog_work_list WHERE blog_master_seq = ${seq}
             `
             const delMstsql = `
-                DELETE FROM dlog_logline_master WHERE logline_master_seq = ${seq}
+                DELETE FROM dlog_blog_master WHERE blog_master_seq = ${seq}
             `
             resultsql += delWorksql + '\n' + delMstsql
             await connection.query(delWorksql)
@@ -94,11 +94,11 @@ module.exports = class Logline {
         const id = req.body.id
         const mastersql = `
             SELECT 
-                logline_master_title,
-                logline_master_content,
+                blog_master_title,
+                blog_master_content,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
-            FROM dlog_logline_master 
-            WHERE logline_master_seq = '${id}'
+            FROM dlog_blog_master 
+            WHERE blog_master_seq = '${id}'
         `
         const result = await dao.select(mastersql)
         /*
@@ -108,7 +108,7 @@ module.exports = class Logline {
             work_content,
             work_level
         FROM dlog_work_list
-        WHERE logline_master_seq = '${id}'
+        WHERE blog_master_seq = '${id}'
         `
         result.worklist = await dao.list(worksql)
         */
@@ -118,11 +118,11 @@ module.exports = class Logline {
     async list () {
         const sql = `
         SELECT
-            logline_master_seq,
-            logline_master_title,
-            LEFT(logline_master_content, 250) AS logline_master_content,
+            blog_master_seq,
+            blog_master_title,
+            LEFT(blog_master_content, 250) AS blog_master_content,
             DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
-        FROM dlog_logline_master
+        FROM dlog_blog_master
         ORDER BY update_date DESC
         `
         const result = await dao.list(sql)

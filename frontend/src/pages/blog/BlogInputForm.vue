@@ -1,11 +1,11 @@
 <template>
     <div class="vh-conatiner">
-        <div class="logline-header">
+        <div class="blog-header">
             <div class="title-area">
               <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             </div>
             <div class="button-group">
-                <button @click="saveLogline">저장</button>
+                <button @click="saveBlog">저장</button>
                 <router-link to="/">목록</router-link>
             </div>
         </div>
@@ -25,29 +25,29 @@
 import marked from 'marked'
 
 export default {
-  name: 'LogLineForm',
+  name: 'BlogInputForm',
   data () {
     return {
       data: {
-        logline_master_title: '',
-        logline_master_content: ''
+        blog_master_title: '',
+        blog_master_content: ''
       }
     }
   },
   async beforeCreate () {
     if (this.$route.params.id) {
-      const {data} = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
+      const {data} = await this.$http.post('/api/blog/detail', {id: this.$route.params.id})
       this.data = data
     }
   },
   methods: {
-    async saveLogline () {
+    async saveBlog () {
       if (confirm('저장하시겠습니까?')) {
         try {
           if (!this.$route.params.id) {
-            await this.$http.post('/api/logline/add', {data: this.data})
+            await this.$http.post('/api/blog/add', {data: this.data})
           } else {
-            await this.$http.post('/api/logline/edit', {seq: this.$route.params.id, data: this.data})
+            await this.$http.post('/api/blog/edit', {seq: this.$route.params.id, data: this.data})
           }
           alert('저장이 완료되었습니다.')
           this.$router.push({path: '/'})
@@ -61,25 +61,25 @@ export default {
   computed: {
     compiledMarkdown () {
       let content = ''
-      if (this.data.logline_master_content) {
-        content = this.data.logline_master_content
+      if (this.data.blog_master_content) {
+        content = this.data.blog_master_content
       }
       return marked(content, { sanitize: true })
     },
     subject: {
       get () {
-        return this.data.logline_master_title
+        return this.data.blog_master_title
       },
       set (value) {
-        this.data.logline_master_title = value
+        this.data.blog_master_title = value
       }
     },
     content: {
       get () {
-        return this.data.logline_master_content
+        return this.data.blog_master_content
       },
       set (value) {
-        this.data.logline_master_content = value
+        this.data.blog_master_content = value
       }
     }
   }
@@ -90,7 +90,7 @@ export default {
 @import '$static/css/github-markdown';
 div.vh-conatiner {
   height: 99vh;
-  div.logline-header {
+  div.blog-header {
     flex: 0 0 10%;
     display: flex;
     align-items: center;

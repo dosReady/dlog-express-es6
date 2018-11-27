@@ -8,29 +8,29 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/logline'
+      redirect: '/blog'
     },
     {
-      path: '/logline',
-      name: 'LogLine',
-      component: () => import('@/pages/logline/LogLine'),
+      path: '/blog',
+      name: 'Blog',
+      component: () => import('@/pages/blog/BlogList'),
       meta: {layout: 'topmenu'}
     },
     {
-      path: '/logline/add',
-      name: 'LogLineAddForm',
-      component: () => import('@/pages/logline/LogLineForm')
+      path: '/blog/add',
+      name: 'BlogAdd',
+      component: () => import('@/pages/blog/BlogInputForm')
     },
     {
-      path: '/logline/:id/detail',
-      name: 'LogLineDetailForm',
-      component: () => import('@/pages/logline/LogLineDetailForm'),
+      path: '/blog/:id/detail',
+      name: 'BlogDetail',
+      component: () => import('@/pages/blog/BlogDetail'),
       meta: {layout: 'topmenu'}
     },
     {
-      path: '/logline/:id/edit',
-      name: 'LogLineEditForm',
-      component: () => import('@/pages/logline/LogLineForm')
+      path: '/blog/:id/edit',
+      name: 'BlogEdit',
+      component: () => import('@/pages/blog/BlogInputForm')
     },
     {
       path: '*',

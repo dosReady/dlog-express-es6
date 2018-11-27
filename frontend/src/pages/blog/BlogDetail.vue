@@ -2,12 +2,12 @@
   <div class="page-container">
     <div class="page-top"></div>
     <div class="page-content">
-        <div class="logline-title">
-          <h1>{{data.logline_master_title}}</h1>
+        <div class="blog-title">
+          <h1>{{data.blog_master_title}}</h1>
           <span class="update-date">{{data.update_date}}</span>
           <hr>
         </div>
-        <div class="logline-content markdown-body" v-html="compiledMarkdown"></div>
+        <div class="blog-content markdown-body" v-html="compiledMarkdown"></div>
         <comment-container :data="comments"></comment-container>
         <div class="comment-input">
           <textarea v-model="inputComment.comment_content" placeholder="댓글을 입력해주세요."></textarea>
@@ -27,7 +27,7 @@ renderer.link = (href, title, text) => {
   return `<a target="_blank" href="${href}" title="${title}">${text}</a>`
 }
 export default {
-  name: 'LogLineDetailForm',
+  name: 'BlogDetail',
   data () {
     return {
       inputComment: {
@@ -43,10 +43,10 @@ export default {
   },
   async beforeCreate () {
     if (this.$route.params.id) {
-      const logline = await this.$http.post('/api/logline/detail', {id: this.$route.params.id})
+      const blog = await this.$http.post('/api/blog/detail', {id: this.$route.params.id})
       const {data} = await this.$http.post('/api/comment/list', {id: this.$route.params.id})
       this.comments = data
-      this.data = logline.data
+      this.data = blog.data
     }
   },
   async created () {
@@ -91,25 +91,25 @@ export default {
   computed: {
     compiledMarkdown () {
       let content = ''
-      if (this.data.logline_master_content) {
-        content = this.data.logline_master_content
+      if (this.data.blog_master_content) {
+        content = this.data.blog_master_content
       }
       return marked(content, { renderer: renderer, sanitize: true })
     },
     subject: {
       get () {
-        return this.data.logline_master_title
+        return this.data.blog_master_title
       },
       set (value) {
-        this.data.logline_master_title = value
+        this.data.blog_master_title = value
       }
     },
     content: {
       get () {
-        return this.data.logline_master_content
+        return this.data.blog_master_content
       },
       set (value) {
-        this.data.logline_master_content = value
+        this.data.blog_master_content = value
       }
     }
   }
@@ -119,14 +119,14 @@ export default {
 <style lang="scss">
 @import '$static/css/github-markdown';
 @import '$static/css/common';
-.logline-title {
+.blog-title {
   word-break: break-all;
   margin-bottom: 1.75rem;
   hr {
     border-color: #e7edf3;
   }
 }
-.logline-content {
+.blog-content {
   padding: 1rem 0 5rem 0;
 }
 .update-date {

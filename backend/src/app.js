@@ -9,7 +9,7 @@ import modules from './modules'
 import app_passport from './setting/app_passport'
 import db from './setting/db'
 import router from './router/index'
-import loglines from './router/logline'
+import blogs from './router/blog'
 import comments from './router/comments'
 import replys from './router/replys' 
 
@@ -40,7 +40,7 @@ app.use(modules.accesslog)
 
 // router
 app.use('/', router)
-app.use('/api/logline', loglines)
+app.use('/api/blog', blogs)
 app.use('/api/comment', comments)
 app.use('/api/reply', replys)
 

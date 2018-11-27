@@ -4,8 +4,8 @@
             <h1><router-link to="/">dlog</router-link></h1>
             <nav class="links">
                 <ul>
-                    <li><router-link to="/">logline</router-link></li>
                     <li><router-link to="/">blog</router-link></li>
+                    <li><router-link to="/">logline</router-link></li>
                 </ul>
             </nav>
             <nav class="icons">
@@ -39,7 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '$static/fontawesome/scss/fontawesome';
 @import '$static/css/common';
 #topmenu-layout {
     height: 100%;
@@ -48,10 +47,10 @@ export default {
         justify-content: space-between;
         background-color: #ffffff;
         border-bottom: solid 1px rgba(160, 160, 160, 0.3);
-        height: 3.5em;
+        height: 4em;
         top: 0;
         left: 0;
-        line-height: 3.5em;
+        line-height: 4em;
         position: fixed;
         width: 100%;
         z-index: 10000;

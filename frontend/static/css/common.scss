@@ -95,7 +95,7 @@ textarea {
     display: none!important;
 }
 
-h1 {
+h1,h2,h3,h4,h5,h6 {
     color: #3c3b3b;
     font-weight: 800;
     letter-spacing: 0.25rem;
@@ -114,9 +114,40 @@ h1 {
                 padding-left: 0
             }
         }
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
     }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+.image.featured {
+    display: block;
+    margin: 0;
+    width: 100%;
+    img {
+        width: 100%;
+    }
+}
+.image {
+    border: 0;
+    display: inline-block;
+    position: relative;
+    img {
+        display: block;
+    }
+}
+p {
+    margin: 0 0 2em 0;
+    word-break: break-all;
+}
+ul {
+    list-style: none;
+    margin: 0 0 2em 0;
+    padding-left: 0;
+}
+ul.actions {
+    cursor: default;
+    list-style: none;
+    padding-left: 0;
 }

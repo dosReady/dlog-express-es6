@@ -23,8 +23,11 @@ html {
   box-sizing: border-box;
   #app {
     font-family: 'Roboto', '맑은 고딕', malgun gothic, '돋움', Dotum, 'Helvetica Neue', Helvetica, verdana, Arial, sans-serif;
-    height: 100%;
+    color: #646464;
     font-size: 1rem!important;
+    font-weight: 400;
+    line-height: 1.75;
+    height: 100%;
     user-select:none;
     display: flex;
     flex-direction: column;
