@@ -102,8 +102,8 @@ export default {
   margin: 0 auto;
   padding: 4.5em;
   height: 100%;
-  width: 90em;
-  @media (max-width: 1400px) {
+  width: 60rem;
+  @media (max-width: 800px) {
     width: 100%;
     padding: 0;
   }
@@ -184,7 +184,7 @@ export default {
     margin-top: 5em;
     margin-right: 2rem;
     width: 22em;
-    @media (max-width: 1400px) {
+    @media (max-width: 800px) {
       display: none;
     }
     #intro {

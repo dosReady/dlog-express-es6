@@ -61,6 +61,7 @@ export default {
       line-height: 1.5;
     }
     .icon-wrap {
+      margin-left: -2px;
       line-height: 1.5;
       padding: .75rem;
       border: 1px solid rgba(160, 160, 160, 0.3);

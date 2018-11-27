@@ -10,6 +10,7 @@ module.exports = class Tags {
                 COUNT(tag_name) as tag_cnt
             FROM dlog_tags
             GROUP BY tag_name
+            ORDER BY tag_cnt DESC
             `
             const result = await dao.list(sql)
             return result
