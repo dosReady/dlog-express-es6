@@ -1,7 +1,7 @@
 <template>
     <div class="tag-container">
       <transition name="ctrl" mode="out-in">
-        <div class="tag-control" v-show="show">
+        <div class="tag-control" v-if="show">
           <div class="quick-btn-group"></div>
           <div class="input-group">
             <input type="text" placeholder="태그 검색"/>
@@ -15,7 +15,7 @@
               </button>
           </div>
         </div>
-        <div class="tag-info" v-show="!show">
+        <div class="tag-info" v-if="!show" >
           <button class="btn backwards-btn" @click="showAlltag"><font-awesome-icon icon="arrow-left" /><span style="margin-left:1rem">전체 태그보기</span></button>
           <hr>
           <h2>#{{selectedTag}}<span>({{selectedTagCnt}})</span></h2>
