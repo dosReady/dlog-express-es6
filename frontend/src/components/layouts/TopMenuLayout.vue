@@ -8,14 +8,11 @@
                     <menu-btn :path="'/logline'">logline</menu-btn>
                 </ul>
             </nav>
-            <!--
             <nav class="icons">
                 <ul>
-                    <li><router-link to="/"><font-awesome-icon icon="search" /></router-link></li>
-                    <li><router-link to="/"><font-awesome-icon icon="bars" /></router-link></li>
+                    <li><router-link to="/profile"><img class="user-image" src="static/image/dlog_logo.png" alt=""></router-link></li>
                 </ul>
             </nav>
-            -->
         </div>
         <slot></slot>
     </div>
@@ -83,15 +80,19 @@ export default {
                     height: inherit;
                     line-height: inherit;
                     white-space: nowrap;
-                    border-left: solid 1px rgba(160, 160, 160, 0.3);
-                    padding: 0.15em 1.3em 0.15em 1.5em;
+                    padding: 0.5em 1.3em 0.5em 1.5em;
                     a {
                         border-bottom: 0;
                         color: #aaaaaa!important;
-                        overflow: hidden;
-                        position: relative;
-                        text-indent: 4em;
-                        width: 4em
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+                        .user-image {
+                            border-radius: 5rem;
+                            width: 3rem;
+                            height: 3rem;
+                        }
                     }
                     a:hover {
                         color: black!important;

@@ -33,6 +33,12 @@ export default new Router({
       component: () => import('@/pages/blog/BlogInputForm')
     },
     {
+      path: '/profile',
+      name: 'ProfileMain',
+      component: () => import('@/pages/profile/profileMain'),
+      meta: {layout: 'topmenu'}
+    },
+    {
       path: '*',
       component: () => import('@/pages/NotFoundComponent'),
       meta: {layout: 'topmenu'}
