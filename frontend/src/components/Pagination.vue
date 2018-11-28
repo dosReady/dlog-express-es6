@@ -77,12 +77,14 @@ export default {
   },
   watch: {
     size () {
+      console.log('size 변경 감지')
       this.pagination.size_length = Math.floor(this.size / this.max) + 1
       this.page_start = ((this.pagination.page - 1) / this.$props.size) * this.$props.size + 1
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)
       let loop = this.page_count
+      this.page_stack = []
       if (this.page_end < this.page_count) loop = this.page_end
-      for (let i = 1; i < loop; i++) {
+      for (let i = 1; i <= loop; i++) {
         this.page_stack.push(i)
       }
     }

@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="tag-wrap">
-              <button v-for="(item, index) in data" :key="index" @click="goTag({emit:$props.emit, tag:item.tag_name, cnt:item.tag_cnt})" class="btn btn-outline-default">
+              <button v-for="(item, index) in data" :key="index" @click="goTag({emit: $props.emit, tag: item.tag_name, cnt: item.tag_cnt})" class="btn btn-outline-default">
                   {{item.tag_name}}({{item.tag_cnt}})
               </button>
           </div>
@@ -60,6 +60,7 @@ export default {
       this.show = false
     },
     showAlltag () {
+      this.goTag({emit: this.$props.emit, tag: '', cnt: 0})
       this.show = true
       this.selectedTag = ''
       this.selectedTagCnt = 0

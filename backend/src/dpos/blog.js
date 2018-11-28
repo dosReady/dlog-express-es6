@@ -1,4 +1,5 @@
 import dao from '../modules/dao'
+import utils from '../utils'
 
 module.exports = class Blog {
     constructor () {}
@@ -107,21 +108,43 @@ module.exports = class Blog {
     async list (req) {
         let page = 0 
         let max = 5
+        const tag = utils.nvl(req.body.tag,'string')
         if (req.body.pagination) {
             const pagination = req.body.pagination
             page = (pagination.page -1)
             max = pagination.max
         }
         const totalsql = `
-        SELECT COUNT(*) AS total FROM dlog_blog
+        SELECT 
+            COUNT(*) AS  total
+        FROM (
+            SELECT 
+                a.blog_seq
+            FROM 
+                dlog_blog a
+            LEFT OUTER JOIN
+                dlog_tags b
+            ON a.blog_seq = b.master_seq
+            WHERE 1=1
+            AND IFNULL(b.tag_name, '') LIKE CONCAT('%','${tag}','%')
+            GROUP BY a.blog_seq
+        ) AS x
         `
         const sql = `
-        SELECT
-            blog_seq,
-            blog_title,
-            LEFT(blog_content, 250) AS blog_content,
-            DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date
-        FROM dlog_blog
+        SELECT 
+            a.blog_seq,
+            a.blog_title,
+            LEFT(a.blog_content, 200) AS blog_content,
+            DATE_FORMAT(a.update_date, '%Y-%m-%d %H:%i') as update_date,
+            a.file_group_seq
+        FROM 
+            dlog_blog a
+        LEFT OUTER JOIN
+            dlog_tags b
+        ON a.blog_seq = b.master_seq
+        WHERE 1=1
+        AND IFNULL(b.tag_name, '') LIKE CONCAT('%','${tag}','%')
+        GROUP BY a.blog_seq, a.blog_title, a.blog_content, a.update_date, a.file_group_seq
         ORDER BY update_date DESC
         LIMIT ${page * max}, ${max}
         `

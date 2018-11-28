@@ -58,7 +58,7 @@ export default {
         this.initBlog(pagination)
       })
       this.$eventbus.$on('searchBlog', (tag) => {
-        console.log(tag)
+        this.searchBlog(tag)
       })
       this.initBlog()
     } catch (error) {
@@ -80,10 +80,26 @@ export default {
       }
     },
     async initBlog (pagination) {
-      const {data} = await this.$http.post('/api/blog/list', {pagination: pagination})
-      this.blogs = data.list
-      this.blogsTotal = data.total
+      try {
+        const {data} = await this.$http.post('/api/blog/list', {pagination: pagination})
+        this.blogs = data.list
+        this.blogsTotal = data.total
+      } catch (error) {
+        console.log(error)
+        alert('블로그 초기화중 오류가 발생했습니다.')
+      }
+    },
+    async searchBlog (tag) {
+      try {
+        const {data} = await this.$http.post('/api/blog/list', {tag: tag})
+        this.blogs = data.list
+        this.blogsTotal = data.total
+      } catch (error) {
+        console.log(error)
+        alert('블로그 조회중 오류가 발생했습니다.')
+      }
     }
+
   },
   computed: {
     classObject: () => {
@@ -138,7 +154,8 @@ export default {
       width: inherit;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: center;
+      align-items: center;
       margin-top: 5em;
       .post {
         display: flex;
@@ -147,6 +164,7 @@ export default {
         border: solid 1px rgba(160, 160, 160, 0.3);
         box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
         position: relative;
+        margin-right: 1rem;
         margin-bottom: 1rem;
         width: 30rem;
         @media (max-width: 1500px) {
