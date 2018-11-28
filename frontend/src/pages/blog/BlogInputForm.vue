@@ -126,6 +126,7 @@ div.blog-conatiner {
   div.title-mobile-area {
     display: none;
     background-color: #3F5866;
+    height: 3rem;
     input {
       border: none;
       width: 100%;
@@ -144,11 +145,10 @@ div.blog-conatiner {
     }
   }
   div.preview-content {
-    flex: 0 0 51%;
     display: flex;
     padding: 2rem;
     width: 100%;
-    height: calc(100% - 24rem);
+    height: 15rem;
     word-break: break-all;
     background-color: transparent!important;
     color: black!important;
@@ -159,9 +159,8 @@ div.blog-conatiner {
   div.input-content {
     display: flex;
     background-color: #2B3A42;
-    height: 20rem;
+    height: calc(100% - 20rem);
     textarea {
-      height: 18rem;
       padding: 2rem;
       overflow: hidden;
       overflow-y: scroll;
