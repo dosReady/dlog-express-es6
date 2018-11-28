@@ -1,12 +1,12 @@
 <template>
-    <div class="vh-conatiner">
+    <div class="blog-conatiner">
         <div class="blog-header">
             <div class="title-area">
               <input type="text" v-model="subject" placeholder="제목" maxlength="100">
             </div>
-            <div class="button-group">
-                <button @click="saveBlog">저장</button>
-                <router-link to="/">목록</router-link>
+            <div class="btn-group">
+                <button class="btn btn-outline-default border-white" @click="saveBlog">저장</button>
+                <router-link class="btn btn-outline-default border-white" to="/">목록</router-link>
             </div>
         </div>
         <div class="title-mobile-area">
@@ -88,23 +88,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '$static/css/github-markdown';
-div.vh-conatiner {
-  height: 99vh;
+div.blog-conatiner {
+  height: 100%;
+  overflow: hidden;
   div.blog-header {
-    flex: 0 0 10%;
     display: flex;
     align-items: center;
     background-color: #2B3A42;
     font-size: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding: 0 1rem 0 1rem;
     overflow: hidden;
+    height: 5rem;
     div.title-area {
-      -ms-flex: 1 1;
-      flex: 1 1;
       display: flex;
+      flex: 1 1;
       input {
         width: 100%;
         border: none;
@@ -122,40 +119,16 @@ div.vh-conatiner {
         display: none;
       }
     }
-    div.button-group {
-      display: flex;
-      align-items: center;
+    div.btn-group {
       margin-left: auto;
-      button:not(:disabled):not(.disabled) {
-        cursor: pointer;
-      }
-      a {
-        text-decoration:none;
-      }
-      a,
-      button {
-        background-color: transparent;
-        border: 1px solid white;
-        color: white;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        font-size: 1rem;
-      }
-      a:hover,
-      button:hover {
-        background-color: white;
-        color: black;
-      }
     }
   }
   div.title-mobile-area {
     display: none;
     background-color: #3F5866;
     input {
-      width: 100%;
       border: none;
+      width: 100%;
       background-color: transparent;
       color: white;
       padding: 1rem;
@@ -168,7 +141,6 @@ div.vh-conatiner {
     }
     @media (max-width: 480px) {
       display: flex;
-      flex: 0 0 5%;
     }
   }
   div.preview-content {
@@ -176,23 +148,24 @@ div.vh-conatiner {
     display: flex;
     padding: 2rem;
     width: 100%;
-    height: 50vh;
+    height: calc(100% - 24rem);
     word-break: break-all;
     background-color: transparent!important;
     color: black!important;
     overflow: hidden;
-    overflow-y: scroll
+    overflow-y: scroll;
+    overflow-x: scroll;
   }
   div.input-content {
-    flex: 0 0 40%;
     display: flex;
     background-color: #2B3A42;
-    width: 100%;
-    height: 35vh;
+    height: 20rem;
     textarea {
+      height: 18rem;
       padding: 2rem;
-      width: 100%;
-      height: 100%;
+      overflow: hidden;
+      overflow-y: scroll;
+      flex: 1 1;
       border: none;
       background-color: transparent;
       color: white;
@@ -203,9 +176,6 @@ div.vh-conatiner {
     }
     textarea:focus {
         outline: none
-    }
-    @media (max-width: 480px) {
-      flex: 0 0 35%;
     }
   }
 }

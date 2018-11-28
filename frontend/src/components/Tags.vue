@@ -6,11 +6,11 @@
           <div class="input-group">
             <input type="text" placeholder="태그 검색" v-model="searchTagText" @keydown="enterSearch"/>
             <div class="append">
-              <button class="btn btn-outline-default" @click="searchTag"><font-awesome-icon icon="search" /></button>
+              <button class="btn btn-outline-default color-black" @click="searchTag"><font-awesome-icon icon="search" /></button>
             </div>
           </div>
           <div class="tag-wrap">
-              <button v-for="(item, index) in data" :key="index" @click="goTag({emit: $props.emit, tag: item.tag_name, cnt: item.tag_cnt})" class="btn btn-outline-default">
+              <button v-for="(item, index) in data" :key="index" @click="goTag({emit: $props.emit, tag: item.tag_name, cnt: item.tag_cnt})" class="btn btn-outline-default color-black">
                   {{item.tag_name}}({{item.tag_cnt}})
               </button>
           </div>
