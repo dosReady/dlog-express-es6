@@ -12,27 +12,33 @@
         <tags :emit="'searchBlog'"></tags>
       </section>
     </div>
-    <div id="list-wrap">
-      <article class="post" v-for="(item, index) in blogs" :key="index">
-        <header>
-          <router-link class="image featured" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}"><img src="static/image/website-bg-img.jpg"></router-link>
-        </header>
-        <div class="post-body">
-          <div class="post-title">
-            <h2>{{item.blog_title}}</h2>
+
+    <div id="list-container">
+      <div id="list-wrap">
+        <article class="post" v-for="(item, index) in blogs" :key="index">
+          <header>
+            <router-link class="image featured" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}"><img src="static/image/website-bg-img.jpg"></router-link>
+          </header>
+          <div class="post-body">
+            <a href="#" class="author"><img src="static/image/dlog_logo.png" alt=""></a>
+            <div class="post-title">
+              <h2>{{item.blog_title}}</h2>
+            </div>
+            <div class="post-content">
+              <p v-html="item.blog_content"></p>
+            </div>
           </div>
-          <p v-html="item.blog_content"></p>
-        </div>
-        <footer>
-          <ul class="actions">
-            <li><router-link class="btn btn-default" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}">더 보기</router-link></li>
-            <li><router-link class="btn btn-default" :to="{name: 'BlogEdit', params: {id: item.blog_seq}}">편집</router-link></li>
-          </ul>
-        </footer>
-      </article>
+          <footer>
+            <ul class="actions">
+              <li><router-link class="btn btn-default" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}">더 보기</router-link></li>
+              <li><router-link class="btn btn-default" :to="{name: 'BlogEdit', params: {id: item.blog_seq}}">편집</router-link></li>
+            </ul>
+          </footer>
+        </article>
+      </div>
       <pagination :size="blogsTotal" :mode="'blog'"></pagination>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -101,89 +107,140 @@ export default {
   flex-direction: row;
   margin: 0 auto;
   padding: 4.5em;
-  height: 100%;
-  width: 60rem;
+  width: 100rem;
   @media (max-width: 800px) {
     width: 100%;
     padding: 0;
   }
-  #list-wrap {
-    width: 100%;
-    margin-top: 5em;
-    .post {
+  #list-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 0 83.333333%;
+    @media (max-width: 1530px) {
+      flex: 0 0 66.666667%;
+    }
+    @media (max-width: 1530px) {
+      flex: 0 0 60%;
+    }
+    @media (max-width: 1250px) {
+      flex: 0 0 50%;
+    }
+    @media (max-width: 1100px) {
+      flex: 0 0 40%;
+    }
+    @media (max-width: 960px) {
+      flex: 0 0 30%;
+    }
+    @media (max-width: 800px) {
+      flex: 0 0 100%;
+    }
+    #list-wrap {
+      width: inherit;
       display: flex;
-      flex-direction: column;
-      background: #ffffff;
-      border: solid 1px rgba(160, 160, 160, 0.3);
-      box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
-      position: relative;
-      margin-bottom: 1rem;
-      a.image.featured {
-        overflow: hidden;
-        border-top-left-radius: .25rem;
-        border-top-right-radius: .25rem;
-        img {
-          transform: transform 0.2s ease-out;
-          height: 26rem;
-          object-fit: cover;
-        }
-      }
-      a.image.featured:hover {
-        img {
-          transform: scale(1.05);
-        }
-      }
-      header {
-        width: 100%;
-        height: auto;
-      }
-      .post-body {
-        padding: 0 1rem 0 1rem;
-      }
-      footer {
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-top: 5em;
+      .post {
         display: flex;
-        align-items: center;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        .actions {
-          flex-grow: 1;
-          li:last-child {
-            padding-right: 0;
-          }
-          li {
-            display: inline-block;
-            padding: 0 1.5em 0 0;
-            vertical-align: middle;
+        flex-wrap: wrap;
+        background: #ffffff;
+        border: solid 1px rgba(160, 160, 160, 0.3);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
+        position: relative;
+        margin-bottom: 1rem;
+        width: 30rem;
+        @media (max-width: 1500px) {
+          width: 100%;
+        }
+        a.image.featured {
+          overflow: hidden;
+          border-top-left-radius: .25rem;
+          border-top-right-radius: .25rem;
+          img {
+            transform: transform 0.2s ease-out;
+            height: 15rem;
+            object-fit: cover;
           }
         }
-        .stats {
-          cursor: default;
-          list-style: none;
-          padding: 0;
-          li:first-child {
-            border-left: 0;
-            margin-left: 0;
-            padding-left: 0;
+        a.image.featured:hover {
+          img {
+            transform: scale(1.05);
           }
-          li {
-            display: inline-block;
-            font-family: "Raleway", Helvetica, sans-serif;
-            font-size: 0.6em;
-            font-weight: 400;
-            letter-spacing: 0.25em;
-            line-height: 1;
-            margin: 0 0 0 2em;
-            padding: 0 0 0 2em;
-            text-transform: uppercase;
+        }
+        header {
+          width: 100%;
+          height: auto;
+        }
+        .post-body {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          padding: 0 1rem 0 1rem;
+          height: 10rem;
+          .post-content {
+            overflow: hidden;
+          }
+          .author {
+            position: absolute;
+            top: -2rem;
+            right: .75rem;
+            img {
+              border-radius: 2rem;
+            }
+          }
+        }
+        footer {
+          flex-grow: 1;
+          display: flex;
+          justify-content: space-between;
+          border-top: solid 1px rgba(160, 160, 160, 0.3);
+          padding: 1rem 1rem 0 1rem;
+          margin-bottom: 1rem;
+          .actions {
+            flex-grow: 1;
+            margin: 0!important;
+            li:last-child {
+              padding-right: 0;
+            }
+            li {
+              display: inline-block;
+              vertical-align: middle;
+            }
+          }
+          .stats {
+            cursor: default;
+            list-style: none;
+            padding: 0;
+            li:first-child {
+              border-left: 0;
+              margin-left: 0;
+              padding-left: 0;
+            }
+            li {
+              display: inline-block;
+              font-family: "Raleway", Helvetica, sans-serif;
+              font-size: 0.6em;
+              font-weight: 400;
+              letter-spacing: 0.25em;
+              line-height: 1;
+              margin: 0 0 0 2em;
+              padding: 0 0 0 2em;
+              text-transform: uppercase;
+            }
           }
         }
       }
     }
   }
   #left-side {
-    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
     margin-right: 2rem;
-    width: 22em;
+    width: 25rem;
+    @media (max-width: 1400px) {
+      width: 15rem;
+    }
     @media (max-width: 800px) {
       display: none;
     }

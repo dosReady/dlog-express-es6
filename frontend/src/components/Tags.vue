@@ -1,17 +1,26 @@
 <template>
     <div class="tag-container">
-        <div class="quick-btn-group"></div>
-        <div class="tag-search-wrap">
-          <input type="text" placeholder="태그 입력"/>
-          <div class="icon-wrap">
-            <font-awesome-icon icon="search" />
+      <transition name="ctrl" mode="out-in">
+        <div class="tag-control" v-show="show">
+          <div class="quick-btn-group"></div>
+          <div class="input-group">
+            <input type="text" placeholder="태그 검색"/>
+            <div class="append">
+              <button class="btn btn-outline-default"><font-awesome-icon icon="search" /></button>
+            </div>
+          </div>
+          <div class="tag-wrap">
+              <button v-for="(item, index) in data" :key="index" @click="goTag({emit:$props.emit, tag:item.tag_name, cnt:item.tag_cnt})" class="btn btn-outline-default">
+                  {{item.tag_name}}({{item.tag_cnt}})
+              </button>
           </div>
         </div>
-        <div class="tag-wrap">
-            <button v-for="(item, index) in data" :key="index" @click="goTag({emit:$props.emit, tag:item.tag_name})" class="btn btn-outline-default">
-                {{item.tag_name}}({{item.tag_cnt}})
-            </button>
+        <div class="tag-info" v-show="!show">
+          <button class="btn backwards-btn" @click="showAlltag"><font-awesome-icon icon="arrow-left" /><span style="margin-left:1rem">전체 태그보기</span></button>
+          <hr>
+          <h2>#{{selectedTag}}<span>({{selectedTagCnt}})</span></h2>
         </div>
+      </transition>
     </div>
 </template>
 
@@ -23,7 +32,12 @@ export default {
   },
   data () {
     return {
-      data: []
+      data: [],
+      tagInfoShow: false,
+      tagCtrlShow: true,
+      selectedTag: '',
+      selectedTagCnt: 0,
+      show: true
     }
   },
   async created () {
@@ -41,6 +55,14 @@ export default {
     },
     goTag (data) {
       this.$eventbus.$emit(data.emit, data.tag)
+      this.selectedTag = data.tag
+      this.selectedTagCnt = data.cnt
+      this.show = false
+    },
+    showAlltag () {
+      this.show = true
+      this.selectedTag = ''
+      this.selectedTagCnt = 0
     }
   }
 }
@@ -50,24 +72,8 @@ export default {
 .tag-container {
   display: flex;
   flex-direction: column;
-  .tag-search-wrap {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 1rem;
-    input {
-      flex: 1 1;
-      padding: .75em;
-      line-height: 1.5;
-    }
-    .icon-wrap {
-      margin-left: -2px;
-      line-height: 1.5;
-      padding: .75rem;
-      border: 1px solid rgba(160, 160, 160, 0.3);
-    }
-  }
-  .tag-wrap {
+  .tag-control {
+    .tag-wrap {
     display: inline-block;
     align-items: center;
     button {
@@ -81,6 +87,35 @@ export default {
         font-size: .75rem!important;
       }
     }
+   }
   }
+  .tag-info {
+    h2 {
+      margin-left: 1rem;
+    }
+    .backwards-btn {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #868e96
+    }
+    .backwards-btn:hover {
+      color: black
+    }
+  }
+}
+.ctrl-enter-active, .ctrl-leave-active {
+  transition: opacity .5s;
+}
+.ctrl-enter {
+  opacity: 0;
+}
+.ctrl-enter-to {
+  opacity: 1;
+}
+.ctrl-leave {
+  opacity: 1;
+}
+.ctrl-leave-to {
+  opacity: 0;
 }
 </style>

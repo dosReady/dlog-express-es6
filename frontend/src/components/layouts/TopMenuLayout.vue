@@ -32,7 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '$static/css/common';
 #topmenu-layout {
     height: 100%;
     #topmenu-container {

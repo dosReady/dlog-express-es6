@@ -95,6 +95,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
+  width: 100%;
   ul {
       display: flex;
       align-items: center;

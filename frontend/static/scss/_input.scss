@@ -1,0 +1,23 @@
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    .prepend {
+        display: flex;
+        justify-content: center;
+        button {
+            border: none;
+        }
+    }
+    .append {
+        display: flex;
+        justify-content: center;
+        button {
+            border: none;
+        }
+    }
+}
+
+input {
+    padding: .75rem;
+}

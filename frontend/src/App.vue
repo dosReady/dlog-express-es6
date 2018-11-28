@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '$static/css/common';
+@import '$static/scss/common';
 html {
   height: 100%;
   body {
