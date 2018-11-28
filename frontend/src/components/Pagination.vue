@@ -70,6 +70,8 @@ export default {
       this.pagination.page = n
       if (this.$props.mode === 'comment') {
         this.$eventbus.$emit('reloadComments', this.pagination)
+        this.$eventbus.$emit('initComments')
+        this.$eventbus.$emit('initReply')
       } else if (this.$props.mode === 'blog') {
         this.$eventbus.$emit('reloadBlogs', this.pagination)
       }

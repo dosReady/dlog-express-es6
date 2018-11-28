@@ -43,6 +43,12 @@ export default {
       }
     }
   },
+  created () {
+    this.$eventbus.$on('initReply', () => {
+      this.inputWrapClass.hide = true
+      this.buttonWrapClass.hide = false
+    })
+  },
   methods: {
     showInputWrap () {
       this.inputWrapClass.hide = false

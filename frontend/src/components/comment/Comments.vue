@@ -57,6 +57,17 @@ export default {
       return result
     }
   },
+  created () {
+    this.$eventbus.$on('initComments', () => {
+      this.inputWrapClass.hide = true
+      this.buttonWrapClass.hide = false
+      this.isReplyShow = false
+      this.replys = []
+    })
+  },
+  updated () {
+    console.log('qqweqwe')
+  },
   methods: {
     async toggleReplys (commentSeq) {
       try {
