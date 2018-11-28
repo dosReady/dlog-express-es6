@@ -4,7 +4,7 @@
         <div class="tag-control" v-if="show">
           <div class="quick-btn-group"></div>
           <div class="input-group">
-            <input type="text" placeholder="태그 검색" v-model="searchTagText"/>
+            <input type="text" placeholder="태그 검색" v-model="searchTagText" @keydown="enterSearch"/>
             <div class="append">
               <button class="btn btn-outline-default" @click="searchTag"><font-awesome-icon icon="search" /></button>
             </div>
@@ -53,6 +53,9 @@ export default {
         console.log(error)
         throw error
       }
+    },
+    enterSearch (e) {
+      if (e.keyCode === 13) this.searchTag()
     },
     async searchTag () {
       try {
