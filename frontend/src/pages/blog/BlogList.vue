@@ -169,6 +169,7 @@ export default {
         width: 30rem;
         @media (max-width: 1500px) {
           width: 100%;
+          margin-right: 0;
         }
         a.image.featured {
           overflow: hidden;

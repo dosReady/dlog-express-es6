@@ -4,9 +4,9 @@
         <div class="tag-control" v-if="show">
           <div class="quick-btn-group"></div>
           <div class="input-group">
-            <input type="text" placeholder="태그 검색"/>
+            <input type="text" placeholder="태그 검색" v-model="searchTagText"/>
             <div class="append">
-              <button class="btn btn-outline-default"><font-awesome-icon icon="search" /></button>
+              <button class="btn btn-outline-default" @click="searchTag"><font-awesome-icon icon="search" /></button>
             </div>
           </div>
           <div class="tag-wrap">
@@ -37,7 +37,8 @@ export default {
       tagCtrlShow: true,
       selectedTag: '',
       selectedTagCnt: 0,
-      show: true
+      show: true,
+      searchTagText: ''
     }
   },
   async created () {
@@ -47,6 +48,15 @@ export default {
     async init () {
       try {
         const {data} = await this.$http.post('/api/tag/list')
+        this.data = data
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    },
+    async searchTag () {
+      try {
+        const {data} = await this.$http.post('/api/tag/list', {searchTagText: this.searchTagText})
         this.data = data
       } catch (error) {
         console.log(error)
