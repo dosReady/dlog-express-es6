@@ -16,14 +16,14 @@
             <div class="markdown-body" v-html="compiledMarkdown"></div>
         </div>
         <div class="input-content">
-            <textarea v-model="content" placeholder="내용을 입력하세요"></textarea>
+            <codemirror class="" v-model="content" :options="cmOption"></codemirror>
         </div>
     </div>
 </template>
 
 <script>
 import marked from 'marked'
-
+import 'codemirror/mode/markdown/markdown.js'
 export default {
   name: 'BlogInputForm',
   data () {
@@ -31,6 +31,14 @@ export default {
       data: {
         blog_title: '',
         blog_content: ''
+      },
+      cmOption: {
+        mode: 'markdown',
+        theme: 'material',
+        lineNumbers: false,
+        lineWrapping: true,
+        scrollbarStyle: 'overlay',
+        placeholder: '내용을 입력해보세요!'
       }
     }
   },
@@ -103,7 +111,7 @@ div.blog-conatiner {
       display: flex;
       flex: 1 1;
       input {
-        width: 100%;
+        flex: 1 1;
         border: none;
         background-color: transparent;
         color: white;
@@ -129,7 +137,7 @@ div.blog-conatiner {
     height: 3rem;
     input {
       border: none;
-      width: 100%;
+      flex: 1 1;
       background-color: transparent;
       color: white;
       padding: 1rem;
@@ -148,7 +156,7 @@ div.blog-conatiner {
     display: flex;
     padding: 2rem;
     width: 100%;
-    height: 15rem;
+    height: 20rem;
     word-break: break-all;
     background-color: transparent!important;
     color: black!important;
@@ -158,23 +166,11 @@ div.blog-conatiner {
   }
   div.input-content {
     display: flex;
-    background-color: #2B3A42;
-    height: calc(100% - 20rem);
-    textarea {
-      padding: 2rem;
-      overflow: hidden;
-      overflow-y: scroll;
-      flex: 1 1;
-      border: none;
-      background-color: transparent;
-      color: white;
-      resize: none
-    }
-    textarea::placeholder {
-        color: white
-    }
-    textarea:focus {
-        outline: none
+    background-color: #263238;
+    height: calc(100% - 25rem);
+    padding: 1rem;
+    @media (max-width: 480px) {
+      height: calc(100% - 28rem);
     }
   }
 }
