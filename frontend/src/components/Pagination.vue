@@ -79,7 +79,6 @@ export default {
   },
   watch: {
     size () {
-      console.log('size 변경 감지')
       this.pagination.size_length = Math.floor(this.size / this.max) + 1
       this.page_start = ((this.pagination.page - 1) / this.$props.size) * this.$props.size + 1
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)

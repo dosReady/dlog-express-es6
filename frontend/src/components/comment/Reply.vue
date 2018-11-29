@@ -60,7 +60,6 @@ export default {
     },
     async addComment () {
       try {
-        console.log(this.$props)
         this.inputReplyData.comment_seq = this.data.comment_seq
         this.inputReplyData.target_user_id = this.data.target_user_id
         await this.$http.post('/api/reply/add', {data: this.inputReplyData})

@@ -66,7 +66,6 @@ export default {
     })
   },
   updated () {
-    console.log('qqweqwe')
   },
   methods: {
     async toggleReplys (commentSeq) {

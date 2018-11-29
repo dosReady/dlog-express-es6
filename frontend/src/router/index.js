@@ -43,5 +43,8 @@ export default new Router({
       component: () => import('@/pages/NotFoundComponent'),
       meta: {layout: 'topmenu'}
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
