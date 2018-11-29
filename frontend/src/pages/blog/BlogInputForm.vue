@@ -193,7 +193,7 @@ div.blog-conatiner {
     display: flex;
     background-color: #263238;
     padding: 2rem;
-    height: calc(55% - 3rem);
+    height: 50%;
     @media (max-width: 480px) {
       padding: 1rem;
       height: calc(50% - 3rem);
