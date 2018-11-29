@@ -12,10 +12,10 @@
         <div class="title-mobile-area">
           <input type="text" v-model="subject" placeholder="제목" maxlength="100">
         </div>
-        <div class="preview-content">
+        <div :class="previewContentClass" @dblclick="togglePreview">
             <div class="markdown-body" v-html="compiledMarkdown"></div>
         </div>
-        <div class="input-content">
+        <div :class="inputContentClass" @dblclick="toggleInputContent">
             <codemirror class="" v-model="content" :options="cmOption"></codemirror>
         </div>
     </div>
@@ -31,6 +31,14 @@ export default {
       data: {
         blog_title: '',
         blog_content: ''
+      },
+      previewContentClass: {
+        'preview-content': true,
+        hide: false
+      },
+      inputContentClass: {
+        'input-content': true,
+        hide: false
       },
       cmOption: {
         mode: 'markdown',
@@ -49,6 +57,16 @@ export default {
     }
   },
   methods: {
+    togglePreview (e) {
+      const inputcontent = document.getElementsByClassName('input-content')
+      console.log(inputcontent[0].style)
+      this.inputContentClass.hide = this.previewContentClass.hide
+      this.previewContentClass.hide = !this.previewContentClass.hide
+    },
+    toggleInputContent (e) {
+      this.previewContentClass.hide = this.inputContentClass.hide
+      this.inputContentClass.hide = !this.inputContentClass.hide
+    },
     async saveBlog () {
       if (confirm('저장하시겠습니까?')) {
         try {
@@ -106,7 +124,7 @@ div.blog-conatiner {
     font-size: 2rem;
     padding: 0 1rem 0 1rem;
     overflow: hidden;
-    height: 5rem;
+    height: 10%;
     div.title-area {
       display: flex;
       flex: 1 1;
@@ -152,11 +170,18 @@ div.blog-conatiner {
       display: flex;
     }
   }
+  div.preview-sizecontrol {
+    flex: 1 1;
+    height: 1rem;
+    z-index: 15;
+    opacity: .5;
+    cursor: row-resize;
+  }
   div.preview-content {
     display: flex;
     padding: 2rem;
     width: 100%;
-    height: 20rem;
+    height: 40%;
     word-break: break-all;
     background-color: transparent!important;
     color: black!important;
@@ -167,10 +192,11 @@ div.blog-conatiner {
   div.input-content {
     display: flex;
     background-color: #263238;
-    height: calc(100% - 25rem);
     padding: 2rem;
+    height: calc(55% - 3rem);
     @media (max-width: 480px) {
-      height: calc(100% - 28rem);
+      padding: 1rem;
+      height: calc(50% - 3rem);
     }
   }
 }

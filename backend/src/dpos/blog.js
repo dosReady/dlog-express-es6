@@ -12,14 +12,12 @@ module.exports = class Blog {
             INSERT INTO dlog_blog (
                 blog_title,
                 blog_content,
-                blog_worklist_seq,
                 file_group_seq,
                 action_log_seq
             )
             VALUES(
                 '${data.blog_title}',
                 '${data.blog_content}',
-                null,
                 null,
                 null
             )
