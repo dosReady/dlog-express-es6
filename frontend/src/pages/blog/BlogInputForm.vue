@@ -168,7 +168,7 @@ div.blog-conatiner {
     display: flex;
     background-color: #263238;
     height: calc(100% - 25rem);
-    padding: 1rem;
+    padding: 2rem;
     @media (max-width: 480px) {
       height: calc(100% - 28rem);
     }
