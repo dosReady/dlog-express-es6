@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     togglePreview (e) {
-      const inputcontent = document.getElementsByClassName('input-content')
+      // const inputcontent = document.getElementsByClassName('input-content')
       this.inputContentClass.hide = this.previewContentClass.hide
       this.previewContentClass.hide = !this.previewContentClass.hide
     },
