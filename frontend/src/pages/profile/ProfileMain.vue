@@ -1,6 +1,6 @@
 <template>
-  <div class="page-container">
-    <div class="page-content">
+  <div class="profile-container">
+    <div class="profile-content">
         <div class="user-image">
             <img src="static/image/dlog_logo.png" alt="">
         </div>
@@ -36,13 +36,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.page-container {
+<style lang="scss" scoped>
+.profile-container {
     display: flex;
     flex-direction: column;
     margin-top: 5rem;
     height: 100%;
-   .page-content {
+   .profile-content {
         border-radius: .25rem;
         padding: 1.75rem;
         box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);
@@ -83,7 +83,7 @@ export default {
             margin-top: 1rem;
         }
    }
-   .page-bottom {
+   .profile-bottom {
         background-color: #DDD7D0;
         height:auto;
    }

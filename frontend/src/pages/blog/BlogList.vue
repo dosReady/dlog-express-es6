@@ -159,7 +159,7 @@ export default {
       margin-top: 5em;
       .post {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         background: #ffffff;
         border: solid 1px rgba(160, 160, 160, 0.3);
         box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.05), 0 2px 4px 0 rgba(0,0,0,0.05);

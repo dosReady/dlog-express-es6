@@ -1,6 +1,5 @@
 <template>
   <div class="page-container">
-    <div class="page-top"></div>
     <div class="page-content">
         <div class="blog-title">
           <h1>{{data.blog_title}}</h1>
@@ -116,7 +115,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '$static/css/github-markdown';
 .page-container {
     display: flex;
