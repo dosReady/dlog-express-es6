@@ -116,7 +116,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '$static/css/github-markdown';
 .page-container {
     display: flex;
     flex-direction: column;
