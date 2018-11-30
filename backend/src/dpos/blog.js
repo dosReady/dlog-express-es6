@@ -45,10 +45,13 @@ module.exports = class Blog {
         let result = []
         try {
             const seq = req.body.seq
+            const deleteTagSql = `DELETE FROM dlog_tags WHERE master_seq = ${seq}`
             const delCommentSql = `DELETE FROM dlog_comments WHERE master_seq = ${seq}`
             const delBlogSql = `
                 DELETE FROM dlog_blog WHERE blog_seq = ${seq}
             `
+            await connection.query(deleteTagSql)
+            result.push(deleteTagSql)
             await connection.query(delCommentSql)
             result.push(delCommentSql)
             await connection.query(delBlogSql)
