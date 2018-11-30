@@ -5,7 +5,16 @@
     .prepend {
         display: flex;
         justify-content: center;
+        input {
+            flex: 1 1 90%;
+            border: 1px solid #dee2e6;
+            border-left: none;
+        }
+        input:focus {
+            outline: none;
+        }
         button {
+            flex: 1 1 10%;
             border: none;
         }
     }
@@ -13,7 +22,18 @@
         display: flex;
         justify-content: center;
         button {
+            flex: 1 1 10%;
             border: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        input {
+            flex: 1 1 90%;
+            border: 1px solid #dee2e6;
+            border-right: none;
+        }
+        input:focus {
+            outline: none;
         }
     }
     input {

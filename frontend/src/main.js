@@ -13,11 +13,12 @@ import 'codemirror/addon/display/placeholder.js'
 import 'codemirror/theme/material.css'
 import 'github-markdown-css'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import {faGoogle, faFacebook} from '@fortawesome/fontawesome-free-brands'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Ajax from '@/common/ajax.js'
 
-library.add(fas)
+library.add(fas, faGoogle, faFacebook)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueCodemirror)
 Vue.use(Ajax)

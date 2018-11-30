@@ -1,6 +1,7 @@
 @import 'button';
 @import 'input';
 @import 'editor';
+@import 'page';
 .active {
     background-color: #355c7d!important;
     color: white;
@@ -23,11 +24,11 @@ textarea {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color: #3c3b3b;
+    color: inherit;
     font-weight: 800;
     letter-spacing: 0.25rem;
-    margin: 0 0 1em 0;
     text-transform: uppercase;
+    margin: 0;
 }
 a {
     color: inherit;

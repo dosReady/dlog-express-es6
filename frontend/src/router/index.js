@@ -8,7 +8,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/blog'
+      // redirect: '/blog'
+      name: 'Root',
+      component: () => import('@/pages/login/LoginContainer')
     },
     {
       path: '/blog',
@@ -40,7 +42,7 @@ export default new Router({
     },
     {
       path: '*',
-      component: () => import('@/pages/NotFoundComponent'),
+      component: () => import('@/pages/NotFound'),
       meta: {layout: 'topmenu'}
     }
   ],
