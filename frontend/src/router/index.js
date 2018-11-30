@@ -35,7 +35,7 @@ export default new Router({
     {
       path: '/profile',
       name: 'ProfileMain',
-      component: () => import('@/pages/profile/profileMain'),
+      component: () => import('@/pages/profileMain'),
       meta: {layout: 'topmenu'}
     },
     {

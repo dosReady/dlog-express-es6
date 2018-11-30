@@ -15,10 +15,12 @@ import 'github-markdown-css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Ajax from '@/common/ajax.js'
 
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueCodemirror)
+Vue.use(Ajax)
 
 Vue.config.productionTip = false
 

@@ -8,11 +8,13 @@ import bodyParser from 'body-parser'
 import modules from './modules'
 import app_passport from './setting/app_passport'
 import db from './setting/db'
+//한군데 모아서 전달할 방법없나..
 import router from './router/index'
 import blogs from './router/blog'
 import comments from './router/comments'
 import tags from './router/tags'
 import replys from './router/replys' 
+import profiles from './router/profile'
 
 const app = express()
 
@@ -45,6 +47,7 @@ app.use('/api/tag', tags)
 app.use('/api/blog', blogs)
 app.use('/api/comment', comments)
 app.use('/api/reply', replys)
+app.use('/api/profile', profiles)
 
 app.all('*',modules.httpcode_exception)
 

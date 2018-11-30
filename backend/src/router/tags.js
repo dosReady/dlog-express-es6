@@ -13,4 +13,12 @@ router.post('/list', async (req, res, next) => {
         next(error)
     }
 })
+router.post('/mylist', async (req, res, next) => {
+    try {
+        const result = await tags.mylist(req)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router

@@ -12,13 +12,15 @@
             <button class="btn btn-default">로그라인 작성</button>
         </div>
         <div class="user-active">
-            내용
+            <div></div>
+            <component :is="'profile-tab-blog'"></component>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import ProfileTabBlog from '@/components/profile/ProfileTabBlog'
 export default {
   name: 'ProfileMain',
   data () {
@@ -26,8 +28,7 @@ export default {
     }
   },
   components: {
-  },
-  async created () {
+    ProfileTabBlog
   },
   methods: {
   },
@@ -41,7 +42,6 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: 5rem;
-    height: 100%;
    .profile-content {
         border-radius: .25rem;
         padding: 1.75rem;
