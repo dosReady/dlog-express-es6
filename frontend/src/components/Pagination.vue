@@ -22,7 +22,9 @@ export default {
       type: Number,
       default: 5
     },
-    mode: String
+    mode: String,
+    scrollToId: String,
+    scrollToClass: String
   },
   data () {
     return {
@@ -74,6 +76,13 @@ export default {
         this.$eventbus.$emit('initReply')
       } else if (this.$props.mode === 'blog') {
         this.$eventbus.$emit('reloadBlogs', this.pagination)
+      }
+      if (this.$props.scrollToId) {
+        document.getElementById(this.$props.scrollToId).scrollIntoView()
+        console.log(document.getElementById(this.$props.scrollToId).scrollTop)
+      } else {
+        console.log('window')
+        window.scrollTo(0, 0)
       }
     }
   },
