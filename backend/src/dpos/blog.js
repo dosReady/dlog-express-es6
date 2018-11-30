@@ -4,7 +4,6 @@ import utils from '../utils'
 module.exports = class Blog {
     constructor () {}
     async insert (req, connection) {
-        let resultsql = ''
         try {
             const data = req.body.data
             const mastersql = `
@@ -19,18 +18,13 @@ module.exports = class Blog {
                 null
             )
             `
-            resultsql += mastersql + '\n'
-            const [rows] = await connection.query(mastersql)
+            await dao.insert(mastersql)
         } catch (error) {
            throw error
-        } finally {
-            console.log(resultsql)
         }
-    
     }
 
     async update (req, connection) {
-        let resultsql = ''
         try {
             const seq = req.body.seq
             const data = req.body.data
@@ -41,39 +35,36 @@ module.exports = class Blog {
                 update_date=CURRENT_TIMESTAMP
             WHERE blog_seq=${seq}
             `
-            resultsql += updatesql + '\n'
-            await connection.query(updatesql)
+            await dao.update(updatesql)
         } catch (error) {
             throw error
-        } finally {
-            console.log(resultsql)
         }
     }
 
     async delete (req, connection) {
-        let resultsql = ''
+        let result = []
         try {
             const seq = req.body.seq
-            const delWorksql = `
-                DELETE FROM dlog_work_list WHERE blog_seq = ${seq}
-            `
-            const delMstsql = `
+            const delCommentSql = `DELETE FROM dlog_comments WHERE master_seq = ${seq}`
+            const delBlogSql = `
                 DELETE FROM dlog_blog WHERE blog_seq = ${seq}
             `
-            resultsql += delWorksql + '\n' + delMstsql
-            await connection.query(delWorksql)
-            await connection.query(delMstsql)
+            await connection.query(delCommentSql)
+            result.push(delCommentSql)
+            await connection.query(delBlogSql)
+            result.push(delBlogSql)
         } catch (error) {
             throw error
         } finally {
-            console.log(resultsql)
+            result.forEach((sql) => console.log(sql))
         }
     }
 
     async detail (req) {
         const id = req.body.id
         const mastersql = `
-            SELECT 
+            SELECT
+                blog_seq,
                 blog_title,
                 blog_content,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date

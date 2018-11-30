@@ -8,7 +8,7 @@ const blog = new Blog()
 
 router.post('/add', async (req, res, next) => {
     try {
-        const result = await dao.transaction(req, blog.insert)
+        const result = await blog.insert(req)
         res.json(result)
     } catch (error) {
         next(error)
@@ -17,7 +17,7 @@ router.post('/add', async (req, res, next) => {
 
 router.post('/edit', async (req, res, next) => {
     try {
-        const result = await dao.transaction(req, blog.update)
+        const result = await blog.update(req)
         res.json(result)
     } catch (error) {
         next(error)

@@ -10,14 +10,12 @@ module.exports = class Replys {
                 comment_seq,
                 is_private,
                 reply_password,
-                user_id,
                 target_user_id
             ) VALUES(
                 '${data.reply_content}',
                 ${data.comment_seq},
                 '',
                 '',
-                '등록자',
                 '${data.target_user_id}'
             )
             `

@@ -31,7 +31,6 @@
           <footer>
             <ul class="actions">
               <li><router-link class="btn btn-default" :to="{name: 'BlogDetail', params: {id: item.blog_seq}}">더 보기</router-link></li>
-              <li><router-link class="btn btn-default" :to="{name: 'BlogEdit', params: {id: item.blog_seq}}">편집</router-link></li>
             </ul>
           </footer>
         </article>

@@ -93,8 +93,8 @@ export default {
       this.page_end = Math.min(this.page_start + this.$props.size - 1, this.pagination.size_length)
       let loop = this.page_count
       this.page_stack = []
-      if (this.page_end < this.page_count) loop = this.page_end
-      for (let i = 1; i <= loop; i++) {
+      if (this.page_end <= this.page_count) loop = this.page_end
+      for (let i = 1; i < loop; i++) {
         this.page_stack.push(i)
       }
     }

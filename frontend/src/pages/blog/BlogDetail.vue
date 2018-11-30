@@ -3,7 +3,13 @@
     <div class="page-content">
         <div class="blog-title">
           <h1>{{data.blog_title}}</h1>
-          <span class="update-date">{{data.update_date}}</span>
+          <div class="bottom-area">
+            <span class="update-date">{{data.update_date}}</span>
+            <div class="btn-group">
+                <router-link class="btn btn-default" style="margin-right:1rem" :to="{name: 'BlogEdit', params: {id: data.blog_seq}}">편집</router-link>
+                <button class="btn btn-default" @click="deletePost">삭제</button>
+            </div>
+          </div>
           <hr>
         </div>
         <div class="blog-content markdown-body" v-html="compiledMarkdown"></div>
@@ -85,6 +91,12 @@ export default {
         console.log(error)
         alert('댓글 조회중 오류가 발생했습니다.')
       }
+    },
+    async deletePost () {
+      if (confirm('이 포스트를 정말로 삭제하시겠습니까?')) {
+        await this.$post({url: '/api/blog/delete', params: {seq: this.data.blog_seq}, msg: '포스트가 삭제되었습니다.', errmsg: '포스트 삭제처리중 오류가 발생했습니다.'})
+        this.$router.push({ path: '/blog' })
+      }
     }
   },
   computed: {
@@ -142,6 +154,12 @@ export default {
 .blog-title {
   word-break: break-all;
   margin-bottom: 1.75rem;
+  .bottom-area {
+    display: flex;
+    .btn-group {
+      margin-left: auto;
+    }
+  }
   hr {
     border-color: #e7edf3;
   }
