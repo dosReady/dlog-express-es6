@@ -22,6 +22,19 @@
                 </div>
             </div>
         </div>
+        <div class="find-info">
+            <ul>
+                <li>
+                    <router-link to="/">아이디 찾기</router-link>
+                </li>
+                <li>
+                    <router-link to="/">비밀번호 찾기</router-link>
+                </li>
+                <li>
+                    <router-link to="/">회원가입</router-link>
+                </li>
+            </ul>
+        </div>
         <div class="oauth-area">
             <div class="separator"><div class="or">또는</div></div>
             <div class="google-wrap">
@@ -55,7 +68,14 @@ export default {
       if (e.keyCode === 13) this.checkEmail()
     },
     async checkEmail () {
-      this.isCommon = true
+      const data = await this.$post({url: '/api/user/checkExist', params: {email: this.email}, errmsg: '이메일 조회중 오류가 발생했습니다.'})
+      if (data) {
+        this.isCommon = true
+      } else {
+        // 임시 alert 적용,  화면에 표출로 변경예정
+        alert('해당 이메일로 가입되어 있지않습니다. 다시 확인바랍니다.')
+        this.isCommon = false
+      }
     },
     async backEmail () {
       this.isCommon = false
@@ -70,6 +90,22 @@ export default {
     width: 700px;
     @media (max-width: 700px) {
         width: 100%;
+    }
+    .find-info {
+        ul {
+            display: flex;
+            justify-content: flex-end;
+            li {
+                margin-right: .75rem;
+                padding-right: .75rem;
+                border-right: 1px solid #ced4da;
+            }
+            li:last-child {
+                border-right: none;
+                padding-right: 0;
+                margin-right:  0;
+            }
+        }
     }
     .separator {
         width: 100%;

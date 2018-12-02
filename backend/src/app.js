@@ -15,6 +15,7 @@ import comments from './router/comments'
 import tags from './router/tags'
 import replys from './router/replys' 
 import profiles from './router/profile'
+import users from './router/users'
 
 const app = express()
 
@@ -48,6 +49,7 @@ app.use('/api/blog', blogs)
 app.use('/api/comment', comments)
 app.use('/api/reply', replys)
 app.use('/api/profile', profiles)
+app.use('/api/user', users)
 
 app.all('*',modules.httpcode_exception)
 
