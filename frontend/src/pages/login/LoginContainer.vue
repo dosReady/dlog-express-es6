@@ -4,7 +4,7 @@
         <h1>Dlog, 어서오세요 환영합니다.</h1>
         <div v-if="!isCommon" class="input-group">
             <div class="append">
-                <input type="text" v-model="email" placeholder="이메일을 입력해주세요."/>
+                <input type="text" v-model="email" placeholder="이메일을 입력해주세요." @keydown="enterEmail"/>
                 <button class="btn btn-default" @click="checkEmail">시작</button>
             </div>
         </div>
@@ -51,6 +51,9 @@ export default {
     }
   },
   methods: {
+    enterEmail (e) {
+      if (e.keyCode === 13) this.checkEmail()
+    },
     async checkEmail () {
       this.isCommon = true
     },
