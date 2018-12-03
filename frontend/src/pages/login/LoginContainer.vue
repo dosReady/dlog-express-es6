@@ -136,6 +136,9 @@ export default {
             display: flex;
             height: 4rem;
             margin-bottom: 1rem;
+            h4 {
+                text-transform: none;
+            }
         }
     }
     .google-wrap {

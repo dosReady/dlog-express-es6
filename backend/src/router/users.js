@@ -13,4 +13,12 @@ router.post('/checkExist', async (req, res, next) => {
         next(error)
     }
 })
+router.post('/sendEmail', async (req, res, next) => {
+    try {
+        await users.sendEmail(req)
+        res.json('send')
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router
