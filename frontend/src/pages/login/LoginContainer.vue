@@ -30,9 +30,6 @@
                 <li>
                     <router-link to="/">비밀번호 찾기</router-link>
                 </li>
-                <li>
-                    <router-link to="/">회원가입</router-link>
-                </li>
             </ul>
         </div>
         <div class="oauth-area">

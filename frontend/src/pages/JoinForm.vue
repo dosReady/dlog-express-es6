@@ -1,7 +1,25 @@
 <template>
   <div class="page-container">
     <div class="page-content">
-        <h1>환영합니다. {{data.email}}님!</h1>
+        <h2>환영합니다. {{data.email}}님!</h2>
+        <div class="input-form">
+            <div class="input-group">
+                <input type="text" placeholder="비밀번호를 입력하세요."/>
+                <font-awesome-icon icon="unlock-alt"/>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="확인비밀번호를 입력하세요."/>
+                <font-awesome-icon icon="unlock-alt"/>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="이름을 입력하세요"/>
+                <font-awesome-icon icon="user"/>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="연락처를 입력하세요"/>
+                <font-awesome-icon icon="phone"/>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -34,6 +52,10 @@ export default {
     width: 700px;
     @media (max-width: 700px) {
         width: 100%;
+    }
+    h2 {
+        text-transform: none;
+        margin-bottom: 1rem;
     }
 }
 </style>
