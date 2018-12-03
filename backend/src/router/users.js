@@ -29,4 +29,12 @@ router.post('/checkSendEmail', async (req, res, next) => {
         next(error)
     }
 })
+router.post('/inserUser', async (req, res, next) => {
+    try {
+        const result = await users.inserUser(req)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router
