@@ -15,7 +15,33 @@ module.exports = class Users {
             throw error
         }
     }
-    async sendEmail (req) {
-        sendEmail.send({to: 'lonely721@naver.com', subject: '이메일 서비스'})
+    async sendEmail (req, connection) {
+        try {
+            const toEmail = req.body.toEmail
+            const sql = `
+            INSERT INTO dlog_joinreq (joinreq_email) VALUES('${toEmail}')
+            `
+            await connection.query(sql)
+            console.log(sql)
+            sendEmail.send({to: toEmail, subject: '[Dlog] 회원가입'})
+        } catch (error) {
+            throw error
+        }
+    }
+    async checkSendEmail (req) {
+        try {
+            const toEmail = req.body.toEmail
+            const sql = `
+            SELECT * 
+            FROM 
+                dlog_joinreq 
+            WHERE joinreq_email ='${toEmail}'
+            AND is_join != 'Y'
+            AND is_expires != 'Y'
+            `
+            return await dao.select(sql)
+        } catch (error) {
+            throw error
+        }
     }
 }

@@ -73,7 +73,11 @@ export default {
         this.isCommon = true
       } else {
         // 임시 alert 적용,  화면에 표출로 변경예정
-        alert('해당 이메일로 가입되어 있지않습니다. 다시 확인바랍니다.')
+        if (confirm('해당 이메일로 가입되어 있지않습니다. 회원가입 하시겠습니까?')) {
+          await this.$post({url: '/api/user/sendEmail', params: {toEmail: this.email}, msg: '입력하신 이메일로 회원가입 요청메일을 발송하였습니다.', errmsg: '회원가입 요청메일 발송중 오류가 발생했습니다.'})
+        } else {
+          alert('회원가입을 취소 하였습니다.')
+        }
         this.isCommon = false
       }
     },

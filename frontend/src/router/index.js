@@ -41,6 +41,11 @@ export default new Router({
       meta: {layout: 'topmenu'}
     },
     {
+      path: '/join',
+      name: 'JoinForm',
+      component: () => import('@/pages/JoinForm')
+    },
+    {
       path: '*',
       component: () => import('@/pages/NotFound'),
       meta: {layout: 'topmenu'}

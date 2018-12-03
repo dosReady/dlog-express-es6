@@ -15,8 +15,16 @@ router.post('/checkExist', async (req, res, next) => {
 })
 router.post('/sendEmail', async (req, res, next) => {
     try {
-        await users.sendEmail(req)
+        await dao.transaction(req, users.sendEmail)
         res.json('send')
+    } catch (error) {
+        next(error)
+    }
+})
+router.post('/checkSendEmail', async (req, res, next) => {
+    try {
+        const result = await users.checkSendEmail(req)
+        res.json(result)
     } catch (error) {
         next(error)
     }
