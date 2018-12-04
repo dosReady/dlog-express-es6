@@ -32,8 +32,6 @@ module.exports = class Comments {
             const commentsql = `
             UPDATE dlog_comments
                 SET comment_content='${data.comment_content}',
-                    action_log_seq=0,
-                    comment_upper_seq=0,
                     update_date=CURRENT_TIMESTAMP,
                     master_seq=${data.master_seq},
             WHERE comment_seq=${data.comment_seq}
@@ -68,7 +66,7 @@ module.exports = class Comments {
             SELECT
             a.comment_seq,
             a.comment_content,
-            a.user_id AS comment_user_id,
+            a.reg_user AS comment_user,
             DATE_FORMAT(a.update_date, '%Y-%m-%d %H:%i') AS comment_update_date,
             COUNT(b.reply_seq) AS reply_cnt
             FROM 
@@ -77,7 +75,7 @@ module.exports = class Comments {
                 dlog_comment_replys b
             ON a.comment_seq =  b.comment_seq
             WHERE a.master_seq = ${seq}
-            GROUP BY a.comment_seq, a.comment_content, a.user_id, a.update_date
+            GROUP BY a.comment_seq, a.comment_content, a.reg_user, a.update_date
             ORDER BY comment_update_date DESC
             LIMIT ${page * max}, ${max}
             `
@@ -97,7 +95,7 @@ module.exports = class Comments {
                 comment_content,
                 action_log_seq,
                 comment_upper_seq,
-                user_id,
+                reg_user,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS update_date,
                 master_seq,
                 is_private,
