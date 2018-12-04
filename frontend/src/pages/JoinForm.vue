@@ -30,10 +30,17 @@
         <button class="btn btn-default" @click="login">로그인</button>
     </div>
   </div>
+  <div v-if="isExpired" class="page-container" key="expired">
+    <div class="page-content">
+        <h2>해당 링크는 만료된 요청입니다.</h2>
+        <button class="btn btn-default" @click="login">Dlog 이동</button>
+    </div>
+  </div>
   </transition>
 </template>
 
 <script>
+import pbkdf2 from 'pbkdf2'
 export default {
   name: 'JoinForm',
   data () {
@@ -63,14 +70,15 @@ export default {
         }
       },
       msgstack: [],
-      isCompleted: false
+      isCompleted: false,
+      isExpired: false
     }
   },
   async created () {
     if (this.$route.query.email) {
       const data = await this.$post({url: '/api/user/checkSendEmail', params: {toEmail: atob(this.$route.query.email)}, errmsg: '잘못된 요청입니다.'})
       if (!data) {
-        alert('잘못된 요청 입니다.')
+        this.isExpired = true
       }
       this.data.email = atob(this.$route.query.email)
     }
@@ -99,7 +107,16 @@ export default {
       if (this.data.name > 20) this.msgstack.push(this.errmsg.name.length)
       if (this.data.pwd < 8 || this.data.pwd > 20) this.msgstack.push(this.errmsg.pwd.length)
       if (this.data.pwd !== this.data.checkpwd) this.msgstack.push(this.errmsg.checkpwd.notmatch)
-      if (this.msgstack.length === 0) await this.$post({url: '/api/user/insertUser', params: {data: this.data}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'}, this.callback)
+      if (this.msgstack.length === 0) {
+        const derivedKey = pbkdf2.pbkdf2Sync(this.data.pwd, 'salt', 1000, 32, 'sha512')
+        const insertData = {
+          email: this.data.email,
+          name: this.data.name,
+          pwd: derivedKey.toString('hex'),
+          call: this.data.call
+        }
+        await this.$post({url: '/api/user/insertUser', params: {data: insertData}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'}, this.callback)
+      }
     }
   }
 }

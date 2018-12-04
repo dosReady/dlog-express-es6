@@ -31,7 +31,7 @@ router.post('/checkSendEmail', async (req, res, next) => {
 })
 router.post('/insertUser', async (req, res, next) => {
     try {
-        const result = await users.insertUser(req)
+        const result = await dao.transaction(req, users.insertUser)
         res.json(result)
     } catch (error) {
         next(error)

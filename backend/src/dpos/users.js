@@ -44,23 +44,34 @@ module.exports = class Users {
             throw error
         }
     }
-    async insertUser (req) {
+    async insertUser (req, connection) {
+        let result = []
         try {
             const data = req.body.data
-            const sql = `
+            const dlogUserSql = `
             INSERT INTO dlog_user (
                 user_email,
                 user_name,
                 user_password,
                 user_phone
             ) VALUES(
-                '${data.user_email}',
-                '${data.user_name}',
-                '${data.user_password}', 
-                '${data.phone}', 
+                '${data.email}',
+                '${data.name}',
+                '${data.pwd}', 
+                '${data.call}'
             )
             `
-            await dao.insert(sql)
+            const dlogJoinReqSql = `
+            UPDATE dlog_joinreq 
+	            SET is_join='Y', 
+	            update_date=CURRENT_TIMESTAMP,
+	            is_expires='Y' 
+            WHERE joinreq_email='${data.email}'
+            `
+            await connection.query(dlogUserSql)
+            result.push(dlogUserSql)
+            await connection.query(dlogJoinReqSql)
+            result.push(dlogJoinReqSql)
         } catch (error) {
             throw error
         }
