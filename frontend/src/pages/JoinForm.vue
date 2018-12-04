@@ -1,6 +1,6 @@
 <template>
   <transition name="component-fade" mode="out-in">
-  <div v-if="!isCompleted" class="page-container" key="join">
+  <div v-if="mode === 'join' " class="page-container" key="join">
     <div class="page-content">
         <h2>환영합니다.</h2>
         <h2>{{data.email}}님!</h2>
@@ -23,17 +23,17 @@
       </span>
     </div>
   </div>
-  <div v-if="isCompleted" class="page-container" key="completed">
+  <div v-if="mode === 'completed'" class="page-container" key="completed">
     <div class="page-content">
         <h2>축하합니다.</h2>
         <h2>{{data.email}}님!</h2>
         <button class="btn btn-default" @click="login">로그인</button>
     </div>
   </div>
-  <div v-if="isExpired" class="page-container" key="expired">
+  <div v-if="mode === 'expired'" class="page-container" key="expired">
     <div class="page-content">
-        <h2>해당 링크는 만료된 요청입니다.</h2>
-        <button class="btn btn-default" @click="login">Dlog 이동</button>
+        <h2>해당 링크는 만료되었습니다.</h2>
+        <router-link class="btn btn-default" to="/blog">Dlog 이동</router-link>
     </div>
   </div>
   </transition>
@@ -70,15 +70,16 @@ export default {
         }
       },
       msgstack: [],
-      isCompleted: false,
-      isExpired: false
+      mode: ''
     }
   },
-  async created () {
+  async beforeCreate () {
     if (this.$route.query.email) {
       const data = await this.$post({url: '/api/user/checkSendEmail', params: {toEmail: atob(this.$route.query.email)}, errmsg: '잘못된 요청입니다.'})
       if (!data) {
-        this.isExpired = true
+        this.mode = 'expired'
+      } else {
+        this.mode = 'join'
       }
       this.data.email = atob(this.$route.query.email)
     }
@@ -93,7 +94,7 @@ export default {
   },
   methods: {
     callback () {
-      this.isCompleted = true
+      this.mode = 'completed'
     },
     async login () {
       console.log('qweqw')
