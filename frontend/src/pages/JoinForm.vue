@@ -77,7 +77,8 @@ export default {
     if (this.$route.query.email) {
       const data = await this.$post({url: '/api/user/checkSendEmail', params: {toEmail: atob(this.$route.query.email)}, errmsg: '잘못된 요청입니다.'})
       if (!data) {
-        this.mode = 'expired'
+        // this.mode = 'expired'
+        this.mode = 'completed'
       } else {
         this.mode = 'join'
       }
@@ -97,7 +98,22 @@ export default {
       this.mode = 'completed'
     },
     async login () {
-      console.log('qweqw')
+      const form = document.createElement('form')
+      form.setAttribute('method', 'POST')
+      form.setAttribute('action', '/api/login')
+      const username = document.createElement('input')
+      username.setAttribute('type', 'hidden')
+      username.setAttribute('name', 'username')
+      username.setAttribute('value', this.data.email)
+      const password = document.createElement('input')
+      password.setAttribute('type', 'hidden')
+      password.setAttribute('name', 'password')
+      password.setAttribute('value', this.data.pwd)
+      form.appendChild(username)
+      form.appendChild(password)
+      document.body.appendChild(form)
+      form.submit()
+      // await this.$post({url: '/api/login', params: {username: this.data.email, password: this.data.pwd}})
     },
     async join () {
       this.msgstack = []
