@@ -24,7 +24,7 @@ module.exports = class Tags {
     async mylist (req) {
         try {
             const tag = utils.nvl(req.body.tag, 'string')
-            const id = utils.nvl(req.body.id, 'string')
+            const reg_user = utils.nvl(req.body.reg_user, 'string')
             const sql = `
             SELECT 
                 a.tag_name,
@@ -34,7 +34,7 @@ module.exports = class Tags {
             LEFT OUTER JOIN 
                 dlog_blog b
             ON a.master_seq = b.blog_seq
-            WHERE b.user_id = '${id}'
+            WHERE b.reg_user = '${reg_user}'
             AND a.tag_name LIKE CONCAT('%','${tag}','%')
             GROUP BY a.tag_name
             ORDER BY tag_cnt DESC

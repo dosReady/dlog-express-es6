@@ -12,16 +12,16 @@ module.exports = class Profile {
                 a.blog_seq,
                 a.blog_title,
                 LEFT(a.blog_content, 100) AS blog_content,
-                a.user_id,
+                a.reg_user,
                 DATE_FORMAT(a.update_date, '%Y-%m-%d %H:%i') as update_date
             FROM
                 dlog_blog a
             LEFT OUTER JOIN	
                 dlog_tags b
             ON a.blog_seq = b.master_seq
-            WHERE a.user_id = '${id}'
+            WHERE a.reg_user = '${id}'
             AND IFNULL(b.tag_name, '') LIKE CONCAT('%','${tag}','%')
-            GROUP BY a.blog_seq, a.blog_title, a.user_id, a.update_date
+            GROUP BY a.blog_seq, a.blog_title, a.reg_user, a.update_date
             ORDER BY a.update_date DESC
             `
             const totalsql = `
@@ -35,7 +35,7 @@ module.exports = class Profile {
                 LEFT OUTER JOIN
                     dlog_tags b
                 ON a.blog_seq = b.master_seq
-                WHERE a.user_id = '${id}'
+                WHERE a.reg_user = '${id}'
                 AND IFNULL(b.tag_name, '') LIKE CONCAT('%','${tag}','%')
                 GROUP BY a.blog_seq
             ) AS x

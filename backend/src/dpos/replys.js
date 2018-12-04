@@ -10,13 +10,13 @@ module.exports = class Replys {
                 comment_seq,
                 is_private,
                 reply_password,
-                target_user_id
+                target_user
             ) VALUES(
                 '${data.reply_content}',
                 ${data.comment_seq},
                 '',
                 '',
-                '${data.target_user_id}'
+                '${data.target_user}'
             )
             `
             await dao.insert(sql)
@@ -32,8 +32,8 @@ module.exports = class Replys {
                 reply_seq,
                 reply_content,
                 comment_seq,
-                target_user_id,
-                user_id,
+                target_user,
+                reg_user,
                 DATE_FORMAT(update_date, '%Y-%m-%d %H:%i') AS reply_update_date
             FROM
                 dlog_comment_replys 

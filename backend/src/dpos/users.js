@@ -44,4 +44,25 @@ module.exports = class Users {
             throw error
         }
     }
+    async insertUser (req) {
+        try {
+            const data = req.body.data
+            const sql = `
+            INSERT INTO dlog_user (
+                user_email,
+                user_name,
+                user_password,
+                user_phone
+            ) VALUES(
+                '${data.user_email}',
+                '${data.user_name}',
+                '${data.user_password}', 
+                '${data.phone}', 
+            )
+            `
+            await dao.insert(sql)
+        } catch (error) {
+            throw error
+        }
+    }
 }

@@ -74,24 +74,32 @@ export default {
       }
       this.data.email = atob(this.$route.query.email)
     }
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 13) {
+        this.join()
+      }
+    })
   },
   updated () {
     if (this.msgstack.length > 0) document.getElementById('error-focus').scrollIntoView()
   },
   methods: {
+    callback () {
+      this.isCompleted = true
+    },
+    async login () {
+      console.log('qweqw')
+    },
     async join () {
       this.msgstack = []
       if (!this.data.name) this.msgstack.push(this.errmsg.name.required)
       if (!this.data.pwd) this.msgstack.push(this.errmsg.pwd.required)
       if (!this.data.call) this.msgstack.push(this.errmsg.call.required)
+      else if (!/^\d{2,3}-\d{3,4}-\d{4}$/.test(this.data.call)) this.msgstack.push(this.errmsg.call.vaild)
       if (this.data.name > 20) this.msgstack.push(this.errmsg.name.length)
       if (this.data.pwd < 8 || this.data.pwd > 20) this.msgstack.push(this.errmsg.pwd.length)
       if (this.data.pwd !== this.data.checkpwd) this.msgstack.push(this.errmsg.checkpwd.notmatch)
-      if (!/^\d{2,3}-\d{3,4}-\d{4}$/.test(this.data.call)) this.msgstack.push(this.errmsg.call.vaild)
-      if (this.msgstack.length > 0) {
-      } else {
-        await this.$post({callback: () => {this.isCompleted = true}, url: '/api/user/insertUser', params: {data: this.data}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'})
-      }
+      if (this.msgstack.length === 0) await this.$post({url: '/api/user/insertUser', params: {data: this.data}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'}, this.callback)
     }
   }
 }

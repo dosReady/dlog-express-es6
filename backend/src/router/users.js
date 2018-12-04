@@ -29,9 +29,9 @@ router.post('/checkSendEmail', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/inserUser', async (req, res, next) => {
+router.post('/insertUser', async (req, res, next) => {
     try {
-        const result = await users.inserUser(req)
+        const result = await users.insertUser(req)
         res.json(result)
     } catch (error) {
         next(error)
