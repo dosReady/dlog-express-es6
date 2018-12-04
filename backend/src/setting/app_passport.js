@@ -28,7 +28,6 @@ module.exports = (passport) => {
         })
         */
         try {
-            await pool.query('delete from dlog_user_sessions where sid = ?', [String(req.sessionID)])
             const user = await pool.query('SELECT * FROM dlog_user WHERE user_email = ?', [String(username)])
             console.log(user[0])
             return done(null, user)

@@ -18,8 +18,8 @@ const storeconfig = {
     database: dbconfig.db.database,
     port: dbconfig.port,
     clearExpired: true,
-    checkExpirationInterval: 1000,
-    expiration: 1000,
+    checkExpirationInterval: 100000,
+    expiration: 100000,
     connectionLimit: 1,
     endConnectionOnClose: true,
     schema: {
