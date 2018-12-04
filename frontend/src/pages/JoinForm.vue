@@ -27,7 +27,11 @@
     <div class="page-content">
         <h2>축하합니다.</h2>
         <h2>{{data.email}}님!</h2>
-        <button class="btn btn-default" @click="login">로그인</button>
+        <form action="/api/login" method="POST">
+          <input type="hidden" name="username" :value="data.email"/>
+          <input type="hidden" name="password" :value="derivedKey"/>
+          <button type="submit" class="btn btn-default">로그인</button>
+        </form>
     </div>
   </div>
   <div v-if="mode === 'expired'" class="page-container" key="expired">
@@ -52,6 +56,7 @@ export default {
         checkpwd: '',
         call: ''
       },
+      derivedKey: '',
       errmsg: {
         name: {
           required: '이름은 필수 입력 값입니다.',
@@ -97,24 +102,6 @@ export default {
     callback () {
       this.mode = 'completed'
     },
-    async login () {
-      const form = document.createElement('form')
-      form.setAttribute('method', 'POST')
-      form.setAttribute('action', '/api/login')
-      const username = document.createElement('input')
-      username.setAttribute('type', 'hidden')
-      username.setAttribute('name', 'username')
-      username.setAttribute('value', this.data.email)
-      const password = document.createElement('input')
-      password.setAttribute('type', 'hidden')
-      password.setAttribute('name', 'password')
-      password.setAttribute('value', this.data.pwd)
-      form.appendChild(username)
-      form.appendChild(password)
-      document.body.appendChild(form)
-      form.submit()
-      // await this.$post({url: '/api/login', params: {username: this.data.email, password: this.data.pwd}})
-    },
     async join () {
       this.msgstack = []
       if (!this.data.name) this.msgstack.push(this.errmsg.name.required)
@@ -132,6 +119,7 @@ export default {
           pwd: derivedKey.toString('hex'),
           call: this.data.call
         }
+        this.derivedKey = derivedKey.toString('hex')
         await this.$post({url: '/api/user/insertUser', params: {data: insertData}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'}, this.callback)
       }
     }
@@ -149,12 +137,15 @@ export default {
 .page-content {
     width: 500px;
     @media (max-width: 700px) {
-        width: 100%;
+      width: 100%;
     }
     h2 {
-        text-transform: none;
-        margin-bottom: 1rem;
-        word-break: break-all;
+      text-transform: none;
+      margin-bottom: 1rem;
+      word-break: break-all;
+    }
+    button {
+      width: 100%;
     }
     .input-form {
       display: flex;

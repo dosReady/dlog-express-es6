@@ -4,6 +4,7 @@ import db from '../setting/db'
 const router = express.Router()
 
 router.get('/*', async (req, res, next) => {
+    console.log(req.session)
     res.render('dist/index')
 })
 

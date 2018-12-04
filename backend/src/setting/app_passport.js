@@ -15,6 +15,7 @@ module.exports = (passport) => {
     passport.use('app-login', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
+        session: true,
         passReqToCallback: true
     }, async (req, username, password, done) => {
         /*
@@ -27,11 +28,10 @@ module.exports = (passport) => {
         })
         */
         try {
-            console.log('1231')
-            await pool.query('delete from dlog_user_sessions where sid = $1', [String(req.sessionID)])
-            const user = await pool.query('SELECT * FROM dlog_user WHERE user_email = $1', [String(username)])
-            console.log(user)
-            return done(null, sampleuser)
+            await pool.query('delete from dlog_user_sessions where sid = ?', [String(req.sessionID)])
+            const user = await pool.query('SELECT * FROM dlog_user WHERE user_email = ?', [String(username)])
+            console.log(user[0])
+            return done(null, user)
         } catch(error) {
             console.error(error)
             return done(null, false, {
