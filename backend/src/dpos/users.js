@@ -1,6 +1,7 @@
 import dao from '../modules/dao'
 import utils from '../utils'
 import sendEmail from '../modules/sendMail'
+import jwt from '../modules/jwt'
 
 module.exports = class Users {
     constructor () {}
@@ -72,6 +73,25 @@ module.exports = class Users {
             result.push(dlogUserSql)
             await connection.query(dlogJoinReqSql)
             result.push(dlogJoinReqSql)
+        } catch (error) {
+            throw error
+        }
+    }
+    async createToken (req) {
+        try {
+            let result = {}
+            const user = await dao.select(`SELECT * FROM dlog_user WHERE user_email = '${req.body.email}'`)
+            if (user) {
+                if (req.body.pwd === user.user_password) {
+                    result.user = {
+                        user_name: user.user_name,
+                        user_email: user.user_email,
+                        user_phone: user.user_phone
+                    }              
+                    result.token = jwt.createToken(result.user)
+                }
+            }
+            return result
         } catch (error) {
             throw error
         }

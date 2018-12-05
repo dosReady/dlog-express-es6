@@ -41,6 +41,7 @@ app.use(flash())
 app_passport(passport)
 
 app.use(modules.accesslog)
+app.use(modules.jwtModule)
 
 // router
 app.use('/', router)

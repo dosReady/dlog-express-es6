@@ -37,4 +37,20 @@ router.post('/insertUser', async (req, res, next) => {
         next(error)
     }
 })
+
+router.post('/createToken', async (req, res, next) => {
+    try {
+        const result = await users.createToken(req)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
+router.post('/test', async (req, res, next) => {
+    try {
+        res.json('test')
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router

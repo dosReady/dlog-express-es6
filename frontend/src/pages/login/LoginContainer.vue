@@ -15,12 +15,15 @@
                     <h4>{{email}}</h4>
                 </button>
             </div>
+            <form action="/api/login" method="POST">
             <div class="input-group">
                 <div class="append">
-                    <input type="password" placeholder="비밀번호를 입력해주세요."/>
-                    <button class="btn btn-default">로그인</button>
+                        <input type="hidden" name="username" :value="email"/>
+                        <input type="password" name="password" v-model="pwd" placeholder="비밀번호를 입력해주세요."/>
+                        <button class="btn btn-default">로그인</button>
                 </div>
             </div>
+            </form>
         </div>
         <div class="find-info">
             <ul>
@@ -52,12 +55,20 @@
 </template>
 
 <script>
+import pbkdf2 from 'pbkdf2'
 export default {
   name: 'LoginContainer',
   data () {
     return {
       email: '',
+      pwd: '',
+      derivedKey: '',
       isCommon: false
+    }
+  },
+  watch: {
+    pwd () {
+      this.derivedKey = pbkdf2.pbkdf2Sync(this.pwd, 'salt', 1000, 32, 'sha512').toString('hex')
     }
   },
   methods: {

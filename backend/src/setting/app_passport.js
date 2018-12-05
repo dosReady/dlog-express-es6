@@ -15,7 +15,6 @@ module.exports = (passport) => {
     passport.use('app-login', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
-        session: true,
         passReqToCallback: true
     }, async (req, username, password, done) => {
         /*
