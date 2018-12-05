@@ -72,8 +72,8 @@ export default {
       await this.$post({url: '/api/user/login', params: data, errmsg: '로그인 처리중 오류가 발생했습니다.'}, this.loginCallback)
     },
     loginCallback (data) {
-      console.log(data)
       this.$store.commit('setAccessToken', data.token)
+      this.$router.push('/blog')
     },
     enterEmail (e) {
       if (e.keyCode === 13) this.checkEmail()

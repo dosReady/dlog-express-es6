@@ -18,6 +18,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Ajax from '@/common/ajax.js'
 import store from './store'
+import jwt from 'jsonwebtoken'
+import config from './setting/config'
 
 library.add(fas, faGoogle, faFacebook)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -28,6 +30,20 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = axios
 Vue.prototype.$eventbus = new Vue()
+
+router.beforeEach((to, from, next) => {
+  try {
+    const token = store.state.token.accessToken
+    if (token) {
+      const decoded = jwt.verify(store.state.token.accessToken, config.jwt.accessSecret)
+      console.log(decoded)
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    next()
+  }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
