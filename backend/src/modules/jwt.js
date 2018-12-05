@@ -1,26 +1,25 @@
 import jwt from 'jsonwebtoken'
 import config from '../setting/config.json'
 
-const createToken = (user) => {
-    const accessToken = jwt.sign({user: user}, config.jwt.secret, {algorithm: config.jwt.algorithm, expiresIn: 30})
-    const refreshToken = jwt.sign({user: user}, config.jwt.secret, {algorithm: config.jwt.algorithm, expiresIn: 60 * 60})
-    return {access: accessToken, refresh: refreshToken}
+const createToken = (user, req) => {
+    const accessToken = jwt.sign({user: user}, config.jwt.accessSecret, {algorithm: config.jwt.accressAlg, expiresIn: 30})
+    const refreshToken = jwt.sign({user: user}, config.jwt.refreshScret, {algorithm: config.jwt.refreshAlg, expiresIn: 60 * 60})
+    req.session.refresh = refreshToken
+    return accessToken
 }
 const isVaild = (token) => {
     const decoded = jwt.verify(token, config.jwt.secret)
     return decoded
 }
-
+const _refreshAccessToken = (req) => {
+    const access = req.body.access
+    const refresh = req.session.refresh
+    console.log(access)
+    console.log(refresh)
+}
 const jwtModule = (req, res, next) => {
     try {
-        const token = req.body.token
-        
-        if (token) {
-            const accessdecode = isVaild(token.access)
-            const refeshdecode = isVaild(token.refresh)
-            if (refeshdecode)
-            console.log(accessdecode)
-        }
+        _refreshAccessToken(req)
         next()
     } catch (error) {
         next(error)
