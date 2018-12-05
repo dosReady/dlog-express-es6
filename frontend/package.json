@@ -26,7 +26,8 @@
     "vue": "^2.5.2",
     "vue-codemirror": "^4.0.6",
     "vue-router": "^3.0.1",
-    "vue-scrollto": "^2.13.0"
+    "vue-scrollto": "^2.13.0",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

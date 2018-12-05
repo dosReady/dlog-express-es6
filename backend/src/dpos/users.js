@@ -80,15 +80,15 @@ module.exports = class Users {
     async createToken (req) {
         try {
             let result = {}
-            const user = await dao.select(`SELECT * FROM dlog_user WHERE user_email = '${req.body.email}'`)
+            const user = await dao.select(`SELECT * FROM dlog_user WHERE user_email = '${req.body.username}'`)
             if (user) {
-                if (req.body.pwd === user.user_password) {
+                if (req.body.password === user.user_password) {
                     result.user = {
                         user_name: user.user_name,
                         user_email: user.user_email,
                         user_phone: user.user_phone
                     }              
-                    result.token = jwt.createToken(result.user)
+                    result.token = jwt.createToken(result.user, req)
                 }
             }
             return result

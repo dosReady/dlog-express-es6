@@ -17,6 +17,7 @@ import {faGoogle, faFacebook} from '@fortawesome/fontawesome-free-brands'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Ajax from '@/common/ajax.js'
+import store from './store'
 
 library.add(fas, faGoogle, faFacebook)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -31,6 +32,7 @@ Vue.prototype.$eventbus = new Vue()
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

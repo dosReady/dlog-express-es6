@@ -7,19 +7,19 @@ const createToken = (user, req) => {
     req.session.refresh = refreshToken
     return accessToken
 }
-const isVaild = (token) => {
-    const decoded = jwt.verify(token, config.jwt.secret)
+const isVaild = (token, secret) => {
+    const decoded = jwt.verify(token, secret)
     return decoded
 }
 const _refreshAccessToken = (req) => {
     const access = req.body.access
     const refresh = req.session.refresh
-    console.log(access)
-    console.log(refresh)
+    const accessDecoded = isVaild(access, config.jwt.accessSecret)
+    const refreshDecoded = isVaild(refresh, config.jwt.refreshScret)
+    jwt.sign({user: accessDecoded.user}, config.jwt.accessSecret, {algorithm: config.jwt.accressAlg, expiresIn: 30})
 }
 const jwtModule = (req, res, next) => {
     try {
-        _refreshAccessToken(req)
         next()
     } catch (error) {
         next(error)

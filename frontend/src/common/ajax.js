@@ -5,7 +5,7 @@ const ajaxplugin = {
       try {
         const {data} = await axios.post(option.url, option.params)
         if (option.msg) alert(option.msg)
-        if (callback) callback()
+        if (callback) callback(data)
         return data
       } catch (error) {
         console.log(error)
