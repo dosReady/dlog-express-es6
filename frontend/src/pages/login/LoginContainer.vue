@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import pbkdf2 from 'pbkdf2'
+import crypto from 'crypto'
+import config from '@/setting/config'
 export default {
   name: 'LoginContainer',
   data () {
@@ -67,7 +68,7 @@ export default {
     async login () {
       const data = {
         username: this.email,
-        password: pbkdf2.pbkdf2Sync(this.pwd, 'salt', 1000, 32, 'sha512').toString('hex')
+        password: crypto.pbkdf2Sync(this.pwd, config.salt, 1000, 32, 'sha512').toString('hex')
       }
       await this.$post({url: '/api/user/login', params: data, errmsg: '로그인 처리중 오류가 발생했습니다.'}, this.loginCallback)
     },

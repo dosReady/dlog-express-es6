@@ -44,7 +44,8 @@
 </template>
 
 <script>
-import pbkdf2 from 'pbkdf2'
+import crypto from 'crypto'
+import config from '@/setting/config'
 export default {
   name: 'JoinForm',
   data () {
@@ -82,7 +83,6 @@ export default {
     if (this.$route.query.email) {
       const data = await this.$post({url: '/api/user/checkSendEmail', params: {toEmail: atob(this.$route.query.email)}, errmsg: '잘못된 요청입니다.'})
       if (!data) {
-        // this.mode = 'expired'
         this.mode = 'completed'
       } else {
         this.mode = 'join'
@@ -112,7 +112,7 @@ export default {
       if (this.data.pwd < 8 || this.data.pwd > 20) this.msgstack.push(this.errmsg.pwd.length)
       if (this.data.pwd !== this.data.checkpwd) this.msgstack.push(this.errmsg.checkpwd.notmatch)
       if (this.msgstack.length === 0) {
-        const derivedKey = pbkdf2.pbkdf2Sync(this.data.pwd, 'salt', 1000, 32, 'sha512')
+        const derivedKey = crypto.pbkdf2Sync(this.data.pwd, config.salt, 1000, 32, 'sha512')
         const insertData = {
           email: this.data.email,
           name: this.data.name,

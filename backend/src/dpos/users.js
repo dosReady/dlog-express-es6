@@ -114,14 +114,15 @@ module.exports = class Users {
             if (user && user.jwt_refresh_token) {
                 const decoded = jwt.isVaild(user.jwt_refresh_token, config.jwt.refreshScret)
                 if (decoded) {
-                    console.log(decoded)
-                    const param = {
-                        user_name: user.user_name,
-                        user_email: user.user_email,
-                        user_phone: user.user_phone,
-                        jwt_refresh_token: user.jwt_refresh_token
-                    }  
-                    accessToekn = jwt.refreshAccessToken(param)
+                    if (decoded.accessToekn === token) {
+                        const param = {
+                            user_name: user.user_name,
+                            user_email: user.user_email,
+                            user_phone: user.user_phone,
+                            jwt_refresh_token: user.jwt_refresh_token
+                        }  
+                        accessToekn = jwt.refreshAccessToken(param)
+                    }
                 }
             }
             return accessToekn

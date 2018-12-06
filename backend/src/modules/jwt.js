@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken'
 import config from '../setting/config.json'
 
 const createToken = (user, req) => {
+    let ip = req.header('x-forwarded-for') || req.connection.remoteAddress
     const accessToken = jwt.sign({user: user}, config.jwt.accessSecret, {algorithm: config.jwt.accressAlg, expiresIn: 10})
-    const refreshToken = jwt.sign({accessToekn: accessToken}, config.jwt.refreshScret, {algorithm: config.jwt.refreshAlg, expiresIn: 30})
+    const refreshToken = jwt.sign({ip: ip}, config.jwt.refreshScret, {algorithm: config.jwt.refreshAlg, expiresIn: 30})
     return {access: accessToken, refresh: refreshToken}
 }
 const isVaild = (token, secret) => {
@@ -13,7 +14,6 @@ const isVaild = (token, secret) => {
     } catch (error) {
         return false
     }
-    
 }
 const refreshAccessToken = (param) => {
     const refreshDecoded = isVaild(param.jwt_refresh_token, config.jwt.refreshScret)

@@ -40,8 +40,7 @@ export default new Router({
       path: '/blog',
       name: 'Blog',
       component: () => import('@/pages/blog/BlogList'),
-      meta: {layout: 'topmenu'},
-      beforeEnter: isAuthenticated
+      meta: {layout: 'topmenu'}
     },
     {
       path: '/blog/add',
@@ -53,8 +52,7 @@ export default new Router({
       path: '/blog/:id/detail',
       name: 'BlogDetail',
       component: () => import('@/pages/blog/BlogDetail'),
-      meta: {layout: 'topmenu'},
-      beforeEnter: isAuthenticated
+      meta: {layout: 'topmenu'}
     },
     {
       path: '/blog/:id/edit',
@@ -72,14 +70,12 @@ export default new Router({
     {
       path: '/join',
       name: 'JoinForm',
-      component: () => import('@/pages/JoinForm'),
-      beforeEnter: isAuthenticated
+      component: () => import('@/pages/JoinForm')
     },
     {
       path: '*',
       component: () => import('@/pages/NotFound'),
-      meta: {layout: 'topmenu'},
-      beforeEnter: isAuthenticated
+      meta: {layout: 'topmenu'}
     }
   ],
   scrollBehavior (to, from, savedPosition) {

@@ -22,7 +22,6 @@
     "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.4.0",
     "marked": "^0.5.1",
-    "pbkdf2": "^3.0.17",
     "v-bar": "^3.0.0",
     "vue": "^2.5.2",
     "vue-codemirror": "^4.0.6",
