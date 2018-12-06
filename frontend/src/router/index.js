@@ -7,7 +7,6 @@ import axios from 'axios'
 
 Vue.use(Router)
 const isAuthenticated = async (to, from, next) => {
-  console.log('qwe')
   const token = store.state.token.accessToken
   const user = store.state.user.data
   try {
@@ -27,13 +26,25 @@ const isAuthenticated = async (to, from, next) => {
     }
   }
 }
+const isExpired = async (to, from, next) => {
+  const token = store.state.token.accessToken
+  try {
+    if (token) {
+      jwt.verify(token, config.jwt.accessSecret)
+      next('/blog')
+    } else next()
+  } catch (error) {
+    next()
+  }
+}
 const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Root',
-      component: () => import('@/pages/login/LoginContainer')
+      component: () => import('@/pages/login/LoginContainer'),
+      beforeEnter: isExpired
     },
     {
       path: '/blog',
