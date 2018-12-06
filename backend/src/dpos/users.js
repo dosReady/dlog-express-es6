@@ -108,6 +108,13 @@ module.exports = class Users {
     }
     async deleteToken (req) {
         try {
+            const sql = `
+            UPDATE dlog_user 
+                SET jwt_refresh_token='',
+                    update_date=CURRENT_TIMESTAMP
+            WHERE user_email='${req.body.username}'
+            `
+            await dao.update(sql)
         } catch (error) {
         }
     }
