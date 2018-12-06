@@ -2,6 +2,7 @@ import dao from '../modules/dao'
 import sendEmail from '../modules/sendMail'
 import jwt from '../modules/jwt'
 import config from '../setting/config.json'
+import util from '../utils'
 
 module.exports = class Users {
     constructor () {}
@@ -114,7 +115,9 @@ module.exports = class Users {
             if (user && user.jwt_refresh_token) {
                 const decoded = jwt.isVaild(user.jwt_refresh_token, config.jwt.refreshScret)
                 if (decoded) {
-                    if (decoded.accessToekn === token) {
+                    const clientIp = req.header('x-forwarded-for') || req.connection.remoteAddress
+                    const result = util.aesDecipher(decoded.secret)
+                    if (result === clientIp) {
                         const param = {
                             user_name: user.user_name,
                             user_email: user.user_email,
