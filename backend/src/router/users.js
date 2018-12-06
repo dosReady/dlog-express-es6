@@ -47,6 +47,15 @@ router.post('/login', async (req, res, next) => {
     }
 })
 
+router.post('/logout', async (req, res, next) => {
+    try {
+        const result = await users.deleteToken(req)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.post('/refreshToekn', async (req, res, next) => {
     try {
         const result = await users.refreshToken(req)

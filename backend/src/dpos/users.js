@@ -106,9 +106,13 @@ module.exports = class Users {
             throw error
         }
     }
+    async deleteToken (req) {
+        try {
+        } catch (error) {
+        }
+    }
     async refreshToken (req) {
         let accessToekn = ''
-        const token = req.body.token
         const userdata = req.body.user
         try {
             const user = await dao.select(`SELECT * FROM dlog_user WHERE user_email = '${userdata.user_email}'`)
