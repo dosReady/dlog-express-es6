@@ -18,7 +18,7 @@
             <div class="input-group">
                 <div class="append">
                         <input type="hidden" name="username" :value="email"/>
-                        <input type="password" name="password" v-model="pwd" placeholder="비밀번호를 입력해주세요."/>
+                        <input type="password" name="password" v-model="pwd" placeholder="비밀번호를 입력해주세요." @keydown="enterLogin"/>
                         <button class="btn btn-default" @click="login">로그인</button>
                 </div>
             </div>
@@ -73,7 +73,11 @@ export default {
     },
     loginCallback (data) {
       this.$store.commit('setAccessToken', data.token)
+      this.$store.commit('setUser', data.user)
       this.$router.push('/blog')
+    },
+    enterLogin (e) {
+      if (e.keyCode === 13) this.login()
     },
     enterEmail (e) {
       if (e.keyCode === 13) this.checkEmail()

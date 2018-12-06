@@ -1,7 +1,7 @@
 import dao from '../modules/dao'
-import utils from '../utils'
 import sendEmail from '../modules/sendMail'
 import jwt from '../modules/jwt'
+import config from '../setting/config.json'
 
 module.exports = class Users {
     constructor () {}
@@ -88,10 +88,43 @@ module.exports = class Users {
                         user_email: user.user_email,
                         user_phone: user.user_phone
                     }              
-                    result.token = jwt.createToken(result.user, req)
+                    const {access, refresh}= jwt.createToken(result.user, req)
+                    
+                    const updateSql = `
+                    UPDATE dlog_user 
+                        SET jwt_refresh_token='${refresh}',
+                            update_date=CURRENT_TIMESTAMP
+                    WHERE user_email='${req.body.username}'
+                    `
+                    result.token = access
+                    await dao.update(updateSql)
                 }
             }
             return result
+        } catch (error) {
+            throw error
+        }
+    }
+    async refreshToken (req) {
+        let accessToekn = ''
+        const token = req.body.token
+        const userdata = req.body.user
+        try {
+            const user = await dao.select(`SELECT * FROM dlog_user WHERE user_email = '${userdata.user_email}'`)
+            if (user && user.jwt_refresh_token) {
+                const decoded = jwt.isVaild(user.jwt_refresh_token, config.jwt.refreshScret)
+                if (decoded) {
+                    console.log(decoded)
+                    const param = {
+                        user_name: user.user_name,
+                        user_email: user.user_email,
+                        user_phone: user.user_phone,
+                        jwt_refresh_token: user.jwt_refresh_token
+                    }  
+                    accessToekn = jwt.refreshAccessToken(param)
+                }
+            }
+            return accessToekn
         } catch (error) {
             throw error
         }

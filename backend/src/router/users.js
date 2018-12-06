@@ -38,7 +38,7 @@ router.post('/insertUser', async (req, res, next) => {
     }
 })
 
-router.post('/createToken', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
     try {
         const result = await users.createToken(req)
         res.json(result)
@@ -46,17 +46,10 @@ router.post('/createToken', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/test', async (req, res, next) => {
-    try {
-        res.json('test')
-    } catch (error) {
-        next(error)
-    }
-})
 
-router.post('/login', async (req, res, next) => {
+router.post('/refreshToekn', async (req, res, next) => {
     try {
-        const result = await users.createToken(req)
+        const result = await users.refreshToken(req)
         res.json(result)
     } catch (error) {
         next(error)
