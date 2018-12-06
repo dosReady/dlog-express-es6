@@ -115,9 +115,9 @@ module.exports = class Users {
             if (user && user.jwt_refresh_token) {
                 const decoded = jwt.isVaild(user.jwt_refresh_token, config.jwt.refreshScret)
                 if (decoded) {
-                    const clientIp = req.header('x-forwarded-for') || req.connection.remoteAddress
+                    const vaildVal = (req.header('x-forwarded-for') || req.connection.remoteAddress) + req.sessionID
                     const result = util.aesDecipher(decoded.secret)
-                    if (result === clientIp) {
+                    if (result === vaildVal) {
                         const param = {
                             user_name: user.user_name,
                             user_email: user.user_email,

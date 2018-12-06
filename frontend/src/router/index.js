@@ -7,11 +7,13 @@ import axios from 'axios'
 
 Vue.use(Router)
 const isAuthenticated = async (to, from, next) => {
+  console.log('qwe')
   const token = store.state.token.accessToken
   const user = store.state.user.data
   try {
     if (token) {
-      jwt.verify(store.state.token.accessToken, config.jwt.accessSecret)
+      jwt.verify(token, config.jwt.accessSecret)
+      next()
     } else {
       next('/')
     }
@@ -23,16 +25,13 @@ const isAuthenticated = async (to, from, next) => {
     } else {
       next('/')
     }
-  } finally {
-    next()
   }
 }
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      // redirect: '/blog'
       name: 'Root',
       component: () => import('@/pages/login/LoginContainer')
     },
@@ -82,3 +81,5 @@ export default new Router({
     return { x: 0, y: 0 }
   }
 })
+
+export default router
