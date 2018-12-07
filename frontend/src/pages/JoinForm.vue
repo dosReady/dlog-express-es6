@@ -27,11 +27,7 @@
     <div class="page-content">
         <h2>축하합니다.</h2>
         <h2>{{data.email}}님!</h2>
-        <form action="/api/login" method="POST">
-          <input type="hidden" name="username" :value="data.email"/>
-          <input type="hidden" name="password" :value="derivedKey"/>
-          <button type="submit" class="btn btn-default">로그인</button>
-        </form>
+        <button class="btn btn-default" @click="login">로그인</button>
     </div>
   </div>
   <div v-if="mode === 'expired'" class="page-container" key="expired">
@@ -83,7 +79,7 @@ export default {
     if (this.$route.query.email) {
       const data = await this.$post({url: '/api/user/checkSendEmail', params: {toEmail: atob(this.$route.query.email)}, errmsg: '잘못된 요청입니다.'})
       if (!data) {
-        this.mode = 'completed'
+        this.mode = 'expired'
       } else {
         this.mode = 'join'
       }
@@ -122,6 +118,18 @@ export default {
         this.derivedKey = derivedKey.toString('hex')
         await this.$post({url: '/api/user/insertUser', params: {data: insertData}, errmsg: '사용자 등록처리중 오류가 발생했습니다.'}, this.callback)
       }
+    },
+    async login () {
+      const data = {
+        username: this.data.email,
+        password: crypto.pbkdf2Sync(this.data.pwd, config.salt, 1000, 32, 'sha512').toString('hex')
+      }
+      await this.$post({url: '/api/user/login', params: data, errmsg: '로그인 처리중 오류가 발생했습니다.'}, this.loginCallback)
+    },
+    loginCallback (data) {
+      this.$store.commit('setAccessToken', data.token)
+      this.$store.commit('setUser', data.user)
+      this.$router.push('/blog')
     }
   }
 }

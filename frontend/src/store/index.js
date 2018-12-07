@@ -10,7 +10,7 @@ const vuexCookie = new VuexPersistence({
   restoreState: (key, storage) => Cookies.getJSON(key),
   saveState: (key, state, storage) =>
     Cookies.set(key, state, {
-      // expires: new Date(new Date().getTime() + 15 * 1000),
+      expires: new Date(new Date().getTime() + 15 * 1000),
       httponly: true
     })
 })

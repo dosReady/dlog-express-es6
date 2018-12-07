@@ -23,8 +23,8 @@ module.exports = class Users {
             const sql = `
             INSERT INTO dlog_joinreq (joinreq_email) VALUES('${toEmail}')
             `
-            await connection.query(sql)
             console.log(sql)
+            await connection.query(sql)
             sendEmail.send({to: toEmail, subject: '[Dlog] 회원가입'})
         } catch (error) {
             throw error
@@ -116,6 +116,7 @@ module.exports = class Users {
             `
             await dao.update(sql)
         } catch (error) {
+            throw error
         }
     }
     async refreshToken (req) {

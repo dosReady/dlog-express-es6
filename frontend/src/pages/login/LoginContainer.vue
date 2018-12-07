@@ -88,8 +88,7 @@ export default {
       if (data) {
         this.isCommon = true
       } else {
-        // 임시 alert 적용,  화면에 표출로 변경예정
-        if (confirm('해당 이메일로 가입되어 있지않습니다. 회원가입 하시겠습니까?')) {
+        if (confirm('저희사이트에 가입되어있지 않군요. 회원가입 하실껀가요?')) {
           await this.$post({url: '/api/user/sendEmail', params: {toEmail: this.email}, msg: '입력하신 이메일로 회원가입 요청메일을 발송하였습니다.', errmsg: '회원가입 요청메일 발송중 오류가 발생했습니다.'})
         } else {
           alert('회원가입을 취소 하였습니다.')
